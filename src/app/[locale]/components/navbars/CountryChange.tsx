@@ -65,7 +65,7 @@ function CountryChange() {
           alt={nextLocale}
         />
       </button>
-      <Link href={"/"+locale+"/commercial"}>Commercial</Link>
+      <Link href={"/"+locale+"/commercial?slug=all"}>Commercial</Link>
     </div>
   );
 }
