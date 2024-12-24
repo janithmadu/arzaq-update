@@ -1,0 +1,39 @@
+import { client } from "@/lib/sanity";
+import { PrismaClient } from "@prisma/client";
+
+const GetFavoritesAds = async (userId: string) => {
+  const prisma = new PrismaClient();
+  
+
+  try {
+    const favoriteAds = await prisma.users.findUnique({
+      where: {
+        userexid: userId, // Replace with the actual userexid
+      },
+      include: {
+        favorites: {
+          include: {
+            postad: {
+              include: {
+                category: true, // Include details of the category
+                subcategory: true, // Include details of the subcategory
+                postad_photos:true,
+              
+                
+              },
+            },
+          },
+        },
+      },
+    });
+
+    console.log(favoriteAds);
+    
+    return favoriteAds;
+  } catch (error) {
+    return error;
+  }
+};
+
+
+export default GetFavoritesAds;

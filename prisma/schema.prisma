@@ -1,0 +1,274 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model brand {
+  id             Int         @id @default(autoincrement())
+  title_en       String      @db.VarChar(50)
+  title_ar       String      @db.VarChar(50)
+  slug           String      @unique(map: "slug") @db.VarChar(96)
+  subcategory_id Int
+  subcategory    subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "brand_ibfk_1")
+
+  @@index([slug], map: "slug_2")
+  @@index([subcategory_id], map: "subcategory_id")
+}
+
+model categories {
+  id             Int           @id @default(autoincrement())
+  title_en       String        @db.VarChar(255)
+  title_ar       String        @db.VarChar(255)
+  slug           String        @unique(map: "slug") @db.VarChar(255)
+  image_url      String?       @db.VarChar(255)
+  description_en String?       @db.Text
+  description_ar String?       @db.Text
+  price          Decimal       @default(0.00) @db.Decimal(10, 2)
+  ad_count       Int           @default(0)
+  created_at     DateTime      @default(now()) @db.Timestamp(0)
+  updated_at     DateTime      @default(now()) @db.Timestamp(0)
+  postads        postad[]      @relation("CategoryPostads")
+  subcategory    subcategory[]
+}
+
+model model {
+  id             Int         @id @default(autoincrement())
+  title_en       String      @db.VarChar(50)
+  title_ar       String      @db.VarChar(50)
+  slug           String      @unique(map: "slug") @db.VarChar(96)
+  subcategory_id Int
+  description    String?     @db.Text
+  subcategory    subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_ibfk_1")
+
+  @@index([slug], map: "slug_2")
+  @@index([subcategory_id], map: "subcategory_id")
+}
+
+model option {
+  id                Int                 @id @default(autoincrement())
+  title_en          String              @db.VarChar(255)
+  title_ar          String              @db.VarChar(255)
+  slug              String              @unique(map: "slug") @db.VarChar(96)
+  description       String?             @db.Text
+  optionsubcategory optionsubcategory[]
+  optionvalue       optionvalue[]
+}
+
+model optionsubcategory {
+  option_id      Int
+  subcategory_id Int
+  option         option      @relation(fields: [option_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "optionsubcategory_ibfk_1")
+  subcategory    subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "optionsubcategory_ibfk_2")
+
+  @@id([option_id, subcategory_id])
+  @@index([subcategory_id], map: "subcategory_id")
+}
+
+model optionvalue {
+  id        Int    @id @default(autoincrement())
+  option_id Int
+  value_en  String @db.VarChar(255)
+  value_ar  String @db.VarChar(255)
+  option    option @relation(fields: [option_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "optionvalue_ibfk_1")
+
+  @@index([option_id], map: "option_id")
+}
+
+model subcategory {
+  id                Int                 @id @default(autoincrement())
+  title_en          String              @db.VarChar(255)
+  title_ar          String              @db.VarChar(255)
+  slug              String              @unique(map: "slug") @db.VarChar(255)
+  category_id       Int
+  image             String?             @db.VarChar(255)
+  description_en    String?             @db.Text
+  description_ar    String?             @db.Text
+  created_at        DateTime            @default(now()) @db.Timestamp(0)
+  updated_at        DateTime            @default(now()) @db.Timestamp(0)
+  brand             brand[]
+  model             model[]
+  optionsubcategory optionsubcategory[]
+  postads           postad[]            @relation("SubcategoryPostads")
+  categories        categories          @relation(fields: [category_id], references: [id], onUpdate: Restrict, map: "subcategory_ibfk_1")
+commercial        commercial[]
+  @@index([category_id], map: "category_id")
+}
+
+model postad {
+  id              Int                  @id @default(autoincrement())
+  adName          String               @db.VarChar(255)
+  categoryId      Int
+  subcategoryId   Int
+  brand           String?              @db.VarChar(255)
+  model           String?              @db.VarChar(255)
+  condition       postad_condition?
+  currency        postad_currency?
+  authenticity    postad_authenticity?
+  price           Decimal              @db.Decimal(10, 2)
+  negotiable      Boolean?             @default(false)
+  description     String?              @db.Text
+  phoneNumber     String               @db.VarChar(20)
+  country         String               @db.VarChar(255)
+  state           String?              @db.VarChar(255)
+  location        String?              @db.VarChar(255)
+  mapLatitude     Decimal?             @db.Decimal(10, 8)
+  mapLongitude    Decimal?             @db.Decimal(11, 8)
+  userId          Int
+  payment         Boolean?             @default(false)
+  viewCount       Int?                 @default(0)
+  createdAt       DateTime             @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime             @default(now()) @db.Timestamp(0)
+  category        categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
+  favorites       favorites[]          @relation("PostAdFavorites")
+  subcategory     subcategory          @relation("SubcategoryPostads", fields: [subcategoryId], references: [id])
+  user            users                @relation("UserPostAds", fields: [userId], references: [id])
+  postad_features postad_features[]
+  postad_options  postad_options[]
+  postad_photos   postad_photos[]
+ ad_views        ad_views[]           @relation("PostadViews")
+  @@index([categoryId], map: "postad_categoryId_fkey")
+  @@index([subcategoryId], map: "postad_subcategoryId_fkey")
+  @@index([userId], map: "postad_userId_fkey")
+}
+
+model postad_features {
+  id       Int     @id @default(autoincrement())
+  postAdId Int
+  feature  String? @db.VarChar(255)
+  postad   postad  @relation(fields: [postAdId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "postad_features_ibfk_1")
+
+  @@index([postAdId], map: "postAdId")
+}
+
+model postad_options {
+  id          Int     @id @default(autoincrement())
+  postAdId    Int
+  optionKey   String? @db.VarChar(255)
+  optionValue String? @db.VarChar(255)
+  postad      postad  @relation(fields: [postAdId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "postad_options_ibfk_1")
+
+  @@index([postAdId], map: "postAdId")
+}
+
+model postad_photos {
+  id       Int     @id @default(autoincrement())
+  postAdId Int
+  photoUrl String? @db.Text
+  altText  String? @db.VarChar(255)
+  postad   postad  @relation(fields: [postAdId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "postad_photos_ibfk_1")
+
+  @@index([postAdId], map: "postAdId")
+}
+
+model users {
+  id             Int      @id @default(autoincrement())
+  name           String?  @db.VarChar(255)
+  email          String?  @db.VarChar(255)
+  phoneNumber    String?  @db.VarChar(20)
+  avatarUrl      String   @db.VarChar(500)
+  createdDate    DateTime @default(now()) @db.Timestamp(0)
+  member         Boolean
+  userexid       String   @unique @db.VarChar(500)
+  verifiedSeller Boolean
+  postads        postad[] @relation("UserPostAds")
+  favorites      favorites[] @relation("UserFavorites")
+}
+
+model hero_image {
+  id        Int      @id @default(autoincrement())
+  imageName String
+  altText   String
+  imageUrl  String
+  createdAt DateTime @default(now())
+}
+
+model Footer {
+  id          Int           @id @default(autoincrement())
+  address     String        @db.Text
+  phoneNumber String        @db.VarChar(20)
+  email       String        @db.VarChar(255)
+  createdAt   DateTime      @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime      @db.Timestamp(0)
+  SocialMedia SocialMedia[]
+}
+
+model SocialMedia {
+  id        Int      @id @default(autoincrement())
+  platform  String   @db.VarChar(255)
+  url       String   @db.VarChar(255)
+  icon      String?  @db.VarChar(255)
+  footerId  Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @db.Timestamp(0)
+  Footer    Footer   @relation(fields: [footerId], references: [id], onDelete: Cascade)
+
+  @@index([footerId])
+}
+
+model Store {
+  id        Int      @id @default(autoincrement())
+  name      String
+  logo      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+model ad_views {
+  id        Int      @id @default(autoincrement())
+  postadId  Int
+  viewCount Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+
+  postad    postad   @relation("PostadViews", fields: [postadId], references: [id])
+
+  @@index([postadId], map: "ad_views_postadId_fkey")
+}
+
+model favorites {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  postadId  Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  postad    postad   @relation("PostAdFavorites", fields: [postadId], references: [id])
+  user      users    @relation("UserFavorites", fields: [userId], references: [id])
+
+  @@unique([userId, postadId], map: "user_postad_unique")
+  @@index([userId], map: "favorites_userId_fkey")
+  @@index([postadId], map: "favorites_postadId_fkey")
+}
+
+model commercial {
+  id              Int         @id @default(autoincrement())
+  image           String?     @db.VarChar(255)
+  phone_number    String      @db.VarChar(20)
+  whatsapp_number String      @db.VarChar(20)
+  description     String?     @db.Text
+  view_count      Int         @default(0)
+  subcategory_id  Int
+  created_at      DateTime    @default(now()) @db.Timestamp(0)
+  updated_at      DateTime    @default(now()) @db.Timestamp(0)
+  subcategory     subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, map: "commercial_ibfk_1")
+
+  @@index([subcategory_id], map: "subcategory_id")
+}
+
+
+enum postad_condition {
+  new
+  used
+}
+
+enum postad_currency {
+  LKR
+  USD
+}
+
+enum postad_authenticity {
+  original
+  copy
+}
