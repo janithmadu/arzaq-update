@@ -8,7 +8,7 @@ if (!stripeSecretKey) {
 
 // Use the required apiVersion
 const stripe = new Stripe(stripeSecretKey, {
-    apiVersion: '2024-12-18.acacia',
+    apiVersion: '2022-11-15',
   });
 interface PaymentRequestBody {
     amount: number;
