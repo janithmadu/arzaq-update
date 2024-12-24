@@ -12,7 +12,7 @@ export default function AboutPage() {
         </div>
         <div className="relative h-full container mx-auto px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44">
           <div className="flex flex-col justify-center items-center h-full text-white space-y-4">
-            <h1 className="text-4xl font-bold">About Us</h1>
+            <h1 className="text-4xl font-bold">About Uss</h1>
             <div className="flex items-center gap-2 text-sm"></div>
           </div>
         </div>
