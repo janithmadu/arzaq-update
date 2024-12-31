@@ -31,7 +31,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
 
       <div className="grid grid-cols-3 md:grid-cols-3  lg:grid-cols-5 xl:grid-cols-6  gap-3 ">
         {getCategory.map((data: Category, index: number) => {
-  
+
 
           return (
             <Link
@@ -40,16 +40,18 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
             >
               <div className=" min-w-[90px] min-h-[140px] md:min-w-[170px] md:min-h-[170px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                 <Image
-                  width={80}
-                  height={80}
+                  width={90}
+                  height={90}
                   alt={data.title_en}
                   src={data.image_url || "/defultimage.png"}
-                  className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-150 w-[50px] md:w-[80px]"
+                  className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-150 w-[100px] md:w-[100px]"
                 />
-                <h1 className=" text-bodytiny md:text-heading04 font-semibold text-center">
-                  {locale == "en" ? data.title_en : data.title_ar}
-                </h1>
+
               </div>
+
+              <h1 className=" text-md md:text-xl font-semibold text-center">
+                {locale == "en" ? data.title_en : data.title_ar}
+              </h1>
             </Link>
           );
         })}

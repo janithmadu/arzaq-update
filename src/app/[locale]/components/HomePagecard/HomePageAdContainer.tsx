@@ -31,9 +31,11 @@ const HomePageAdContainer = ({ cateid }: any) => {
       {ad?.map((data: PostAd, index: any) => (
         <CarouselItem
           className=" basis-1/1 md:basis-1/3 xl:basis-1/4"
+          dir="ltr"
           key={index}
         >
           <CarCard
+          
             id={data.id}
             brand={data.brand}
             duration={data.createdAt}
