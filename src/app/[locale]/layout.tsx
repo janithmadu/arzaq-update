@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import Topnavbar from "./components/navbars/Topnavbar";
 import { getMessages } from "next-intl/server";
@@ -13,10 +13,9 @@ import { GetUsers } from "./actions/usersAction";
 import { FloatingMenu } from "./components/ui/floating-dock";
 
 export const revalidate = 1;
-const nunitoSans = Open_Sans({
+const nunitoSans = Roboto({
   subsets: ["latin"], // Include subsets you need
   weight: ["400", "700"], // Specify font weights you need
-  display: "swap", // Recommended for Google Fonts
 });
 
 export const metadata: Metadata = {

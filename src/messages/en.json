@@ -6,8 +6,10 @@
     "SearchBarPlaceHolder": "Ads tittle, keyword...",
     "CategoryPlaceHolder": "All Category",
     "LangugeChangePlaceHolder": "Change Language",
-    "HomePageCategortSectionHeading": "Discover Our Categories",
-    "HomePageProductSectionHeading": "Fresh recommended ads",
+    "HomePageCategortSectionHeading": "Discover Our ",
+    "Categories":"Categories",
+    "HomePageProductSectionHeading": "Fresh recommended",
+    "ads":"ads",
     "ViewAllButtion": "View Alls",
     "SelectYourCategory": "Select Your Category",
     "categorytitle": "Select Your Category",
@@ -74,7 +76,9 @@
     "Welcometothenew": "Welcome to the new",
     "MyAds": "My Ads",
      "profilenavdis": "Welcome to the new Arzaq dashboard! Effortlessly manage your ads, memberships, drafts, and favorites, all in one convenient place.",
-     "pandingpayment":"Payment Pending"
+     "pandingpayment":"Payment Pending",
+     "AllCategoryIn":"All Category In",
+     "AllAds":"All Ads"
 
   }
 }

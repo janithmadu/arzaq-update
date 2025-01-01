@@ -47,7 +47,6 @@ export async function GET(request: NextRequest) {
       orderBy: {
         updatedAt: "desc",
       },
-      take: 4,
     });
 
     const resultCount = result.length;

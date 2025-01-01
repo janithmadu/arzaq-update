@@ -5,7 +5,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowArcRight } from "@phosphor-icons/react";
 
-const Breadcrumb = () => {
+const Breadcrumb = ({ children}:{children: React.ReactNode;}) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -22,7 +22,7 @@ const Breadcrumb = () => {
   }
 
   return (
-    <nav aria-label="breadcrumb" className="mb-3">
+    <nav aria-label="breadcrumb" className="mb-3 flex justify-between">
       <ol className="flex flex-wrap items-center text-sm text-gray-600">
         <li>
           <Link href="/" className="hover:underline font-bold">
@@ -61,6 +61,10 @@ const Breadcrumb = () => {
           );
         })}
       </ol>
+
+      {
+        children
+      }
     </nav>
   );
 };

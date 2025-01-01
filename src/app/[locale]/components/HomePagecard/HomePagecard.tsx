@@ -19,7 +19,7 @@ export default async function HomePagecard() {
   // Fetch ads for all categories
   const categoriesWithAds = await Promise.all(
     category.map(async (category: any) => {
-      const ads = await GetAdByCategory(category.id); // Assuming this function fetches ads for a given category  
+      const ads = await GetAdByCategory(category.id); // Assuming this function fetches ads for a given category
       return ads.length > 0 ? category : null; // Include only categories with ads
     })
   );
@@ -32,24 +32,27 @@ export default async function HomePagecard() {
       {filteredCategories.map((data: any, index: number) => (
         <div
           key={index}
-          className="container mx-auto flex flex-col space-y-[50px] px-5  lg:px-5 xl:px-20 md:px-10 2xl:px-44 mb-3 "
-          dir="ltr"
+          className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10 "
         >
-          <div className="flex flex-col gap-y-3" dir="ltr">
+          <div className="flex flex-col gap-y-3">
             <h1 className="text-bodyxl font-bold">
-              All in{" "}
+              {locale === "en" ? " All In" : "كل شيء في"} {' '}
               <span className="text-[#312783]">
-               
                 {locale == "en" ? data.title_en : data.title_ar}
               </span>
             </h1>
             <Carousel dir="ltr">
               <CarouselContent className="-ml-4" dir="ltr">
                 <HomePageAdContainer cateid={data.id} />
-               
               </CarouselContent>
-              <CarouselPrevious className="bg-[#312783] text-white hidden md:flex   "  dir="ltr"/>
-              <CarouselNext className="bg-[#312783] text-white hidden md:flex" dir="ltr" />
+              <CarouselPrevious
+                className="bg-[#312783] text-white hidden md:flex   "
+                dir="ltr"
+              />
+              <CarouselNext
+                className="bg-[#312783] text-white hidden md:flex"
+                dir="ltr"
+              />
             </Carousel>
           </div>
         </div>

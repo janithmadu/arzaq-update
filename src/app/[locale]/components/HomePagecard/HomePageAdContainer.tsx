@@ -23,14 +23,14 @@ const HomePageAdContainer = ({ cateid }: any) => {
     getAds();
   }, [cateid]);
 
-  console.log(ad);
+
   
 
   return (
     <>
       {ad?.map((data: PostAd, index: any) => (
         <CarouselItem
-          className=" basis-1/1 md:basis-1/3 xl:basis-1/4"
+          className=" basis-1/1 md:basis-1/3 xl:basis-1/5"
           dir="ltr"
           key={index}
         >

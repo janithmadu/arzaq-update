@@ -1,27 +1,33 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 export async function POST(request: Request) {
   const prisma = new PrismaClient();
-  const req = await request.json();
 
-  if (!req.category) {
-    return new Response("Category is required", { status: 400 });
-  } else {
-    try {
-      const subcategories = await prisma.categories.findMany({
-        where: {
-          slug: req.category,
-        },
-        include: {
-          subcategory: true,
-        },
-      });
+  if(request){
+    const req = await request.json();
 
-      return new Response(JSON.stringify(subcategories), { status: 200 });
-    } catch (error) {
-      return new Response(
-        JSON.stringify({ error: "Error retrieving subcategories" }),
-        { status: 500 }
-      );
+    if (!req.category) {
+      return new Response("Category is required", { status: 400 });
+    } else {
+      try {
+        const subcategories = await prisma.categories.findMany({
+          where: {
+            slug: req.category,
+          },
+          include: {
+            subcategory: true,
+          },
+        });
+  
+        return new Response(JSON.stringify(subcategories), { status: 200 });
+      } catch (error) {
+        return new Response(
+          JSON.stringify({ error: "Error retrieving subcategories" }),
+          { status: 500 }
+        );
+      }
     }
+  }else{
+    return new Response("Category is required", { status: 400 });
   }
+  
 }

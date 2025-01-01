@@ -39,7 +39,7 @@ export async function getPostAds(data: Params): Promise<Result> {
     orderBy: {
       updatedAt: 'desc', // Order by the most recently updated
     },
-    take: 4, // Limit the results to 4 ads
+    take:10, // Limit the results to 4 ads
   });
 
 
