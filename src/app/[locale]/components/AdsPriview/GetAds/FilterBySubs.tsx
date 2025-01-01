@@ -148,9 +148,9 @@ export default function FilterBySubs() {
   return (
     <div>
       <h1 className="text-bodyxl font-bold">
-        {t("AllCategoryIn")}{' '}
+        {category && t("AllCategoryIn")} {' '}
         <span className="text-[#312783]">
-          {titleCategory ? titleCategory : " Ads"}
+          {titleCategory ? titleCategory : ""}
         </span>
       </h1>
       {subcategory && subcategory[0] ? (
@@ -203,7 +203,7 @@ export default function FilterBySubs() {
       ) : ads.length > 0 ? (
         <div className="mt-7">
           <h1 className="text-bodyxl font-bold">
-            {t("AllAds")} {" "}
+            {category && t("AllAds")} {" "}
             <span className="text-[#312783]">
               {titleCategory ? titleCategory : t("AllAds")}
             </span>
