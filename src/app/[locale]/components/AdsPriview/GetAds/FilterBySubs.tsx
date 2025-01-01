@@ -164,7 +164,7 @@ export default function FilterBySubs() {
             };
 
             return (
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
                   className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer mt-7"
