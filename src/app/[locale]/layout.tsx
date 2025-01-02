@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans, Roboto } from "next/font/google";
+import { Cairo, Roboto } from "next/font/google";
 import "./globals.css";
 import Topnavbar from "./components/navbars/Topnavbar";
 import { getMessages } from "next-intl/server";
@@ -13,9 +13,15 @@ import { GetUsers } from "./actions/usersAction";
 import { FloatingMenu } from "./components/ui/floating-dock";
 
 export const revalidate = 1;
-const nunitoSans = Roboto({
-  subsets: ["latin"], // Include subsets you need
-  weight: ["400", "700"], // Specify font weights you need
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+});
+
+const cairo = Cairo({
+  subsets: ["latin", "arabic"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -48,12 +54,13 @@ export default async function RootLayout({
 
   const messages = await getMessages();
 
+  const fontClass = locale === "ar" ? cairo.className : roboto.className;
+
   return (
     <html lang={locale} dir={dir}>
-      <body className={`${nunitoSans.className} bg-gray-100`}>
-        {" "}
+      <body className={`${fontClass} bg-gray-100`}>
         <NextIntlClientProvider messages={messages}>
-          <div className="bg-white ">
+          <div className="bg-white">
             <Topnavbar user={users} />
           </div>
           {children}
