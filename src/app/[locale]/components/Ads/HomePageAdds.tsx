@@ -48,7 +48,7 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
       </div>
       {/* Heading End*/}
       {/* Main Grid */}
-      <div className="  relative container mx-auto    place-items-center min-w-full   ">
+      
         <Carousel dir="ltr">
           <CarouselContent className="-ml-4" dir="ltr">
             {Ads.map((item: PostAd, index: number) => (
@@ -80,7 +80,7 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
             dir="ltr"
           />
         </Carousel>
-      </div>
+     
       {/* Main Grid End */}
       <div className="min-w-full flex justify-center items-center mt-4">
         <Link
