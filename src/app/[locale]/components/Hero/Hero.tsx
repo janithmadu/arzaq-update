@@ -28,6 +28,7 @@ export const Hero: React.FC<{ HeroImages: any }> = ({ HeroImages }) => {
               width={1920}
               height={446}
               loading="lazy"
+              className="min-w-full"
             />
           </div>
         ))}
