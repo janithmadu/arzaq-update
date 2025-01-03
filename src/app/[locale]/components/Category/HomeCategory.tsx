@@ -39,11 +39,11 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
             >
               <div className=" min-w-[90px] min-h-[140px] md:min-w-[120px] md:min-h-[120px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                 <Image
-                  width={90}
-                  height={90}
+                  width={70}
+                  height={70}
                   alt={data.title_en}
                   src={data.image_url || "/defultimage.png"}
-                  className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-150 w-[100px] md:w-[100px]"
+                  className=" w-[70px] h-[70px]"
                 />
               </div>
 

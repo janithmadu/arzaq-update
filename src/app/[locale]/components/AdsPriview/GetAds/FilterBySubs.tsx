@@ -197,7 +197,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "hidden" : "grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-y-3"}`}
+          className={`${titleSubCategory ? "hidden" : "grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6  "}`}
         >
           {subcategory[0].subcategory.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -211,23 +211,23 @@ export default function FilterBySubs() {
               <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
-                  className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer mt-7"
+                  className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
                   onClick={() => handleSubcategoryChange(data.slug)} // Trigger the change on click
                 >
                   <div className="min-w-full flex justify-center items-center">
                     <Image
-                      width={100}
-                      height={100}
+                      width={90}
+                      height={90}
                       alt={data.title_en}
                       src={data.image || "/photo.png"}
-                      className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-150"
+                      className="w-[70px] h-[70px]"
                     />
                   </div>
                 </div>
-                <div className="min-w-full text-center text-sm min-h-[40px] mt-2">
+                <div className="min-w-full text-center text-xs min-h-[40px] mt-2">
                   {truncateText(
                     locale == "en" ? data.title_en : data.title_ar,
-                    15
+                    30
                   )}
                 </div>
               </div>
@@ -248,7 +248,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-y-3" : " hidden"}`}
+          className={`${titleSubCategory ? "grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6" : " hidden"}`}
         >
           {Secondcategory?.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -271,14 +271,14 @@ export default function FilterBySubs() {
                       height={100}
                       alt={data.title_en}
                       src={data.image || "/photo.png"}
-                      className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-150"
+                      className="w-[70px] h-[70px]"
                     />
                   </div>
                 </div>
                 <div className="min-w-full text-center text-sm min-h-[40px] mt-2">
                   {truncateText(
                     locale == "en" ? data.title_en : data.title_ar,
-                    15
+                    30
                   )}
                 </div>
               </div>
