@@ -34,7 +34,9 @@ export default function FilterBySubs() {
   const [adsLoader, setAdsLoader] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
+  const subcategoryPrams = searchParams.get("subcategories");
   const [subcategory, setsubcategory] = useState<any>();
+  const [Secondcategory, setSecondcategory] = useState<any>();
   const PageSize = 50;
   const [locale, setLocale] = useState("en");
   const router = useRouter();
@@ -62,6 +64,7 @@ export default function FilterBySubs() {
         category: queryObject.category as string,
         page: parseInt(queryObject.page, 10) || 1,
         limit: PageSize,
+        secondCategory: queryObject.secondcategory as string,
       };
 
       let subads = { result: [], resultCount: 0 }; // Default value
@@ -71,7 +74,8 @@ export default function FilterBySubs() {
         queryObject.subOptions ||
         queryObject.minPrice ||
         queryObject.maxPrice ||
-        queryObject.category
+        queryObject.category ||
+        queryObject.secondcategory
       ) {
         const res = await fetch("/api/filters", {
           method: "POST",
@@ -105,7 +109,6 @@ export default function FilterBySubs() {
   }, [searchParams]);
 
   useEffect(() => {
-    console.log(category);
     const getSubcategory = async () => {
       if (category) {
         const subcategory = await fetch(
@@ -145,16 +148,57 @@ export default function FilterBySubs() {
     }
   };
 
+  const handleSecondcategoryChange = (subcategoryId: string) => {
+    const currentParams = new URLSearchParams(searchParams.toString());
+
+    // Find the selected subcategory title based on the subcategory ID
+    const selectedSecondcategory = Secondcategory.find(
+      (data: any) => data.slug === subcategoryId
+    );
+
+    if (selectedSecondcategory) {
+      // Update the "subcategories" parameter in the query
+      currentParams.set("secondcategory", selectedSecondcategory.slug);
+
+      // Navigate to the updated URL
+      router.push(`${pathname}?${currentParams.toString()}`);
+    }
+  };
+
+  useEffect(() => {
+    const getSecondcategory = async () => {
+      if (subcategoryPrams) {
+        const Secondcategories = await fetch("/api/secondcategory", {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ subcategoryPrams }),
+        });
+        const res = await Secondcategories.json();
+        setSecondcategory(res);
+      } else {
+        return null;
+      }
+    };
+    getSecondcategory();
+  }, [subcategoryPrams]);
+
   return (
     <div>
-      <h1 className="text-bodyxl font-bold">
+      <h1
+        className={`${titleSubCategory ? "hidden" : "text-bodyxl font-bold"}`}
+      >
         {category && t("AllCategoryIn")}{" "}
         <span className="text-[#312783]">
           {titleCategory ? titleCategory : ""}
         </span>
       </h1>
       {subcategory && subcategory[0] ? (
-        <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-y-3">
+        <div
+          className={`${titleSubCategory ? "hidden" : "grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-y-3"}`}
+        >
           {subcategory[0].subcategory.map((data: any, index: number) => {
             // Utility function to truncate text
             const truncateText = (text: string, maxLength: number) => {
@@ -169,6 +213,57 @@ export default function FilterBySubs() {
                   key={index}
                   className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer mt-7"
                   onClick={() => handleSubcategoryChange(data.slug)} // Trigger the change on click
+                >
+                  <div className="min-w-full flex justify-center items-center">
+                    <Image
+                      width={100}
+                      height={100}
+                      alt={data.title_en}
+                      src={data.image || "/photo.png"}
+                      className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-150"
+                    />
+                  </div>
+                </div>
+                <div className="min-w-full text-center text-sm min-h-[40px] mt-2">
+                  {truncateText(
+                    locale == "en" ? data.title_en : data.title_ar,
+                    15
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        <></>
+      )}
+
+      <h1
+        className={`${titleSubCategory ? " text-bodyxl font-bold" : "hidden"}`}
+      >
+        {category && t("AllCategoryIn")}{" "}
+        <span className="text-[#312783]">
+          {titleSubCategory ? titleSubCategory : ""}
+        </span>
+      </h1>
+      {subcategory && subcategory[0] ? (
+        <div
+          className={`${titleSubCategory ? "grid grid-cols-3 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-9 gap-y-3" : " hidden"}`}
+        >
+          {Secondcategory?.map((data: any, index: number) => {
+            // Utility function to truncate text
+            const truncateText = (text: string, maxLength: number) => {
+              return text.length > maxLength
+                ? text.slice(0, maxLength) + "..."
+                : text;
+            };
+
+            return (
+              <div className="flex flex-col items-center" key={data.id}>
+                <div
+                  key={index}
+                  className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer mt-7"
+                  onClick={() => handleSecondcategoryChange(data.slug)} // Trigger the change on click
                 >
                   <div className="min-w-full flex justify-center items-center">
                     <Image

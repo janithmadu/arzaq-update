@@ -32,9 +32,9 @@ export default async function HomePagecard() {
       {filteredCategories.map((data: any, index: number) => (
         <div
           key={index}
-          className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10 "
+          className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10"
         >
-          <div className="flex flex-col gap-y-3">
+          <div className="flex flex-col gap-y-3 mt-7">
             <h1 className="text-bodyxl font-bold">
               {locale === "en" ? " All In" : "كل شيء في"} {' '}
               <span className="text-[#312783]">

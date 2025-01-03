@@ -44,6 +44,7 @@
     "AdName": "Ad Name",
     "Category": "Category",
     "Subcategory": "Subcategory",
+    "SecondSubcategory": "Second Category",
     "SelectCategory": "Select Category",
     "Select Subcategory": "Select Subcategory",
     "SelectBrand": "Select Brand",

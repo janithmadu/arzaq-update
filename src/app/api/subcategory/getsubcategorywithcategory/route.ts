@@ -14,9 +14,21 @@ export async function POST(request: Request) {
             slug: req.category,
           },
           include: {
-            subcategory: true,
+            subcategory:{
+              include:{
+                brand:true,
+                categories:true,
+                commercial:true,
+                model:true,
+                optionsubcategory:true,
+                postads:true,
+                secondcategory:true
+              }
+            },
           },
         });
+
+        
   
         return new Response(JSON.stringify(subcategories), { status: 200 });
       } catch (error) {

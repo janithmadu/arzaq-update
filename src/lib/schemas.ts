@@ -19,6 +19,9 @@ export const SchemaAdPostForm = z.object({
     .refine((value) => value !== "DEFAULT", {
       message: "Please select a valid authenticity.",
     }),
+
+    secondcategory: z
+    .string().optional(),
     
   price: z.coerce.number().min(1, "Set a fair price for your item."),
   brands: z

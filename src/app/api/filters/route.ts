@@ -5,8 +5,10 @@ export async function POST(request: NextRequest) {
   const prisma = new PrismaClient();
   try {
     const data = await request.json();
+    console.log(data);
 
     const subcategoryId = data.subcategories; // Ensure this is correctly passed
+    const secondcategoryId = data.secondCategory;
     const categoryId = data.category; // Corrected to match schema field name
     const subOptions = data.subOptions; // Should be an array or single value
     const minPrice = parseFloat(data.minPrice) || 0;
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     if (subcategoryId) where.subcategory = { slug: subcategoryId };
     if (categoryId) where.category = { slug: categoryId };
-
+    if (categoryId) where.secondcategory = { slug: secondcategoryId };
 
     // Handle postad_options dynamically
     if (subOptions && Array.isArray(subOptions) && subOptions.length > 0) {

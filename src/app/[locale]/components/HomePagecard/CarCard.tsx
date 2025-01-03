@@ -15,7 +15,7 @@ interface CarCardProps {
   duration?: string;
   featured?: boolean;
   currancy?: string;
-  id:string;
+  id: string;
 }
 
 function getCookie(name: string) {
@@ -37,8 +37,6 @@ export function CarCard({
   featured,
   currancy,
 }: CarCardProps) {
-  
-  
   const [relativeTime, setRelativeTime] = useState(
     getElapsedTime(duration as string)
   );
@@ -79,16 +77,17 @@ export function CarCard({
               {name}
             </h3>
           </div>
-          <div className="flex flex-wrap gap-2 mb-3 min-h-[50px]">
-            <span className="text-sm text-gray-600">{year}</span>
-            <span className="text-sm text-gray-600">•</span>
-            <span className="text-sm text-gray-600">{km}</span>
-            <span className="text-sm text-gray-600">•</span>
-            <span className="text-sm text-gray-600">{brand}</span>
+          <div className="flex  gap-2 mb-3 min-h-[50px]">
+            {/* {year && <span className="text-sm text-gray-600">{year}</span>}
+            {year && <span className="text-sm text-gray-600">•</span>} */}
+            {km && <span className="text-sm text-gray-600">•</span>}
+            {km && <span className="text-sm text-gray-600">{km}</span>}
+            {brand && <span className="text-sm text-gray-600">•</span>}
+           {brand &&  <span className="text-sm text-gray-600">{brand}</span>}
           </div>
           <div className="flex items-center justify-between max-h-[400px]">
             <div className="flex min-w-full justify-between max-h-[100px] items-end ">
-              <p className="text-xl font-bold text-[#312783]">
+              <p className="text-sm font-bold text-[#312783]">
                 {currancy} {price}
               </p>
               <div className="flex items-center gap-1 text-gray-500">

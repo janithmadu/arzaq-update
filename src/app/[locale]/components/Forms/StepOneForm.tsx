@@ -10,13 +10,10 @@ import { useRouter } from "next/navigation";
 import FormHeader from "../../../../../public/AdForm.png";
 import { Option, Subcategory } from "@/lib/categoryInterface";
 import { SchemaAdPostForm } from "@/lib/schemas";
-import { useRef } from "react";
 import { useTranslations } from "next-intl";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import { FieldValues, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-
 
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -86,14 +83,14 @@ interface Countries {
 
 type Feature = { feature: string };
 
-
-
 const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   const [CategoriesID, setCategoriesID] = useState<string | undefined>();
   const [subCategoriesID, setsubCategoriesID] = useState<string | undefined>();
+  const [secondCategoriesID, setsecondCategoriesID] = useState<string | undefined>();
   const [subCategories, setsubCategories] = useState<
     Subcategory[] | undefined
   >();
+  const [secondCategories, setsecondCategories] = useState<any>();
   const [subBrands, setsubBrands] = useState<Brand[] | undefined>();
   const [Options, setOptions] = useState<Option[] | undefined>();
   const [Models, setModels] = useState<Model[] | undefined>();
@@ -114,16 +111,12 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   const [ImageError, setImageError] = useState<boolean>(true);
   const [ImageCountError, setImageCountError] = useState<boolean>(true);
 
-
-
   //Get Category ID for retrive subcategories
   const handleInputChange = (e: string) => {
     const { id, price } = JSON.parse(e);
     setCategoriesID(id);
     setAdPrice(price);
   };
-
-
 
   useEffect(() => {
     if (ImagesArray.length === 0) {
@@ -140,19 +133,26 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   //Get SubCategory ID for retrive Models,Brands,Options
   const handleSubCategoryChange = (e: string) => {
-   
-
     setOptions([]);
     setsubCategoriesID(e);
   };
+
+  const handleSecondCategoryChange = (e: string) => {
+    console.log("janith");
+    
+    console.log("test"+e);
+    
+    setOptions([]);
+    setsecondCategoriesID(e);
+  };
+
+  
 
   //Get the locales from cookies for navigate based on the locals
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
     setLocale(cookieLocale);
   }, []);
-
-
 
   //////////////////////////////////////////////// Get SubCategory By Usin Category ID /////////////////////////////////
 
@@ -172,13 +172,24 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     getSubCategory();
   }, [CategoriesID]);
 
+  useEffect(() => {
+    const getSecondCategory = async () => {
+      if (subCategoriesID) {
+        // const response = await getSubCategoriesByID(CategoriesID);
+        const response = await fetch(
+          `/api/secondcategory?categoryId=${subCategoriesID}`
+        );
+        const data = await response.json();
+        setsecondCategories(data);
+      }
+    };
+    getSecondCategory();
+  }, [subCategoriesID]);
+
+  console.log(secondCategoriesID);
+  
+
   //////////////////////////////////////////////// END Get SubCategory By Usin Category ID /////////////////////////////////
-
-
-
-
-
-
 
   //////////////////////////////////////////////// Get Models By Usin SubCategory ID /////////////////////////////////
 
@@ -189,7 +200,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
           `/api/models?categoryId=${subCategoriesID}`
         );
         const data = await response.json();
-   
+
         setModels(data);
       }
     };
@@ -197,11 +208,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   }, [subCategoriesID]);
 
   //////////////////////////////////////////////// End Get Models By Usin SubCategory ID /////////////////////////////////
-
-
-
-
-
 
   //////////////////////////////////////////////// Get Barands By Usin SubCategory ID /////////////////////////////////
 
@@ -220,11 +226,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   //////////////////////////////////////////////// END Get Barands By Usin SubCategory ID /////////////////////////////
 
-
-
-
-
-
   //////////////////////////////////////////////// Get Options By Usin SubCategory ID /////////////////////////////////
 
   useEffect(() => {
@@ -235,7 +236,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
           `/api/options?categoryId=${subCategoriesID}`
         );
         const data = await response.json();
-        
 
         setOptions(data);
       }
@@ -245,10 +245,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   }, [subCategoriesID]);
 
   //////////////////////////////////////////////// Get Barands By Usin SubCategory ID /////////////////////////////////
-
-
-
-
 
   //////////////////////////////////////////////// Get Country By Externel API  /////////////////////////////////
 
@@ -267,10 +263,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     getCountries();
   }, []);
   //////////////////////////////////////////////// END Get Country By Externel API  /////////////////////////////////
-
-
-
-
 
   //////////////////////////////////////////////// Get States By Externel API  /////////////////////////////////
 
@@ -299,10 +291,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   //////////////////////////////////////////////// END Get States By Externel API  /////////////////////////////////
 
-
-
-
-
   ////////////////////////////////////////////////  DELTE IMAGES from Cloudnery /////////////////////////////////
 
   const handleRemoveImage = async (id: string) => {
@@ -322,9 +310,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   //////////////////////////////////////////////// END DELTE IMAGES from Cloudnery /////////////////////////////////
 
-
-  
-
   const addFeature = () => {
     setFeatures([...features, { feature: "" }]); // Add a new object with an empty feature value
   };
@@ -342,9 +327,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     setFeatures(newFeatures);
   };
 
-
-
-
   ////////////////////////////////////////////////  Start Send Form Data To API And Database /////////////////////////////////
 
   const {
@@ -357,11 +339,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     resolver: zodResolver(SchemaAdPostForm),
   });
 
-
-
   const onSubmit = async (data: FieldValues) => {
-    
-
     setPageLoader("Loading");
     if (Object.keys(errors).length > 0) {
       setPageLoader("Error");
@@ -380,10 +358,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
         },
       });
       const CreateAdData = await CreateAdRes.json();
-
-      
-      
-      
 
       if (!CreateAdRes.ok && !CreateAdData.success) {
         setPageLoader("Error");
@@ -420,11 +394,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     }
   };
 
-
-   //////////////////////////////////////////////// End Send Form Data To API And Database /////////////////////////////////
-
- 
-   
+  //////////////////////////////////////////////// End Send Form Data To API And Database /////////////////////////////////
 
   return (
     <div className=" flex flex-col gap-y-[20px] ">
@@ -519,6 +489,29 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
             )}
             {/* Show error for name */}
           </div>
+        </div>
+
+        <div className="flex flex-col">
+          <label className="text-grayscale900">{t("SecondSubcategory")}</label>
+          <select
+            className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
+            {...register("secondcategory")}
+            onChange={(e) => handleSecondCategoryChange(e.target.value)}
+            defaultValue={"DEFAULT"}
+          >
+            <option value="DEFAULT" disabled>
+              {t("SecondSubcategory")}
+            </option>
+            {secondCategories?.map((selectData: any) => (
+              <option key={selectData.id} value={Number(selectData.id)}>
+                {locale == "en" ? selectData.title_en : selectData.title_ar}
+              </option>
+            ))}
+          </select>
+          {errors.secondcategory && (
+            <p className="text-red-600">{`${errors.secondcategory.message}`}</p>
+          )}
+          {/* Show error for name */}
         </div>
         {/* Category and  Subcategory End*/}
 
@@ -837,11 +830,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                 <option value="DEFAULT" disabled>
                   {t("SelectCountry")}
                 </option>
-                
-                  <option  value="srilanla">
-                   Sri Lanka
-                  </option>
-                
+
+                <option value="srilanla">Sri Lanka</option>
               </select>
 
               {errors.country && (
@@ -859,11 +849,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                 <option value="DEFAULT" disabled>
                   {t("SelectState")}
                 </option>
-                
-                  <option  value={"Gampaha"}>
-                  Gampaha
-                  </option>
-              
+
+                <option value={"Gampaha"}>Gampaha</option>
               </select>
 
               {errors.state && (
@@ -925,7 +912,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
         </div>
       </form>
       <>
-        {PageLoader === "Loading" ? (
+        {/* {PageLoader === "Loading" ? (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="text-center">
               <Image alt="loader" src={LoadingImage} />
@@ -933,7 +920,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </>
     </div>
   );

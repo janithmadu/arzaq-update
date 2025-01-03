@@ -9,12 +9,13 @@ datasource db {
 }
 
 model brand {
-  id             Int         @id @default(autoincrement())
-  title_en       String      @db.VarChar(50)
-  title_ar       String      @db.VarChar(50)
-  slug           String      @unique(map: "slug") @db.VarChar(96)
+  id             Int              @id @default(autoincrement())
+  title_en       String           @db.VarChar(50)
+  title_ar       String           @db.VarChar(50)
+  slug           String           @unique(map: "slug") @db.VarChar(96)
   subcategory_id Int
-  subcategory    subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "brand_ibfk_1")
+  subcategory    subcategory      @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "brand_ibfk_1")
+  secondcategory secondcategory[]
 
   @@index([slug], map: "slug_2")
   @@index([subcategory_id], map: "subcategory_id")
@@ -37,13 +38,14 @@ model categories {
 }
 
 model model {
-  id             Int         @id @default(autoincrement())
-  title_en       String      @db.VarChar(50)
-  title_ar       String      @db.VarChar(50)
-  slug           String      @unique(map: "slug") @db.VarChar(96)
+  id             Int              @id @default(autoincrement())
+  title_en       String           @db.VarChar(50)
+  title_ar       String           @db.VarChar(50)
+  slug           String           @unique(map: "slug") @db.VarChar(96)
   subcategory_id Int
-  description    String?     @db.Text
-  subcategory    subcategory @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_ibfk_1")
+  description    String?          @db.Text
+  subcategory    subcategory      @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_ibfk_1")
+  secondcategory secondcategory[]
 
   @@index([slug], map: "slug_2")
   @@index([subcategory_id], map: "subcategory_id")
@@ -91,49 +93,66 @@ model subcategory {
   created_at        DateTime            @default(now()) @db.Timestamp(0)
   updated_at        DateTime            @default(now()) @db.Timestamp(0)
   brand             brand[]
+  commercial        commercial[]
   model             model[]
   optionsubcategory optionsubcategory[]
   postads           postad[]            @relation("SubcategoryPostads")
+  secondcategory    secondcategory[]
   categories        categories          @relation(fields: [category_id], references: [id], onUpdate: Restrict, map: "subcategory_ibfk_1")
-commercial        commercial[]
+
   @@index([category_id], map: "category_id")
 }
 
 model postad {
-  id              Int                  @id @default(autoincrement())
-  adName          String               @db.VarChar(255)
-  categoryId      Int
-  subcategoryId   Int
-  brand           String?              @db.VarChar(255)
-  model           String?              @db.VarChar(255)
-  condition       postad_condition?
-  currency        postad_currency?
-  authenticity    postad_authenticity?
-  price           Decimal              @db.Decimal(10, 2)
-  negotiable      Boolean?             @default(false)
-  description     String?              @db.Text
-  phoneNumber     String               @db.VarChar(20)
-  country         String               @db.VarChar(255)
-  state           String?              @db.VarChar(255)
-  location        String?              @db.VarChar(255)
-  mapLatitude     Decimal?             @db.Decimal(10, 8)
-  mapLongitude    Decimal?             @db.Decimal(11, 8)
-  userId          Int
-  payment         Boolean?             @default(false)
-  viewCount       Int?                 @default(0)
-  createdAt       DateTime             @default(now()) @db.Timestamp(0)
-  updatedAt       DateTime             @default(now()) @db.Timestamp(0)
-  category        categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
-  favorites       favorites[]          @relation("PostAdFavorites")
-  subcategory     subcategory          @relation("SubcategoryPostads", fields: [subcategoryId], references: [id])
-  user            users                @relation("UserPostAds", fields: [userId], references: [id])
-  postad_features postad_features[]
-  postad_options  postad_options[]
-  postad_photos   postad_photos[]
+  id               Int                  @id @default(autoincrement())
+  adName           String               @db.VarChar(255)
+  categoryId       Int
+  subcategoryId    Int
+  brand            String?              @db.VarChar(255)
+  model            String?              @db.VarChar(255)
+  condition        postad_condition?
+  currency         postad_currency?
+  authenticity     postad_authenticity?
+  price            Decimal              @db.Decimal(10, 2)
+  negotiable       Boolean?             @default(false)
+  description      String?              @db.Text
+  phoneNumber      String               @db.VarChar(20)
+  country          String               @db.VarChar(255)
+  state            String?              @db.VarChar(255)
+  location         String?              @db.VarChar(255)
+  mapLatitude      Decimal?             @db.Decimal(10, 8)
+  mapLongitude     Decimal?             @db.Decimal(11, 8)
+  userId           Int
+  payment          Boolean?             @default(false)
+  viewCount        Int?                 @default(0)
+  createdAt        DateTime             @default(now()) @db.Timestamp(0)
+  updatedAt        DateTime             @default(now()) @db.Timestamp(0)
+  secondcategoryId Int?
+  favorites        favorites[]          @relation("PostAdFavorites")
+  category         categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
+  secondcategory   secondcategory?      @relation(fields: [secondcategoryId], references: [id])
+  subcategory      subcategory          @relation("SubcategoryPostads", fields: [subcategoryId], references: [id])
+  user             users                @relation("UserPostAds", fields: [userId], references: [id])
+  postad_features  postad_features[]
+  postad_options   postad_options[]
+  postad_photos    postad_photos[]
  ad_views        ad_views[]           @relation("PostadViews")
   @@index([categoryId], map: "postad_categoryId_fkey")
   @@index([subcategoryId], map: "postad_subcategoryId_fkey")
   @@index([userId], map: "postad_userId_fkey")
+  @@index([secondcategoryId], map: "postad_secondcategoryId_fkey")
+}
+
+model ad_views {
+  id        Int      @id @default(autoincrement())
+  postadId  Int
+  viewCount Int      @default(0)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+
+  postad    postad   @relation("PostadViews", fields: [postadId], references: [id])
+
+  @@index([postadId], map: "ad_views_postadId_fkey")
 }
 
 model postad_features {
@@ -166,17 +185,17 @@ model postad_photos {
 }
 
 model users {
-  id             Int      @id @default(autoincrement())
-  name           String?  @db.VarChar(255)
-  email          String?  @db.VarChar(255)
-  phoneNumber    String?  @db.VarChar(20)
-  avatarUrl      String   @db.VarChar(500)
-  createdDate    DateTime @default(now()) @db.Timestamp(0)
+  id             Int         @id @default(autoincrement())
+  name           String?     @db.VarChar(255)
+  email          String?     @db.VarChar(255)
+  phoneNumber    String?     @db.VarChar(20)
+  avatarUrl      String      @db.VarChar(500)
+  createdDate    DateTime    @default(now()) @db.Timestamp(0)
   member         Boolean
-  userexid       String   @unique @db.VarChar(500)
+  userexid       String      @unique @db.VarChar(500)
   verifiedSeller Boolean
-  postads        postad[] @relation("UserPostAds")
   favorites      favorites[] @relation("UserFavorites")
+  postads        postad[]    @relation("UserPostAds")
 }
 
 model hero_image {
@@ -217,17 +236,6 @@ model Store {
   createdAt DateTime @default(now())
   updatedAt DateTime
 }
-model ad_views {
-  id        Int      @id @default(autoincrement())
-  postadId  Int
-  viewCount Int      @default(0)
-  createdAt DateTime @default(now()) @db.Timestamp(0)
-  updatedAt DateTime @default(now()) @db.Timestamp(0)
-
-  postad    postad   @relation("PostadViews", fields: [postadId], references: [id])
-
-  @@index([postadId], map: "ad_views_postadId_fkey")
-}
 
 model favorites {
   id        Int      @id @default(autoincrement())
@@ -257,6 +265,24 @@ model commercial {
   @@index([subcategory_id], map: "subcategory_id")
 }
 
+model secondcategory {
+  id             Int          @id @default(autoincrement())
+  title_en       String       @db.VarChar(255)
+  title_ar       String       @db.VarChar(255)
+  slug           String       @unique(map: "slug") @db.VarChar(255)
+  image          String?      @db.VarChar(255)
+  description_en String?      @db.Text
+  description_ar String?      @db.Text
+  created_at     DateTime     @default(now()) @db.Timestamp(0)
+  updated_at     DateTime     @default(now()) @db.Timestamp(0)
+  subcategory_id Int?
+  postad         postad[]
+  subcategory    subcategory? @relation(fields: [subcategory_id], references: [id])
+  brand          brand[]
+  model          model[]
+
+  @@index([subcategory_id], map: "subcategory_id")
+}
 
 enum postad_condition {
   new
