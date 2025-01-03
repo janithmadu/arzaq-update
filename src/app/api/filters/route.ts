@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
     if (subcategoryId) where.subcategory = { slug: subcategoryId };
     if (categoryId) where.category = { slug: categoryId };
-    if (categoryId) where.secondcategory = { slug: secondcategoryId };
+    if (secondcategoryId) where.secondcategory = { slug: secondcategoryId };
 
     // Handle postad_options dynamically
     if (subOptions && Array.isArray(subOptions) && subOptions.length > 0) {

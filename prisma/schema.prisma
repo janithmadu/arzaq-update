@@ -15,7 +15,7 @@ model brand {
   slug           String           @unique(map: "slug") @db.VarChar(96)
   subcategory_id Int
   subcategory    subcategory      @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "brand_ibfk_1")
-  secondcategory secondcategory[]
+  secondcategory secondcategory[] @relation("brandTosecondcategory")
 
   @@index([slug], map: "slug_2")
   @@index([subcategory_id], map: "subcategory_id")
@@ -45,7 +45,7 @@ model model {
   subcategory_id Int
   description    String?          @db.Text
   subcategory    subcategory      @relation(fields: [subcategory_id], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "model_ibfk_1")
-  secondcategory secondcategory[]
+  secondcategory secondcategory[] @relation("modelTosecondcategory")
 
   @@index([slug], map: "slug_2")
   @@index([subcategory_id], map: "subcategory_id")
@@ -128,6 +128,7 @@ model postad {
   createdAt        DateTime             @default(now()) @db.Timestamp(0)
   updatedAt        DateTime             @default(now()) @db.Timestamp(0)
   secondcategoryId Int?
+  ad_views         ad_views[]           @relation("PostadViews")
   favorites        favorites[]          @relation("PostAdFavorites")
   category         categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
   secondcategory   secondcategory?      @relation(fields: [secondcategoryId], references: [id])
@@ -136,7 +137,7 @@ model postad {
   postad_features  postad_features[]
   postad_options   postad_options[]
   postad_photos    postad_photos[]
- ad_views        ad_views[]           @relation("PostadViews")
+
   @@index([categoryId], map: "postad_categoryId_fkey")
   @@index([subcategoryId], map: "postad_subcategoryId_fkey")
   @@index([userId], map: "postad_userId_fkey")
@@ -149,7 +150,6 @@ model ad_views {
   viewCount Int      @default(0)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @db.Timestamp(0)
-
   postad    postad   @relation("PostadViews", fields: [postadId], references: [id])
 
   @@index([postadId], map: "ad_views_postadId_fkey")
@@ -278,8 +278,8 @@ model secondcategory {
   subcategory_id Int?
   postad         postad[]
   subcategory    subcategory? @relation(fields: [subcategory_id], references: [id])
-  brand          brand[]
-  model          model[]
+  brand          brand[]      @relation("brandTosecondcategory")
+  model          model[]      @relation("modelTosecondcategory")
 
   @@index([subcategory_id], map: "subcategory_id")
 }

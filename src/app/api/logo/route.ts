@@ -1,9 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { number } from "zod";
+
 
 export const GET = async ()=>{
-    const prisma = new PrismaClient();
+
     const logodata = await prisma.store.findFirst({
         select:{
             id:true,

@@ -32,6 +32,8 @@ export async function POST(request: Request) {
   
         return new Response(JSON.stringify(subcategories), { status: 200 });
       } catch (error) {
+        console.log(error);
+        
         return new Response(
           JSON.stringify({ error: "Error retrieving subcategories" }),
           { status: 500 }
