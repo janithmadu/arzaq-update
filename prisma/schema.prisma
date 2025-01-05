@@ -111,7 +111,7 @@ model postad {
   brand            String?              @db.VarChar(255)
   model            String?              @db.VarChar(255)
   condition        postad_condition?
-  currency         postad_currency?
+  currency         String?
   authenticity     postad_authenticity?
   price            Decimal              @db.Decimal(10, 2)
   negotiable       Boolean?             @default(false)
@@ -131,7 +131,6 @@ model postad {
   ad_views         ad_views[]           @relation("PostadViews")
   favorites        favorites[]          @relation("PostAdFavorites")
   category         categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
-  secondcategory   secondcategory?      @relation(fields: [secondcategoryId], references: [id])
   subcategory      subcategory          @relation("SubcategoryPostads", fields: [subcategoryId], references: [id])
   user             users                @relation("UserPostAds", fields: [userId], references: [id])
   postad_features  postad_features[]
@@ -141,7 +140,7 @@ model postad {
   @@index([categoryId], map: "postad_categoryId_fkey")
   @@index([subcategoryId], map: "postad_subcategoryId_fkey")
   @@index([userId], map: "postad_userId_fkey")
-  @@index([secondcategoryId], map: "postad_secondcategoryId_fkey")
+
 }
 
 model ad_views {
@@ -276,7 +275,6 @@ model secondcategory {
   created_at     DateTime     @default(now()) @db.Timestamp(0)
   updated_at     DateTime     @default(now()) @db.Timestamp(0)
   subcategory_id Int?
-  postad         postad[]
   subcategory    subcategory? @relation(fields: [subcategory_id], references: [id])
   brand          brand[]      @relation("brandTosecondcategory")
   model          model[]      @relation("modelTosecondcategory")
@@ -289,10 +287,7 @@ enum postad_condition {
   used
 }
 
-enum postad_currency {
-  LKR
-  USD
-}
+
 
 enum postad_authenticity {
   original

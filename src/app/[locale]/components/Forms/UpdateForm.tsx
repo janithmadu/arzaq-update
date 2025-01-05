@@ -456,7 +456,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   }, [updateAd]);
 
   return (
-    <div className=" flex flex-col gap-y-[20px] ">
+    <div className=" justify-center  flex flex-col gap-y-[20px] ">
       <div className=" min-h-[100px] rounded-xl relative">
         <Image
           alt="formHeader"

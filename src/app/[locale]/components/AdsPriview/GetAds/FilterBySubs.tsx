@@ -49,6 +49,12 @@ export default function FilterBySubs() {
     setLocale(cookieLocale);
   }, []);
 
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength
+      ? text.slice(0, maxLength) + "..."
+      : text;
+  };
+
   useEffect(() => {
     const queryObject = Object.fromEntries(searchParams.entries());
     settitleCategory(queryObject.category);
@@ -153,12 +159,12 @@ export default function FilterBySubs() {
 
     // Find the selected subcategory title based on the subcategory ID
     const selectedSecondcategory = Secondcategory.find(
-      (data: any) => data.slug === subcategoryId
+      (data: any) => data.id === subcategoryId
     );
 
     if (selectedSecondcategory) {
       // Update the "subcategories" parameter in the query
-      currentParams.set("secondcategory", selectedSecondcategory.slug);
+      currentParams.set("secondcategory", selectedSecondcategory.id);
 
       // Navigate to the updated URL
       router.push(`${pathname}?${currentParams.toString()}`);
@@ -197,7 +203,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "hidden" : "grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6  "}`}
+          className={`${titleSubCategory ? "hidden" : "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-x-3 "}`}
         >
           {subcategory[0].subcategory.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -211,7 +217,7 @@ export default function FilterBySubs() {
               <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
-                  className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
+                  className="min-w-[80px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
                   onClick={() => handleSubcategoryChange(data.slug)} // Trigger the change on click
                 >
                   <div className="min-w-full flex justify-center items-center">
@@ -224,7 +230,7 @@ export default function FilterBySubs() {
                     />
                   </div>
                 </div>
-                <div className="min-w-full text-center text-xs min-h-[40px] mt-2">
+                <div className="min-w-full text-center font-bold text-xs min-h-[40px] mt-2">
                   {truncateText(
                     locale == "en" ? data.title_en : data.title_ar,
                     30
@@ -248,7 +254,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6" : " hidden"}`}
+          className={`${titleSubCategory ? "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-x-3" : " hidden"}`}
         >
           {Secondcategory?.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -262,8 +268,8 @@ export default function FilterBySubs() {
               <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
-                  className="min-w-[80px] min-h-[120px] md:max-w-[100px] md:max-h-[100px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer mt-7"
-                  onClick={() => handleSecondcategoryChange(data.slug)} // Trigger the change on click
+                  className="min-w-[80px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer"
+                  onClick={() => handleSecondcategoryChange(data.id)} // Trigger the change on click
                 >
                   <div className="min-w-full flex justify-center items-center">
                     <Image
@@ -275,7 +281,7 @@ export default function FilterBySubs() {
                     />
                   </div>
                 </div>
-                <div className="min-w-full text-center text-sm min-h-[40px] mt-2">
+                <div className="min-w-full text-center font-bold text-sm min-h-[40px] mt-2">
                   {truncateText(
                     locale == "en" ? data.title_en : data.title_ar,
                     30
@@ -303,20 +309,38 @@ export default function FilterBySubs() {
               {titleCategory ? titleCategory : t("AllAds")}
             </span>
           </h1>
-          <div className="grid sm:grid-cols-2 sm:gap-x-10  md:grid-cols-3   md:gap-x-3 gap-x-5 lg:gap-y-1 xl:gap-y-0 lg:grid-cols-4  2xl:grid-cols-5 xl:gap-x-5 place-items-center place-content-center rtl:gap-x-[10px] ">
+          <div className="grid  sm:grid-cols-2 sm:gap-x-10  md:grid-cols-3   md:gap-x-3 gap-x-5 lg:gap-y-1 xl:gap-y-0 lg:grid-cols-4  2xl:grid-cols-5 xl:gap-x-5 place-items-center place-content-center rtl:gap-x-[10px] ">
             {ads.map((ad: PostAd, index: number) => (
-              <div className="min-w-full mt-7" key={index}>
-                <CarCard
-                  name={ad.adName}
-                  brand={ad.brand}
-                  currancy={ad.currency}
-                  duration={ad.createdAt}
-                  location={ad.state}
-                  km={ad.model}
-                  image={ad.postad_photos[0]?.photoUrl}
-                  price={ad.price}
-                  id={ad.id}
-                />
+              <div className="min-w-full  sm:mt-7" key={index}>
+                <div className="hidden sm:inline">
+                  <CarCard
+                    name={ad.adName}
+                    brand={ad.brand}
+                    currancy={ad.currency}
+                    duration={ad.createdAt}
+                    location={ad.state}
+                    km={ad.model}
+                    image={ad.postad_photos[0]?.photoUrl}
+                    price={ad.price}
+                    id={ad.id}
+                  />
+                </div>
+
+                <div className="inline sm:hidden">
+                  <ProfileAdCard
+                    state={ad.state}
+                    image={ad.postad_photos[0]?.photoUrl}
+                    price={ad.price}
+                    timestamp={ad.createdAt}
+                    timedate={true}
+                    title={truncateText(ad.adName,30)}
+                    category={
+                      locale == "en"
+                        ? ad.category.title_en
+                        : ad.category.title_ar
+                    }
+                  />
+                </div>
               </div>
             ))}
           </div>

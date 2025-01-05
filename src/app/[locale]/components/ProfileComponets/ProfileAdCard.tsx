@@ -27,8 +27,8 @@ interface ProductCardProps {
   updateMount?: boolean;
   delteActive?: boolean;
   adprice?: number;
-  timedate?:boolean
-  state?:string
+  timedate?: boolean;
+  state?: string;
 }
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -49,16 +49,14 @@ export function ProfileAdCard({
   adprice,
   delteActive,
   timedate,
-  state
+  state,
 }: ProductCardProps) {
   const [locale, setLocale] = useState("en");
   const [loading, setloading] = useState(true);
   const router = useRouter();
   const t = useTranslations("TopNav");
 
-
   const [elapsedTime, setElapsedTime] = useState(getElapsedTime(timestamp));
-
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -67,16 +65,11 @@ export function ProfileAdCard({
 
     return () => clearInterval(interval); // Cleanup on unmount
   }, [timestamp]);
-  
-
-  
 
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
     setLocale(cookieLocale);
   }, []);
-
- 
 
   const PaymentPendingPay = () => {
     localStorage.setItem("AdID", id as string);
@@ -110,12 +103,16 @@ export function ProfileAdCard({
             method: "POST",
             body: JSON.stringify({ id }),
           });
-          const responses = await response.json();
-          if (responses.status === 401) {
+          if (response) {
+            setloading(true);
+          }
+
+          if (response.status === 401) {
             router.push("/");
             return;
           }
-          if (responses.status == 200) {
+
+          if (response.status == 200) {
             setloading(true);
             Swal.fire({
               title: "Deleting Ad...",
@@ -160,13 +157,12 @@ export function ProfileAdCard({
         ) : null}
 
         {updateMount ? (
-           <Link
-           href={`${locale ? `/${locale}` : ""}/addform/${id}`}
-           className="cursor-pointer bg-warning500 p-[7px] rounded-full text-white transition duration-300 ease-in-out hover:bg-danger700 hover:shadow-lg"
-           
-         >
-           <PencilSimpleLine />
-         </Link>
+          <Link
+            href={`${locale ? `/${locale}` : ""}/addform/${id}`}
+            className="cursor-pointer bg-warning500 p-[7px] rounded-full text-white transition duration-300 ease-in-out hover:bg-danger700 hover:shadow-lg"
+          >
+            <PencilSimpleLine />
+          </Link>
         ) : null}
       </div>
 
@@ -182,17 +178,19 @@ export function ProfileAdCard({
                   src={image || "/"}
                   alt={title}
                   fill
-                  className="object-cover"
-                  sizes="(max-width: 96px) 100vw, 96px"
+                  className="object-cover h-full"
+                  sizes="(max-width: 96px) 100vw, 96px "
                 />
               </div>
               <div className="flex flex-col justify-between py-1">
                 <div>
-                  <div className="flex justify-between">
+                  <div className="flex items-center gap-x-4">
                     <div className="max-w-[200px]">
-                    <h3 className="font-medium text-gray-900">{title}</h3>
+                      <h3 className="font-medium text-sm text-gray-900">
+                        {title}
+                      </h3>
                     </div>
-                    {state}
+                    <h3 className="text-xs text-[#312783]"> {state}</h3>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
                     <span className="text-sm text-gray-600">{category}</span>
@@ -204,20 +202,20 @@ export function ProfileAdCard({
                         </span>
                       </>
                     )}
-                   
                   </div>
-                  
                 </div>
                 <div className="flex items-center sm:justify-between sm:max-w-[700px] 2xl:min-w-[360px] lg:min-w-[520px] sm:min-w-[360px]  max-w-[600px] gap-x-[10px]">
                   <span className=" text-bodytiny sm:text-lg font-semibold text-[#312783]">
                     Rs {price}
                   </span>
-                 {timedate &&  <Badge
-                    variant="secondary"
-                    className=" text-[0.7rem] sm:text-xs font-normal"
-                  >
-                    {elapsedTime}
-                  </Badge>}
+                  {timedate && (
+                    <Badge
+                      variant="secondary"
+                      className=" text-[0.7rem] sm:text-xs font-normal"
+                    >
+                      {elapsedTime}
+                    </Badge>
+                  )}
                 </div>
               </div>
             </div>

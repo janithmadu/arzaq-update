@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     images,
     featurs,
     model,
-    secondcategory
+    secondcategory,
   } = addata;
 
   // Parse category and options safely
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
         adName: name,
         category: { connect: { id: Number(categoryData.id) } }, // Connect category by ID
         subcategory: { connect: { id: Number(subcategory) } }, // Connect subcategory by ID
-        secondcategory: { connect: { id: Number(secondcategory) } }, // Connect subcategory by ID
+        secondcategoryId: secondcategory === "DEFAULT" ? null : secondcategory, // Connect subcategory by ID
         brand: brands,
         model: model,
         condition: conditions,
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         country: country,
         state: state,
         user: { connect: { userexid: user.id } },
-        payment: false,
+        payment: true,
         postad_features: {
           create: featurs || [],
         },

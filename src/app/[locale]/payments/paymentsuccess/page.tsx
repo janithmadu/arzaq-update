@@ -5,42 +5,46 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-function Page() {  // Change 'page' to 'Page'
+function Page() {
+  // Change 'page' to 'Page'
   const router = useRouter();
 
-  useEffect(() => {
-    const getAds = async () => {
-      const AdID = localStorage.getItem("AdID");
+  // useEffect(() => {
+  //   const getAds = async () => {
+  //     const AdID = localStorage.getItem("AdID");
 
-      if (!AdID) {
-        router.push("/");
-        return;
-      }
+  //     if (!AdID) {
+  //       router.push("/");
+  //       return;
+  //     }
 
-      const response = await fetch("/api/update", {
-        method: "POST",
-        body: JSON.stringify({ AdID }),
-      });
-      const responses = await response.json();
-      if (response.status === 401) {
-        router.push("/");
-        return;
-      }
+  //     const response = await fetch("/api/update", {
+  //       method: "POST",
+  //       body: JSON.stringify({ AdID }),
+  //     });
+  //     const responses = await response.json();
+  //     if (response.status === 401) {
+  //       router.push("/");
+  //       return;
+  //     }
 
-      if (responses.status) {
-        localStorage.removeItem("AdID");
-      }
-    };
+  //     if (responses.status) {
+  //       localStorage.removeItem("AdID");
+  //     }
+  //   };
 
-    getAds();
-  }, [router]); // Adding router as a dependency to avoid exhaustive-deps warning
+  //   getAds();
+  // }, [router]); // Adding router as a dependency to avoid exhaustive-deps warning
 
   return (
-    <div className="min-w-full min-h-[60dvh] flex justify-center items-center flex-col">
-      <div className="flex flex-col justify-center items-center shadow-xl p-20 rounded-lg gap-y-2">
+    <div className="min-w-full min-h-[60dvh] flex justify-center items-center flex-col bg-white" >
+      <div className="flex flex-col justify-center items-center shadow-md p-20 rounded-lg gap-y-2 bg-white">
         <Image alt="Check" src={complete} />
-        <h1 className="text-bodyxl font-bold">Payment Success</h1>
-        <p>Thank you for completing your secure online payment.</p>
+        <h1 className="text-bodyxl font-bold">Your Ad has been completed</h1>
+        <p>
+          Thank you for posting your ad on{" "}
+          <span className="text-[#312783] font-bold ">ARZAQ</span>.
+        </p>
         <p>Have a great day!</p>
         <Link className="text-bodysmall" href="/">
           Go to home page
@@ -50,4 +54,4 @@ function Page() {  // Change 'page' to 'Page'
   );
 }
 
-export default Page;  // Ensure the export matches the component name
+export default Page; // Ensure the export matches the component name

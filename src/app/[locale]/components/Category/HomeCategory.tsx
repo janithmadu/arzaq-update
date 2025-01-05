@@ -37,7 +37,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
               key={index}
               href={`${locale}/ads?page=1&category=${data?.slug}`}
             >
-              <div className=" min-w-[90px] min-h-[140px] md:min-w-[120px] md:min-h-[120px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
+              <div className=" min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[115px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                 <Image
                   width={70}
                   height={70}
@@ -47,7 +47,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
                 />
               </div>
 
-              <h1 className=" text-md md:text-xl  text-center">
+              <h1 className=" text-md md:text-xl font-bold  text-center">
                 {locale == "en" ? data.title_en : data.title_ar}
               </h1>
             </Link>

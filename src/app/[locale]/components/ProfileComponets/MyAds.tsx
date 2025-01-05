@@ -62,8 +62,8 @@ const MyAds: React.FC<MainProfileProps> = ({
                   }
                   timestamp={ad.createdAt}
                   timedate={true}
-                  updateMount={false}
-                  delteActive={false}
+                  updateMount={true}
+                  delteActive={true}
                   state={ad.state}
                   subcategory={
                     locale == "en"

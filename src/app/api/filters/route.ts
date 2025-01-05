@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
     const limit = parseInt(data.limit) || 10;
     const page = parseInt(data.page) || 1;
 
-    
     const skip = (page - 1) * limit;
 
     // Build where conditions dynamically
@@ -26,8 +25,7 @@ export async function POST(request: NextRequest) {
 
     if (subcategoryId) where.subcategory = { slug: subcategoryId };
     if (categoryId) where.category = { slug: categoryId };
-    if (secondcategoryId) where.secondcategory = { slug: secondcategoryId };
-    
+    if (secondcategoryId) where.secondcategoryId = parseInt(secondcategoryId);
 
     // Handle postad_options dynamically
     if (subOptions && Array.isArray(subOptions) && subOptions.length > 0) {
@@ -60,14 +58,12 @@ export async function POST(request: NextRequest) {
         category: true,
         subcategory: true,
         postad_photos: true,
-        secondcategory:true
       },
     });
 
-    const resultCount = await prisma.postad.count({ where });
+    console.log(result);
 
-    
-    
+    const resultCount = await prisma.postad.count({ where });
 
     return NextResponse.json({ result, resultCount });
   } catch (error) {
