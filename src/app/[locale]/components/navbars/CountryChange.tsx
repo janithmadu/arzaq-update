@@ -8,6 +8,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Loading from "../../loading";
 
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
+
 function getCookie(name: string) {
   if (typeof window !== "undefined") {
     const value = `; ${document.cookie}`;
@@ -36,39 +39,49 @@ function CountryChange() {
   };
 
   // Update the language and URL when switching
-  const handleLanguageSwitch = (newLocale: "en" | "ar") => {
+ 
+  const handleLanguageSwitch = async (newLocale: "en" | "ar") => {
+    // Start progress bar
+    NProgress.start();
+    
+    // Simulate slow progress
+    let progress = 0.1;
+    const interval = setInterval(() => {
+      progress += 0.1;
+      if (progress < 1) {
+        NProgress.set(progress);
+      } else {
+        clearInterval(interval);
+      }
+    }, 100); // Adjust interval time for slower progress
+  
+    // Simulate language switch
     setLoading(true);
-    // Update state immediately for instant UI feedback
-    setLocale(newLocale);
-    setFlgImage(newLocale === "en" ? UKflag : Arab);
-    setLoading(true);
-
-    // Update the cookie asynchronously
+  
     if (typeof window !== "undefined") {
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`;
     }
-
+  
     const segments = pathname.split("/");
-
-    // Update the locale in the URL path
     if (segments[1] === "en" || segments[1] === "ar") {
       segments[1] = newLocale;
     } else {
       segments.unshift(newLocale);
     }
-
+  
     const newPath = segments.join("/");
-
-    // Navigate to the new URL
-    router.push(`${newPath}?${searchParams.toString()}`);
-
-    // Set loading state to false after the navigation
-    setLoading(false);
+  
+    await router.push(`${newPath}?${searchParams.toString()}`);
+  
+    // Slow down completion
+    setTimeout(() => {
+      setLoading(false);
+      NProgress.done(); // Complete the progress bar
+    }, 1000); // Delay completion by 1 second
   };
 
   useEffect(() => {
     // Initialize locale after component mounts
-
     const segments = pathname.split("/");
     const currentLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
     setLocale(currentLocale);
