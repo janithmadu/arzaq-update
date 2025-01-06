@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import UKflag from "../../../../../public/uk.png";
 import Arab from "../../../../../public/arab.png";
@@ -31,20 +31,22 @@ function CountryChange() {
   // Update the language and URL when switching
   const handleLanguageSwitch = (newLocale: "en" | "ar") => {
     const segments = pathname.split("/");
-
+  
     // Update the locale in the URL path
     if (segments[1] === "en" || segments[1] === "ar") {
       segments[1] = newLocale;
     } else {
       segments.unshift(newLocale);
     }
-
+  
     const newPath = segments.join("/");
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`; // Update the cookie
-
+  
     // Update state immediately for instant UI feedback
     setLocale(newLocale);
-
+  
+    // Update the cookie asynchronously to avoid blocking
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`;
+  
     // Navigate to the new URL
     router.push(`${newPath}?${searchParams.toString()}`);
   };
