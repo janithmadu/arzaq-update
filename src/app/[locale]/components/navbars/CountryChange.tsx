@@ -53,7 +53,7 @@ function CountryChange() {
       } else {
         clearInterval(interval);
       }
-    }, 100); // Adjust interval time for slower progress
+    }, 120); // Adjust interval time for slower progress
   
     // Simulate language switch
     setLoading(true);
