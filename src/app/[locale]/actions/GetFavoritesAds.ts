@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 const GetFavoritesAds = async (userId: string) => {
   const prisma = new PrismaClient();
-  
 
   try {
     const favoriteAds = await prisma.users.findUnique({
@@ -17,9 +16,7 @@ const GetFavoritesAds = async (userId: string) => {
               include: {
                 category: true, // Include details of the category
                 subcategory: true, // Include details of the subcategory
-                postad_photos:true,
-              
-                
+                postad_photos: true,
               },
             },
           },
@@ -27,13 +24,12 @@ const GetFavoritesAds = async (userId: string) => {
       },
     });
 
-    console.log(favoriteAds);
-    
     return favoriteAds;
   } catch (error) {
     return error;
+  } finally {
+    await prisma.$disconnect();
   }
 };
-
 
 export default GetFavoritesAds;

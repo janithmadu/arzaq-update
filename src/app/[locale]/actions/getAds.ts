@@ -1,5 +1,3 @@
-import { PostAd } from "@/lib/categoryInterface";
-import { client } from "@/sanity/lib/client";
 import { PrismaClient } from "@prisma/client";
 
 export interface Params {
@@ -21,8 +19,6 @@ export interface Result {
 }
 
 export async function getPostAds(data: Params): Promise<Result> {
-
-
   const prisma = new PrismaClient();
   const result = await prisma.postad.findMany({
     where: {
@@ -30,19 +26,16 @@ export async function getPostAds(data: Params): Promise<Result> {
     },
     include: {
       postad_features: true, // Include features
-      postad_options: true,  // Include options
-      postad_photos: true,   // Include photos
-      category: true,        // Include category
-      subcategory:true,
-      
+      postad_options: true, // Include options
+      postad_photos: true, // Include photos
+      category: true, // Include category
+      subcategory: true,
     },
     orderBy: {
-      updatedAt: 'desc', // Order by the most recently updated
+      updatedAt: "desc", // Order by the most recently updated
     },
-    take:10, // Limit the results to 4 ads
+    take: 10, // Limit the results to 4 ads
   });
-
-
 
   const resultCount = result.length;
 
@@ -52,211 +45,91 @@ export async function getPostAds(data: Params): Promise<Result> {
   };
 }
 
-export async function getAllPostAds() {
-
-
-  const query = `*[_type == "postAd" && payment == true] | order(_createdAt desc) {
-      _id,
-      adName,
-      category->{
-        _id,
-        title
-      },
-      subcategory->{
-        _id,
-        title
-      },
-      brand,
-      model,
-      condition,
-      authenticity,
-      tags,
-      price,
-      negotiable,
-      description,
-      features,
-      photos[] {
-        asset->{
-          _id,
-          url
-        }
-      },
-      phoneNumber,
-      backupPhoneNumber,
-      email,
-      website,
-      country,
-      city,
-      state,
-      location,
-      mapLocation,
-      Currency,
-      _createdAt,
-      image,
-    }`;
-
-
-
-  const result = await client.fetch(query);
-
-
-  return {
-    result,
-
-  };
-}
-
-
-
 export async function getAdById(id: string) {
   const prisma = new PrismaClient();
 
-  if(!id){
-    return {error: 'id is required'}
-  }
+  try {
+    if (!id) {
+      return { error: "id is required" };
+    }
 
-  const result = await prisma.postad.findUnique({
-    where: {
-      id: Number(id), // Replace adId with the actual ad ID you're querying
-    },
-    include: {
-      category: true,
-      subcategory: true,
-      postad_features: true,
-      postad_options: true,
-      postad_photos: true,
-      ad_views:true,
-      user: { // Include the related user based on userId
-        select: {
-          id: true,
-          name: true,
-          email: true,
-          phoneNumber: true,
-          verifiedSeller: true,
-          member: true,
-          avatarUrl: true,
-          userexid: true,
-         
+    const result = await prisma.postad.findUnique({
+      where: {
+        id: Number(id), // Replace adId with the actual ad ID you're querying
+      },
+      include: {
+        category: true,
+        subcategory: true,
+        postad_features: true,
+        postad_options: true,
+        postad_photos: true,
+        ad_views: true,
+        user: {
+          // Include the related user based on userId
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            phoneNumber: true,
+            verifiedSeller: true,
+            member: true,
+            avatarUrl: true,
+            userexid: true,
+          },
         },
       },
-    },
-  });
-
-
-
-
-  
-
-  return result;
-}
-export async function getAdByIdForPayment(id: string) {
-  const prisma = new PrismaClient();
-  const postAd = await prisma.postad.findUnique({
-    where: {
-      id: Number(id), // Replace with the actual ID of the postad you want to retrieve
-    },
-  });
-
-
-
-
-  const query = `
-    *[_type == "postAd" && payment == false && _id == $id][0] {
-      _id,
-      adName,
-      category->{
-        _id,
-        title,
-        price
-      },
-      subcategory->{
-        _id,
-        title
-      },
-      brand,
-      model,
-      condition,
-      authenticity,
-      tags,
-      price,
-      negotiable,
-      description,
-      features,
-      photos[] {
-        asset->{
-          _id,
-          url
-        }
-      },
-      phoneNumber,
-      backupPhoneNumber,
-      email,
-      website,
-      country,
-      city,
-      state,
-      location,
-      mapLocation,
-      Currency,
-      _createdAt,
-      options,
-      user->{
-        externalId,
-        name,
-        avatarUrl,
-        email
-
-      },
-      image,
-    }
-  `;
-
-  const params = { id };
-
-  const result = await client.fetch(query, params);
-  return result;
+    });
+    return result;
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 export async function GetAdByUser(userID: string, page: number, Limit: number) {
-
-
-
-
   const prisma = new PrismaClient();
-  const ads = await prisma.postad.findMany({
-    where: {
-      user: {
-        userexid: userID,
+
+  try {
+    const ads = await prisma.postad.findMany({
+      where: {
+        user: {
+          userexid: userID,
+        },
+        payment: true,
       },
-      payment: true,
-    },
-    skip: (page - 1) * Limit,
-    take: Limit,
-    include: {
-      postad_features: true,
-      postad_options: true,
-      postad_photos: true,
-      category: true,
-      subcategory:true,
-      user: {
-        select: {
-          id: true,
-          name: true,
-          email: true,
+      skip: (page - 1) * Limit,
+      take: Limit,
+      include: {
+        postad_features: true,
+        postad_options: true,
+        postad_photos: true,
+        category: true,
+        subcategory: true,
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  const resultCount = await prisma.postad.count({
-    where: {
-      payment: true, // Filter ads by userId
-    },
-  });
-  return {
-    resultCount,
-    ads,
-  };
+    const resultCount = await prisma.postad.count({
+      where: {
+        payment: true, // Filter ads by userId
+      },
+    });
+    return {
+      resultCount,
+      ads,
+    };
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 export async function GetAdByUserPayementFalse(
@@ -264,65 +137,63 @@ export async function GetAdByUserPayementFalse(
   page: number,
   Limit: number
 ) {
-
   const prisma = new PrismaClient();
-  const result = await prisma.postad.findMany({
-    where: {
-      user: {
-        userexid: userID,
+
+  try {
+    const result = await prisma.postad.findMany({
+      where: {
+        user: {
+          userexid: userID,
+        },
+        payment: false, // Filter ads by userId
       },
-      payment: false, // Filter ads by userId
-    },
-    skip: (page - 1) * Limit,
-    take: Limit,
-    include: {
-      postad_features: true, // Include features
-      postad_options: true,  // Include options
-      postad_photos: true,   // Include photos
-      category: true,
-      subcategory:true,
-    
-    },
-  });
+      skip: (page - 1) * Limit,
+      take: Limit,
+      include: {
+        postad_features: true, // Include features
+        postad_options: true, // Include options
+        postad_photos: true, // Include photos
+        category: true,
+        subcategory: true,
+      },
+    });
 
-  const resultCount = await prisma.postad.count({
-    where: {
-      payment: false, // Filter ads by userId
-    },
-  });
-
-
-
-
-  return result;
-}
-
-interface CateID {
-  cateid: any;
+    const resultCount = await prisma.postad.count({
+      where: {
+        payment: false, // Filter ads by userId
+      },
+    });
+    return result;
+  } catch (error) {
+    return error;
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 export async function GetAdByCategory(cateid: any) {
-
   const prisma = new PrismaClient();
-  const result = await prisma.postad.findMany({
-    where: {
-      categoryId: cateid, // Filter by categoryId
-    },
-    include: {
-      category: true, // Optional: Include category details
-      subcategory: true, // Optional: Include subcategory details
-      user: true, // Optional: Include user details
-      postad_photos: true, // Optional: Include photos
-      postad_features: true, // Optional: Include features
-      postad_options: true, // Optional: Include options
-    },
-  });
 
+  try {
+    const result = await prisma.postad.findMany({
+      where: {
+        categoryId: cateid, // Filter by categoryId
+      },
+      include: {
+        category: true, // Optional: Include category details
+        subcategory: true, // Optional: Include subcategory details
+        user: true, // Optional: Include user details
+        postad_photos: true, // Optional: Include photos
+        postad_features: true, // Optional: Include features
+        postad_options: true, // Optional: Include options
+      },
+    });
 
+    return result;
+  } catch (error) {
+  } finally {
+    await prisma.$disconnect();
+  }
 
-
-  return result
+ 
 }
-
-
-

@@ -7,9 +7,6 @@ export async function POST(request: NextRequest) {
   const id = await request.json();
   const prisma = new PrismaClient();
 
-
- 
-  
   try {
     // Patch the document with the specified ID and set payment to true
 
@@ -18,8 +15,6 @@ export async function POST(request: NextRequest) {
     if (!accessToken) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
-
 
     // const result = await client.patch(id.AdID).set({ payment: true }).commit();
 
@@ -38,12 +33,12 @@ export async function POST(request: NextRequest) {
       status: true,
     });
   } catch (error) {
-    
-    
     return NextResponse.json(
       { message: "Failed to update payment status", error },
       { status: 500 }
     );
   }
+  finally {
+    await prisma.$disconnect();
+  }
 }
-

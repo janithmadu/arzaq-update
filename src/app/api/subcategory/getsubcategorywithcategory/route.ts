@@ -39,6 +39,9 @@ export async function POST(request: Request) {
           { status: 500 }
         );
       }
+      finally {
+        await prisma.$disconnect();
+      }
     }
   }else{
     return new Response("Category is required", { status: 400 });

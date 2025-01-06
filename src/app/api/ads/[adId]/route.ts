@@ -48,4 +48,7 @@ export async function PUT(request: Request, { params }: { params: { adId: string
             status: 500,
         });
     }
+    finally {
+        await prisma.$disconnect();
+      }
 }

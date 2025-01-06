@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   const prisma = new PrismaClient();
   try {
     const data = await request.json();
-    console.log(data);
+
 
     const subcategoryId = data.subcategories; // Ensure this is correctly passed
     const secondcategoryId = data.secondCategory;

@@ -5,11 +5,10 @@ export async function POST(request: NextRequest) {
   const id = await request.json();
   const prisma = new PrismaClient();
 
-    
   try {
     const result = await prisma.favorites.create({
       data: {
-        userId:id.userIdNew,
+        userId: id.userIdNew,
         postadId: id.id,
       },
     });
@@ -21,33 +20,42 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.log(error);
-    
+
     return NextResponse.json(
       { message: "Oops! Something Went Wrong", error },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }
 
 export async function GET(request: NextRequest) {
   const prisma = new PrismaClient();
 
-  const id = await request.json();
+  try {
+    const id = await request.json();
 
-  const favorites = await prisma.favorites.findMany({
-    where: {
-      userId: id.userID,
-    },
-  });
-  return NextResponse.json({ message: "Favorites Page",data:favorites, status: true });
+    const favorites = await prisma.favorites.findMany({
+      where: {
+        userId: id.userID,
+      },
+    });
+    return NextResponse.json({
+      message: "Favorites Page",
+      data: favorites,
+      status: true,
+    });
+  } catch (error) {
+    return NextResponse.json({ message: "Server Error", data: error });
+  } finally {
+    await prisma.$disconnect();
+  }
 }
 
 export async function DELETE(request: NextRequest) {
   const id = await request.json();
   const prisma = new PrismaClient();
-
-
-  
 
   try {
     const result = await prisma.favorites.delete({
@@ -63,13 +71,11 @@ export async function DELETE(request: NextRequest) {
       status: true,
     });
   } catch (error) {
-  
-    
     return NextResponse.json(
       { message: "Oops! Something Went Wrong", error },
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
-
-  
 }

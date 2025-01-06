@@ -27,6 +27,9 @@ export async function POST(request: Request) {
           { status: 500 }
         );
       }
+      finally {
+        await prisma.$disconnect();
+      }
     }
   }else{
     return new Response("Category is required", { status: 400 });
@@ -57,5 +60,8 @@ export async function GET(request: Request) {
         return new Response(JSON.stringify(result), { status: 200 });
     } catch (error) {
         return new Response(JSON.stringify({ error: 'Error retrieving subcategories' }), { status: 500 });
+    }
+    finally {
+      await prisma.$disconnect();
     }
 }

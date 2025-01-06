@@ -16,16 +16,13 @@ export async function GET(request: Request) {
       },
     });
 
-  
-
-  
-    
-
     return new Response(JSON.stringify(brands), { status: 200 });
   } catch (error) {
     return new Response(
       JSON.stringify({ error: "Error retrieving subcategories" }),
       { status: 500 }
     );
+  } finally {
+    await prisma.$disconnect();
   }
 }

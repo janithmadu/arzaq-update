@@ -7,8 +7,6 @@ import { getPostAds } from "./actions/getAds";
 import Details from "./components/Details/Details";
 import MobileApp from "./components/MobileApp/MobileApp";
 import { UserRegistration } from "./actions/usersAction";
-
-import { CarCard } from "./components/HomePagecard/CarCard";
 import HomePagecard from "./components/HomePagecard/HomePagecard";
 import HomePageTipSection from "./components/HomePageTipSection/HomePageTipSection";
 

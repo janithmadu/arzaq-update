@@ -92,6 +92,7 @@ export async function POST(request: Request) {
   }
 }
 const prisma = new PrismaClient();
+
 export async function GET(reqest: Request) {
   const ads = await prisma.postad.findMany({
     include: {

@@ -2,10 +2,11 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const prisma = new PrismaClient();
   try {
     // Parse the search query from the request body
     const { searchText } = await request.json();
-    const prisma = new PrismaClient();
+   
     // Validate input
     if (!searchText || searchText.trim() === "") {
       return NextResponse.json({ error: "Search text is required" }, { status: 400 });
@@ -52,5 +53,8 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Search query failed:", error);
     return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 });
+  }
+  finally {
+    await prisma.$disconnect();
   }
 }

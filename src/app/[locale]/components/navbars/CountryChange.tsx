@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import UKflag from "../../../../../public/uk.png";
 import Arab from "../../../../../public/arab.png";
@@ -18,61 +18,46 @@ function CountryChange() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const languages = [
-    { code: "en", label: "English", image: UKflag },
-    { code: "ar", label: "عربي", image: Arab },
-  ];
+  const [locale, setLocale] = useState<"en" | "ar">(() => {
+    // Fetch the locale from the cookie or default to 'en'
+    return (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
+  });
 
-  const [locale, setLocale] = useState<"en" | "ar">("en");
-  const [flag, setFlag] = useState<any>();
-  const [nextLocale, setnextLocale] = useState<any>();
+  const languages = {
+    en: { label: "English", flag: UKflag, nextLocale: "ar" },
+    ar: { label: "عربي", flag: Arab, nextLocale: "en" },
+  };
 
-  // Fetch the current locale from cookies on mount
-  useEffect(() => {
-    const cookieLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
-    setLocale(cookieLocale);
-  }, []);
-
-  // Update URL and locale when switching the language
+  // Update the language and URL when switching
   const handleLanguageSwitch = (newLocale: "en" | "ar") => {
-    const params = new URLSearchParams(searchParams.toString());
     const segments = pathname.split("/");
 
+    // Update the locale in the URL path
     if (segments[1] === "en" || segments[1] === "ar") {
-      segments[1] = newLocale; // Replace the first segment with the new locale
+      segments[1] = newLocale;
     } else {
-      segments.unshift(newLocale); // Add the new locale if it doesn't exist
+      segments.unshift(newLocale);
     }
 
     const newPath = segments.join("/");
-    document.cookie = `NEXT_LOCALE=${newLocale}; path=/`; // Update the cookie
-    router.push(`${newPath}?${params.toString()}`); // Navigate to the new URL
-    setLocale(newLocale); // Update the local state
-    // const currentFlag = locale === "en" ? Arab : UKflag;
-    // const nextLocale = locale === "en" ? "ar" : "en";
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`; // Update the cookie
+
+    // Update state immediately for instant UI feedback
+    setLocale(newLocale);
+
+    // Navigate to the new URL
+    router.push(`${newPath}?${searchParams.toString()}`);
   };
-
-  useEffect(() => {
-    if (locale == "en") {
-      setFlag(Arab);
-      setnextLocale("ar");
-    } else {
-      setFlag(UKflag);
-      setnextLocale("en");
-    }
-  },[locale]);
-
-  // Get the current flag image based on the locale
 
   return (
     <div className="flex items-center justify-between min-w-full md:min-w-0 md:space-x-5 md:justify-end rtl:gap-10 border-l pl-2">
       <button
-        onClick={() => handleLanguageSwitch(nextLocale)}
+        onClick={() => handleLanguageSwitch(languages[locale].nextLocale as "en" | "ar")}
         className="flex items-center gap-2 rtl:gap-2"
       >
-        <Image width={25} src={flag} alt={nextLocale} />
+        <Image width={25} src={languages[locale].flag} alt={languages[locale].nextLocale} />
       </button>
-      <Link href={"/" + locale + "/commercial?slug=all"}>Commercial</Link>
+      <Link href={`/${locale}/commercial?slug=all`}>Commercial</Link>
     </div>
   );
 }
