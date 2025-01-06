@@ -83,7 +83,7 @@ const MyAds: React.FC<MainProfileProps> = ({
               height={160}
             />
             <h2 className="text-2xl font-semibold text-gray-700">
-              You Have No Ads Still.
+            {t("NoAdsStill")}
             </h2>
           </div>
         )}

@@ -97,6 +97,8 @@ const DescriptionAds: React.FC<AdData> = ({
     setIsExpanded(!isExpanded);
   };
 
+  const [featuresCheck, setfeaturesCheck] = useState(true)
+
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
     setLocale(cookieLocale);
@@ -125,6 +127,9 @@ const DescriptionAds: React.FC<AdData> = ({
     const mailtoURL = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = mailtoURL;
   };
+
+
+  
 
   return (
     <div className="mt-8 ">
@@ -239,11 +244,12 @@ const DescriptionAds: React.FC<AdData> = ({
           onClick={handleToggleDescription}
           className="text-[#312783] text-sm mt-2"
         >
-          {isExpanded ? "Show less" : "Read more"}
+          {isExpanded ?  t("ShowLess"):t("ReadMore") }
         </button>
       )}
       {/* Features List */}
-      <div className="mt-6 flex flex-col gap-y-[24px]">
+      
+        <div className={`${Options.length === 0 ? 'hidden':'mt-6 flex flex-col gap-y-[24px]'}`}>
         <h2 className="text-grayscale900 text-heading03">{t("Options")}</h2>
         <ul className="grid grid-cols-2 gap-y-[16px] text-grayscale700 text-bodymedium">
           {Options?.map((GetOption: Option, index: number) => {
@@ -264,10 +270,12 @@ const DescriptionAds: React.FC<AdData> = ({
           })}
         </ul>
       </div>
+     
+      
 
 
 
-      <div className="mt-6 flex flex-col gap-y-[24px] mb-10">
+      <div className={`${Features?.length === 1 ? 'hidden': 'mt-6 flex flex-col gap-y-[24px] mb-10'}`}>
         <h2 className="text-grayscale900 text-heading03">{t("Features")}</h2>
         <ul className="grid grid-cols-2 gap-y-[16px] text-grayscale700 text-bodymedium">
           {Features?.map((feature: any, index: number) => {

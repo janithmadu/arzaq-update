@@ -38,7 +38,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   const nextStep = async () => {
     const isValid = methods.formState.errors;
-    console.log(isValid);
+
 
     if (!isValid.name && !isValid.description) {
       setCurrentStep((prev) => Math.min(prev + 1, 2));
@@ -55,7 +55,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
         setCurrentStep((prev) => Math.min(prev + 3, 4));
       }
 
-    console.log(ImagesArray);
+   
   };
 
   const prevStep = () => {
@@ -64,7 +64,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
   const onSubmit = async (data: any) => {
     // Your existing submit logic here
-    console.log("Form submitted:", data);
+  
   };
 
   const renderStep = () => {

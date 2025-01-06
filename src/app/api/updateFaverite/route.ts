@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       status: true,
     });
   } catch (error) {
-    console.log(error);
+ 
 
     return NextResponse.json(
       { message: "Oops! Something Went Wrong", error },

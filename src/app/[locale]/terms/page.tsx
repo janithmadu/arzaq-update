@@ -5,102 +5,104 @@ import { PageHeader } from '../components/Terms/PageHeader';
 import { Section } from '../components/Terms/Section';
 import { BulletList } from '../components/Terms/BulletList';
 import { Footer } from '../components/Terms/Footer';
+import { useTranslations } from 'next-intl';
 
 
 const Page = () => {
+  const t = useTranslations("TopNav");
     return (
         <div>
              <main className="min-h-screen bg-gray-50 py-16">
       <div className="container mx-auto flex flex-col space-y-[50px] px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44 mb-3">
         <PageHeader 
-          title="Terms & Conditions" 
-          subtitle={`Last updated: ${new Date().toLocaleDateString('en-US', { 
+          title={t("TermsAndConditions")}
+          subtitle={`${t("LastUpdated")}: ${new Date().toLocaleDateString('en-US', { 
             month: 'long', 
             day: 'numeric', 
             year: 'numeric' 
           })}`}
         />
 
-        <Section icon={Book} title="Agreement to Terms">
+        <Section icon={Book} title={t("AgreementToTerms")}>
           <p className="text-gray-600 leading-relaxed">
-            By accessing our website and using our services, you agree to be bound by these Terms and Conditions, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws.
+          {t("AgreementText")}
           </p>
         </Section>
 
-        <Section icon={Shield} title="Intellectual Property">
+        <Section icon={Shield} title={t("IntellectualProperty")}>
           <div className="space-y-6">
             <p className="text-gray-600 leading-relaxed">
-              The Service and its original content, features, and functionality are owned by Your Company Name and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.
+            {t("IntellectualPropertyText")}
             </p>
             <BulletList items={[
-              'All content is the exclusive property of Your Company Name',
-              'You may not reproduce or distribute any content without permission',
-              'Trademarks and logos are protected under intellectual property laws'
+              t("AllContentProperty"),
+              t("NoReproductionWithoutPermission"),
+              t("TrademarksProtection")
             ]} />
           </div>
         </Section>
 
-        <Section icon={Scale} title="User Responsibilities">
+        <Section icon={Scale} title={t("UserResponsibilities")}>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h3 className="font-medium text-gray-900">Prohibited Activities</h3>
+              <h3 className="font-medium text-gray-900">{t("ProhibitedActivities")}</h3>
               <BulletList items={[
-                'Violating laws or regulations',
-                'Impersonating others',
-                'Spreading malicious software',
-                'Interfering with service security'
+                t("ViolationOfLaws"),
+                t("Impersonation"),
+                t("SpreadingMaliciousSoftware"),
+                t("InterferingWithSecurity")
               ]} />
             </div>
             <div className="space-y-4">
-              <h3 className="font-medium text-gray-900">User Obligations</h3>
+              <h3 className="font-medium text-gray-900">{t("UserObligations")}</h3>
               <BulletList items={[
-                'Maintain accurate account information',
-                'Protect account credentials',
-                'Report unauthorized access',
-                'Comply with all applicable laws'
+                t("MaintainAccurateInformation"),
+                t("ProtectAccountCredentials"),
+                t("ReportUnauthorizedAccess"),
+                t("ComplyWithLaws")
               ]} />
             </div>
           </div>
         </Section>
 
-        <Section icon={AlertCircle} title="Disclaimers">
+        <Section icon={AlertCircle} title={t("Disclaimers")}>
           <div className="bg-amber-50 p-6 rounded-lg border border-amber-100">
-            <h3 className="font-medium text-gray-900 mb-3">Important Notice</h3>
+            <h3 className="font-medium text-gray-900 mb-3">{t("ImportantNotice")}</h3>
             <p className="text-gray-600 text-sm leading-relaxed">
-              Our services are provided &quot;as is&quot; without any warranties, expressed or implied. We do not guarantee that our services will be uninterrupted, timely, secure, or error-free. Your use of our services is at your sole risk.
+            {t("ServiceProvidedAsIs")}
             </p>
           </div>
         </Section>
 
-        <Section icon={Handshake} title="Service Terms">
+        <Section icon={Handshake} title={t("ServiceTerms")}>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-gray-50 p-6 rounded-lg">
               <CheckCircle2 className="w-6 h-6 text-green-600 mb-3" />
-              <h3 className="font-medium text-gray-900 mb-2">Acceptable Use</h3>
+              <h3 className="font-medium text-gray-900 mb-2">{t("AcceptableUse")}</h3>
               <BulletList items={[
-                'Follow community guidelines',
-                'Respect other users',
-                'Use services as intended'
+                t("FollowCommunityGuidelines"),
+                t("RespectOtherUsers"),
+                t("UseServicesAsIntended")
               ]} />
             </div>
             <div className="bg-gray-50 p-6 rounded-lg">
               <BadgeAlert className="w-6 h-6 text-red-600 mb-3" />
-              <h3 className="font-medium text-gray-900 mb-2">Termination</h3>
+              <h3 className="font-medium text-gray-900 mb-2">{t("Termination")}</h3>
               <p className="text-gray-600 text-sm">
-                We reserve the right to terminate or suspend access to our services immediately, without prior notice, for conduct that we believe violates these Terms or is harmful to other users, us, or third parties, or for any other reason.
+              {t("TerminationText")}
               </p>
             </div>
           </div>
         </Section>
 
-        <Section icon={MessageSquare} title="Contact Information">
+        <Section icon={MessageSquare} title={t("ContactInformation")}>
           <div className="bg-indigo-50 p-6 rounded-lg">
             <p className="text-gray-600 text-sm">
-              If you have any questions about these Terms & Conditions, please contact us:
+              {t("ContactUs")}
               <br /><br />
-              Email: info@q8arzaq.com<br />
-              Phone: 96597397310+<br />
-              Address: Arzaq Kuwait jahra
+              {t("Email")}: info@q8arzaq.com<br />
+              {t("Phone")}: 96597397310+<br />
+              {t("Address")}: Arzaq Kuwait jahra
             </p>
           </div>
         </Section>

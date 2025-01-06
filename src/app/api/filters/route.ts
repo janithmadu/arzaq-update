@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    console.log(result);
+ 
 
     const resultCount = await prisma.postad.count({ where });
 

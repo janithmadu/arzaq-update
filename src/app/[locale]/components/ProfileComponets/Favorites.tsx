@@ -34,7 +34,7 @@ const Favorites: React.FC<MainProfileProps> = ({ UserAds }) => {
       >
         {UserAds?.length > 0 ? (
           UserAds.map((ad: any, index: number) => {
-            console.log();
+   
 
             return (
               <div key={index} className="">
@@ -71,7 +71,7 @@ const Favorites: React.FC<MainProfileProps> = ({ UserAds }) => {
                 height={160}
               />
               <h2 className="text-2xl font-semibold text-gray-700">
-                Oops! No Favorites Ads.
+              {t("NoFavoriteAds")}
               </h2>
             </div>
           </div>

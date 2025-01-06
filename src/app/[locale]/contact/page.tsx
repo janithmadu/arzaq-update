@@ -1,7 +1,9 @@
 import React from "react";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 function page() {
+   const t = useTranslations("TopNav");
   return (
     <>
       {/* Hero Header */}
@@ -11,11 +13,10 @@ function page() {
         </div>
         <div className="relative h-full container mx-auto px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44">
           <div className="flex flex-col justify-center items-center h-full text-white space-y-4">
-            <h1 className="text-4xl font-bold">Contact</h1>
+            <h1 className="text-4xl font-bold">{t("Contact")}</h1>
             <div className="flex items-center gap-2 text-sm">
               <p className="text-center">
-                Have questions? We&apos;re here to help. Reach out to us through
-                any of the following channels.
+              {t("ContactDescription")}
               </p>
             </div>
           </div>
@@ -30,10 +31,10 @@ function page() {
               <div className="p-3 bg-primary/10 rounded-lg">
                 <Mail className="h-6 w-6 text-primary" />
               </div>
-              <h2 className="text-xl font-semibold">Email</h2>
+              <h2 className="text-xl font-semibold">{t("Email")}</h2>
             </div>
             <p className="text-muted-foreground mb-2">
-              Send us an email anytime:
+            {t("SendUsEmail")}
             </p>
             <a
               href="mailto:info@q8arzaq.com"
@@ -49,9 +50,9 @@ function page() {
               <div className="p-3 bg-primary/10 rounded-lg">
                 <Phone className="h-6 w-6 text-primary" />
               </div>
-              <h2 className="text-xl font-semibold">Phone</h2>
+              <h2 className="text-xl font-semibold">{t("Phone")}</h2>
             </div>
-            <p className="text-muted-foreground mb-2">Call us directly:</p>
+            <p className="text-muted-foreground mb-2">{t("CallUs")}</p>
             <a
               href="tel:+96597397310"
               className="text-primary hover:underline font-medium"
@@ -66,13 +67,13 @@ function page() {
               <div className="p-3 bg-primary/10 rounded-lg">
                 <Clock className="h-6 w-6 text-primary" />
               </div>
-              <h2 className="text-xl font-semibold">Office Hours</h2>
+              <h2 className="text-xl font-semibold">{t("OfficeHours")}</h2>
             </div>
             <div className="space-y-2">
-              <p className="text-muted-foreground">Sunday - Thursday</p>
-              <p className="font-medium">9:00 AM - 6:00 PM</p>
-              <p className="text-muted-foreground mt-2">Friday - Saturday</p>
-              <p className="font-medium">Closed</p>
+              <p className="text-muted-foreground">{t("SundayToThursday")}</p>
+              <p className="font-medium">{t("SundayToThursdayHours")}</p>
+              <p className="text-muted-foreground mt-2">{t("FridayToSaturday")}</p>
+              <p className="font-medium">{t("FridayToSaturdayHours")}</p>
             </div>
           </div>
         </div>

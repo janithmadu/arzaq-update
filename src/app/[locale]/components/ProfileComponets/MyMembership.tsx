@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import GetVerified from "./GetVerified";
 
 type Membership = {
@@ -6,30 +7,22 @@ type Membership = {
 };
 
 function MyMembership({ verifiedSeller, member }: Membership) {
-
-  
+  const t = useTranslations("TopNav");
   return (
     <div className="flex min-w-full min-h-full justify-center items-center">
       {verifiedSeller && member ? (
         <div className="flex flex-col gap-y-3 items-start">
           <h1 className="text-bodylarge font-semibold text-green-600">
-            Verified Member
+            {t("VerifiedMember")}
           </h1>
-          <p className="text-sm text-gray-600">
-            Your account is verified and trusted. Enjoy the benefits of being a
-            verified member.
-          </p>
-         
+          <p className="text-sm text-gray-600">{t("VerifiedDescription")}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-y-3 items-start">
           <h1 className="text-bodylarge font-semibold">
-            You are not verified yet!
+            {t("NotVerifiedYet")}
           </h1>
-          <p className="text-sm">
-            Get verified to boost your trust and gain priority in search
-            results.
-          </p>
+          <p className="text-sm">{t("GetVerifiedDescription")}</p>
 
           <GetVerified />
         </div>

@@ -8,8 +8,7 @@ export async function POST(request: NextRequest) {
 
   const id = await request.json();
 
-  console.log(id);
-  
+
 
   if (!id.userIdNew || !id.id) {
     return NextResponse.json({ message: "Favorites Page", status: false })

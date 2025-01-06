@@ -68,7 +68,7 @@ const DraftAds: React.FC<MainProfileProps> = ({ UserAds, resultCount }) => {
               height={160}
             />
             <h2 className="text-2xl font-semibold text-gray-700">
-              Oops! No Draft Ads.
+            {t("NoDraftAds")}
             </h2>
           </div>
         )}

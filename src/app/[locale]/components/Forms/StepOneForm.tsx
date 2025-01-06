@@ -146,9 +146,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   };
 
   const handleSecondCategoryChange = (e: string) => {
-    console.log("janith");
+  
 
-    console.log("test" + e);
 
     setOptions([]);
     setsecondCategoriesID(e);
@@ -375,7 +374,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
       >
         <div className=" min-w-full min-h-[300px] grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-3 auto-rows-[min-content]">
           <div className="bg-white shadow-md min-w-full p-5 flex flex-col gap-y-3 rounded-lg h-auto">
-            <FormSecionTitle firstTitle={"Basics"} SecondTitle={"Info"} />
+            <FormSecionTitle firstTitle={t("Basics")} SecondTitle={t("Info")} />
 
             <div className="flex flex-col">
               <label className="text-grayscale900">{t("AdName")}</label>
@@ -484,8 +483,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
           <div className="bg-white shadow-md min-w-full p-5 flex flex-col gap-y-3 rounded-lg h-auto">
             <FormSecionTitle
-              firstTitle={"Product Specifications  "}
-              SecondTitle={"& Details"}
+              firstTitle={t("ProductSpecifications")}
+              SecondTitle={t("Details")}
             />
             <div className="grid lg:grid-cols-2 gap-y-3 md:gap-x-3">
               <div className="flex flex-col ">
@@ -604,8 +603,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
           <div className="bg-white shadow-md min-w-full p-5 flex flex-col gap-y-3 rounded-lg h-auto">
             <FormSecionTitle
-              firstTitle={"Pricing & Contact   "}
-              SecondTitle={"& Information"}
+              firstTitle={t("PricingAndContact")}
+              SecondTitle={t("Information")}
             />
             <div className="grid lg:grid-cols-2 gap-y-3 md:gap-x-3">
               <div className="flex flex-col ">
@@ -671,8 +670,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
           <div className="bg-white shadow-md min-w-full p-5 flex flex-col gap-y-3 rounded-lg h-auto">
             <FormSecionTitle
-              firstTitle={"Ad Description &   "}
-              SecondTitle={"Preferences"}
+              firstTitle={t("AdDescription")}
+              SecondTitle={t("Preferences")}
             />
             <div className="flex flex-col gap-y-[8px]">
               <label className="text-grayscale900">{t("Addescription")}</label>
@@ -737,8 +736,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
 
           <div className="bg-white shadow-md min-w-full p-5 flex flex-col gap-y-3 rounded-lg h-auto">
             <FormSecionTitle
-              firstTitle={"Location, Negotiability &"}
-              SecondTitle={"Features"}
+              firstTitle={t("LocationNegotiability")}
+              SecondTitle={t("Features")}
             />
             <div className="grid lg:grid-cols-2 gap-y-3 md:gap-x-3">
               <div className="flex flex-col">
@@ -839,7 +838,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
           </div>
 
           <div className="bg-white shadow-md min-w-full p-5 gap-y-3 rounded-lg h-auto">
-            <FormSecionTitle firstTitle={"Ad   "} SecondTitle={"Images"} />
+            <FormSecionTitle firstTitle={t("Ad")} SecondTitle={t("Images")} />
             <div className="grid lg:grid-cols-2 gap-x-4">
               <div className="flex flex-col gap-y-[8px]">
                 <label className="text-grayscale900">{t("Images")}</label>

@@ -5,7 +5,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export async function PUT(request: Request, { params }: { params: { adId: string } }) {
-    console.log(params.adId);
     
     const adId = parseInt(params.adId);
 

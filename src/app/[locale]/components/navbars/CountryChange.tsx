@@ -10,6 +10,8 @@ import Loading from "../../loading";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
+import { t } from "i18next";
+import { useTranslations } from "next-intl";
 
 function getCookie(name: string) {
   if (typeof window !== "undefined") {
@@ -24,6 +26,7 @@ function CountryChange() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const t = useTranslations("TopNav");
 
   const [locale, setLocale] = useState<"en" | "ar">(() => {
     // Initially check the cookie on the client-side
@@ -87,7 +90,7 @@ function CountryChange() {
     setLocale(currentLocale);
     setFlgImage(segments[1] === "en" ? Arab : UKflag);
   }, []);
-
+ 
   return (
     <>
       <div className="flex items-center justify-between min-w-full md:min-w-0 md:space-x-5 md:justify-end rtl:gap-10 border-l pl-2">
@@ -99,7 +102,7 @@ function CountryChange() {
         >
           <Image width={25} src={flgimage} alt={languages[locale].nextLocale} />
         </button>
-        <Link href={`/${locale}/commercial?slug=all`}>Commercial</Link>
+        <Link href={`/${locale}/commercial?slug=all`}>{t("Commercial")}</Link>
       </div>
       {loading && <Loading />}
     </>

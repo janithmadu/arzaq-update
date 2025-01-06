@@ -45,7 +45,7 @@ const PriceSection: React.FC<Price> = ({
     const CheckFaExsisting = async () => {
       const userIdNew = parseInt(userID)
       
-      console.log(userIdNew);
+  
       
 
       const AdExsist = await fetch("/api/updateFaverite/getadsbyfav", {
@@ -115,8 +115,7 @@ const PriceSection: React.FC<Price> = ({
 
   };
 
-  console.log(FevoriteCheck);
-  
+
 
 
   const RemoveTofaverite = async () => {

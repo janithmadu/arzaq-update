@@ -44,9 +44,8 @@ const BasicInfoStep: React.FC<BasicInfoStepProps> = ({ categories }) => {
   };
 
   const handleSecondCategoryChange = (e: string) => {
-    console.log("janith");
+  
 
-    console.log("test" + e);
 
     setOptions([]);
     setsecondCategoriesID(e);

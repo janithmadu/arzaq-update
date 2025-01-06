@@ -6,6 +6,7 @@ import CommercialCard from "./CommercialCard";
 import NoItem from "../../../../../public/rb_127823.png";
 import Image from "next/image";
 import LoadingImage from "../../../../../public/system-regular-715-spinner-horizontal-dashed-circle-loop-jab.gif";
+import { useTranslations } from "next-intl";
 
 type Commercial = {
   created_at: Date;
@@ -26,7 +27,7 @@ function CommercialAds() {
   const [commercials, setCommercials] = useState<Commercial[] | null>([]);
   const [errorHandle, setErrorHandle] = useState<boolean>();
   const [adsLoader, setAdsLoader] = useState<boolean>(false);
-
+const t = useTranslations("TopNav");
   useEffect(() => {
     const getCommercialsBySlug = async () => {
       setAdsLoader(true);
@@ -41,7 +42,7 @@ function CommercialAds() {
 
       const data = await response.json();
 
-      console.log(data.status);
+  
 
       if (data.status === 404) {
         setAdsLoader(false);
@@ -57,7 +58,7 @@ function CommercialAds() {
 
     getCommercialsBySlug();
   }, [myParam]); // Only depend on `myParam`
-  console.log(errorHandle);
+
 
   return (
     <>
@@ -92,10 +93,10 @@ function CommercialAds() {
         <div className="flex flex-col items-center justify-center min-h-[400px] w-full text-center text-gray-500 space-y-4 ">
           <Image src={NoItem} alt="No Ads Available" width={160} height={160} />
           <h2 className="text-2xl font-semibold text-gray-700">
-            Oops! No Commercials match your search.
+          {t("NoCommercialsMatchSearch")}
           </h2>
           <p className="text-gray-500">
-            Try adjusting your filters or check back later.
+          {t("TryAdjustFilters")}
           </p>
         </div>
       )}

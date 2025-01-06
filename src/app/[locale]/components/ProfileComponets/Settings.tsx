@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { CldUploadWidget } from "next-cloudinary";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import { useTranslations } from "next-intl";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -29,7 +30,7 @@ export default function Settings() {
   const { user, getUser } = useKindeBrowserClient();
   const currentUser = getUser();
   const [cuUser, setcuUser] = useState<any>([]);
-
+const t = useTranslations("TopNav");
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: {
@@ -116,9 +117,9 @@ export default function Settings() {
     <div className="container mx-auto flex flex-col space-y-[50px] px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44 mb-3 bg-white">
       <div className="space-y-6 mt-8">
         <div>
-          <h1 className="text-3xl font-bold">Edit Profile</h1>
+          <h1 className="text-3xl font-bold">{t("EditProfile")}</h1>
           <p className="text-muted-foreground">
-            Update your photo and personal details here.
+          {t("EditProfileDescription")}
           </p>
         </div>
 
@@ -164,9 +165,9 @@ export default function Settings() {
             </CldUploadWidget>
           </div>
           <div>
-            <h3 className="font-medium">Profile photo</h3>
+            <h3 className="font-medium">{t("ProfilePhoto")}</h3>
             <p className="text-sm text-muted-foreground">
-              Click the camera icon to upload a new photo
+            {t("ProfilePhotoDescription")}
             </p>
           </div>
         </div>
@@ -174,7 +175,7 @@ export default function Settings() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">{t("Name")}</Label>
 
               <input
                 id="name"
@@ -191,7 +192,7 @@ export default function Settings() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("Email")}</Label>
               <input
                 id="email"
                 type="email"
@@ -209,7 +210,7 @@ export default function Settings() {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="bio">Bio</Label>
+            <Label htmlFor="bio">{t("Bio")}</Label>
             <Textarea
               id="bio"
               {...form.register("bio")}
@@ -226,7 +227,7 @@ export default function Settings() {
           <div className="flex justify-end">
             <Button type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save changes
+              {t("SaveChanges")}
             </Button>
           </div>
         </form>

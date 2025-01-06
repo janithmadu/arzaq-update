@@ -1,53 +1,64 @@
 "use client";
 import { CldImage } from "next-cloudinary";
-import Image from "next/image";
-
 import React, { useState } from "react";
 
 export const revalidate = 1;
 
-interface Images {
-  images: Array<{
-    id: string;
-    photoUrl: string; // Ensures URL format
-    altText?: string; // Alt text is optional
-  }>;
+interface Image {
+  id: string;
+  photoUrl: string; // Ensures URL format
+  altText?: string; // Alt text is optional
 }
 
-interface imagenew {
-  url: any;
+interface ImagesProps {
+  images: Image[];
 }
 
-function ImageGallery(Images: any) {
- 
+function ImageGallery({ images }: ImagesProps) {
+  const [selectedImage, setSelectedImage] = useState(
+    images?.[0]?.photoUrl || "/placeholder.jpg" // Default to the first image or a placeholder
+  );
+  const [loading, setLoading] = useState(false); // Loading state for the main image
 
-  const [selectedImage, setSelectedImage] = useState("");
+  const handleImageChange = (photoUrl: string) => {
+    setLoading(true);
+    setSelectedImage(photoUrl);
+  };
 
   return (
-    <div className=" flex flex-col space-y-5">
-      <div className="bg-grayscale20 flex justify-center items-center  min-w-full max-w-full max-h-[600px] rounded-lg overflow-hidden gap-y-10 ">
+    <div className="flex flex-col space-y-5">
+      {/* Main Image */}
+      <div className="flex justify-center items-center bg-grayscale20 rounded-lg overflow-hidden relative">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+            <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-white"></div>
+          </div>
+        )}
         <CldImage
-          width={500}
-          height={700}
+          width={500} // Main image width
+          height={350} // Main image height
           loading="lazy"
-          src={selectedImage || Images?.images[0]?.photoUrl || "/"}
+          src={selectedImage}
           alt="Main Product Image"
-          className="rounded-lg shadow-lg  min-w-10 max-h-[600px] min-h-[400px]"
+          className="  object-contain w-full max-w-[500px] max-h-[400px] bg-grayscale20"
+          onLoad={() => setLoading(false)} // Remove loader when the image loads
         />
       </div>
 
       {/* Thumbnails */}
-      <div className="flex gap-x-2 ">
-        {Images?.images?.map((image: any, index: number) => (
+      <div className="flex gap-x-3 overflow-x-auto">
+        {images.map((image, index) => (
           <CldImage
-            key={index}
+            key={image.id || index}
             loading="lazy"
-            src={image?.photoUrl || ""}
-            alt={`Thumbnail ${index + 1}`}
-            width={80}
-            height={80}
-            className="cursor-pointer  h-20 object-cover"
-            onClick={() => setSelectedImage(image?.photoUrl || "")}
+            src={image.photoUrl || "/placeholder.jpg"} // Fallback to a placeholder if no URL
+            alt={image.altText || `Thumbnail ${index + 1}`}
+            width={60} // Thumbnail width
+            height={60} // Thumbnail height
+            className={`cursor-pointer rounded-lg  bg-none object-cover h-16 w-16 ${
+              selectedImage === image.photoUrl ? "ring-2 ring-primary" : ""
+            }`}
+            onClick={() => handleImageChange(image.photoUrl)}
           />
         ))}
       </div>

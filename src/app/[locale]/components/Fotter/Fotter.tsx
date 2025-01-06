@@ -1,18 +1,11 @@
 "use client";
-import {
-  FacebookLogo,
-  LinkedinLogo,
-  TwitterLogo,
-  WhatsappLogo,
-  YoutubeLogo,
-} from "@phosphor-icons/react/dist/ssr";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../../../../public/logo.png";
-import { getlimitedCategoryFooter } from "../../actions/getCategories";
 import { AppStoreButtons } from "./app-store-buttons";
 import Decimal from "decimal.js";
+import { useTranslations } from "next-intl";
 
 interface Category {
   id: number;
@@ -60,6 +53,7 @@ function Fotter() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [logoData, setlogoData] = useState<LogoData | null>(null);
+  const t = useTranslations("TopNav");
 
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
@@ -123,13 +117,13 @@ function Fotter() {
                 <div className="min-w-[124px] md:min-w-[347px] min-h-[120px] ">
                   <div className="max-w-[312px] max-h-[47px] flex flex-col space-y-[12px] ">
                     <p className="text-bodymedium text-grayscale500 text-wrap">
-                      Address: {footerData?.address || "N/A"}
+                    {t("Address")}: {footerData?.address || "N/A"}
                     </p>
                     <p className="text-bodymedium text-grayscale500 text-wrap">
-                      Phone: {footerData?.phoneNumber || "N/A"}
+                    {t("Phone")}: {footerData?.phoneNumber || "N/A"}
                     </p>
                     <p className="text-bodymedium text-grayscale500 text-wrap">
-                      Mail: {footerData?.email || "N/A"}
+                    {t("Mail")}: {footerData?.email || "N/A"}
                     </p>
                   </div>
                 </div>
@@ -137,50 +131,50 @@ function Fotter() {
             </div>
 
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">Supports</h1>
+              <h1 className="text-grayscalewhite text-bodylarge">{t("Supports")}</h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
                 <Link
                   href={`/${locale}/contact`}
                   className="text-grayscale500 text-bodymedium"
                 >
-                  Contact
+                  {t("Contact")}
                 </Link>
                 <Link
                   href={`/${locale}/faqs`}
                   className="text-grayscale500 text-bodymedium"
                 >
-                  FAQs
+                  {t("FAQs")}
                 </Link>
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
               <h1 className="text-grayscalewhite text-bodylarge">
-                Quick Links
+              {t("QuickLinks")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
                 <Link
                   href={`/${locale}/about`}
                   className="text-grayscale500 text-bodymedium"
                 >
-                  About Us
+                  {t("AboutUs")}
                 </Link>
                 <Link
                   href={`/${locale}/addform/step01`}
                   className="text-grayscale500 text-bodymedium"
                 >
-                  Post a Ads
+                 {t("PostAnAd")}
                 </Link>
 
                 <Link
                   href={`/${locale}/ads?page=1`}
                   className="text-grayscale500 text-bodymedium"
                 >
-                  All Ads
+                  {t("AllAdss")}
                 </Link>
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">Category</h1>
+              <h1 className="text-grayscalewhite text-bodylarge">{t("Categoryfotter")}</h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col ">
                 {categories.length === 0 ? (
                   <div className="text-grayscale600  text-heading04 hover:text-grayscale800 hover:font-bold">
@@ -206,7 +200,7 @@ function Fotter() {
 
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
               <h1 className="text-grayscalewhite text-bodylarge">
-                Download our app
+              {t("DownloadOurApp")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[32px] flex-col ">
                 <div className="flex space-x-[16px]">
@@ -234,12 +228,12 @@ function Fotter() {
       </div>
       <div className="container mx-auto  px-5  lg:px-20 xl:px-56 md:px-10   min-w-full  min-h-[72px] bg-grayscale800 flex items-center justify-between md:flex-row flex-col text-center md:text-start ">
         <h1 className="text-bodymedium text-gray-500">
-          Arzaq - Classified Listing © 2024. Design by{" "}
+        {t("ArzaqClassifiedListing")} © 2024. {t("DesignBy")}{" "}
           <span className="text-grayscalewhite">Infinite Open</span>
         </h1>
         <div className="flex text-grayscale500 space-x-[29px]">
-          <Link href={`/${locale}/privacy`}>Privacy Policy</Link>
-          <Link href={`/${locale}/terms`}>Terms & Condition</Link>
+          <Link href={`/${locale}/privacy`}>{t("PrivacyPolicy")}</Link>
+          <Link href={`/${locale}/terms`}>{t("TermsAndCondition")}</Link>
         </div>
       </div>
     </div>

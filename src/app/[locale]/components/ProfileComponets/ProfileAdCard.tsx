@@ -134,7 +134,7 @@ export function ProfileAdCard({
   };
 
   return (
-    <div className="relative">
+    <div className="relative mb-3">
       <div className="min-w-full flex justify-end p-1  gap-x-3">
         {paymentPending ? (
           <button
@@ -186,18 +186,20 @@ export function ProfileAdCard({
                 <div>
                   <div className="flex items-center gap-x-4">
                     <div className="max-w-[200px]">
-                      <h3 className="font-medium text-sm text-gray-900">
+                      <h3 className="font-medium text-xs md:text-sm text-gray-900">
                         {title}
                       </h3>
                     </div>
                     <h3 className="text-xs text-[#312783]"> {state}</h3>
                   </div>
                   <div className="mt-1 flex items-center gap-2">
-                    <span className="text-sm text-gray-600">{category}</span>
+                    <span className="text-xs md:text-sm text-gray-600">
+                      {category}
+                    </span>
                     {subcategory && (
                       <>
                         <span className="text-gray-400">•</span>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-xs md:text-sm text-gray-600">
                           {subcategory}
                         </span>
                       </>

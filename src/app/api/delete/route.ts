@@ -14,12 +14,12 @@ export async function POST(request: NextRequest) {
     else{
       const delteFavories =  await prisma.ad_views.deleteMany({where:{postadId:id}})
       const deleteAds = await prisma.postad.delete({ where: { id:id } });
-      console.log(deleteAds);
+    
       
       return new Response('Post deleted', { status: 200 });
     }
   } catch (error) {
-    console.log(error);
+ 
     
     return NextResponse.json(
       { message: "Failed to delete ad", error: error },

@@ -1,3 +1,4 @@
+"ues client";
 import React from "react";
 import {
   Shield,
@@ -9,8 +10,10 @@ import {
   Globe,
   Scale,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const Page = () => {
+  const t = useTranslations("TopNav");
   return (
     <div>
       <main className="min-h-screen bg-gray-50 py-16">
@@ -20,9 +23,11 @@ const Page = () => {
             <div className="flex justify-center">
               <Shield className="w-16 h-16 text-indigo-600" />
             </div>
-            <h1 className="text-4xl font-bold text-gray-900">Privacy Policy</h1>
+            <h1 className="text-4xl font-bold text-gray-900">
+              {t("PrivacyPolicy")}
+            </h1>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Last updated:{" "}
+              {t("LastUpdated")}:{" "}
               {new Date().toLocaleDateString("en-US", {
                 month: "long",
                 day: "numeric",
@@ -36,14 +41,11 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-4">
               <FileText className="w-6 h-6 text-indigo-600" />
               <h2 className="text-2xl font-semibold text-gray-900">
-                Introduction
+                {t("Introduction")}
               </h2>
             </div>
             <p className="text-gray-600 leading-relaxed">
-              We respect your privacy and are committed to protecting your
-              personal data. This privacy policy will inform you about how we
-              handle your personal information, your privacy rights, and how the
-              law protects you.
+              {t("IntroductionText")}
             </p>
           </section>
 
@@ -52,26 +54,21 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-4">
               <Eye className="w-6 h-6 text-indigo-600" />
               <h2 className="text-2xl font-semibold text-gray-900">
-                Information We Collect
+                {t("InformationWeCollect")}
               </h2>
             </div>
             <ul className="space-y-4 text-gray-600">
               <li className="flex items-start gap-2">
                 <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                <span>
-                  Personal identification information (Name, email address,
-                  phone number)
-                </span>
+                <span>{t("PersonalIdentificationInfo")}</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                <span>Usage data (How you interact with our services)</span>
+                <span>{t("UsageData")}</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                <span>
-                  Technical data (IP address, browser type, device information)
-                </span>
+                <span>{t("TechnicalData")}</span>
               </li>
             </ul>
           </section>
@@ -81,33 +78,37 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-4">
               <Lock className="w-6 h-6 text-indigo-600" />
               <h2 className="text-2xl font-semibold text-gray-900">
-                How We Use Your Data
+                {t("HowWeUseYourData")}
               </h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <h3 className="font-medium text-gray-900">Primary Uses</h3>
+                <h3 className="font-medium text-gray-900">
+                  {t("PrimaryUses")}
+                </h3>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Providing and maintaining our service</span>
+                    <span>{t("PrimaryUsesText")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Notifying you about changes to our service</span>
+                    <span>{t("NotifyingChanges")}</span>
                   </li>
                 </ul>
               </div>
               <div className="space-y-3">
-                <h3 className="font-medium text-gray-900">Secondary Uses</h3>
+                <h3 className="font-medium text-gray-900">
+                  {t("SecondaryUses")}
+                </h3>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Improving customer service</span>
+                    <span>{t("SecondaryUsesText")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Analyzing usage patterns</span>
+                    <span>{t("AnalyzingUsagePatterns")}</span>
                   </li>
                 </ul>
               </div>
@@ -119,37 +120,35 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-4">
               <Shield className="w-6 h-6 text-indigo-600" />
               <h2 className="text-2xl font-semibold text-gray-900">
-                Data Protection
+                {t("DataProtection")}
               </h2>
             </div>
             <p className="text-gray-600 leading-relaxed mb-4">
-              We implement appropriate security measures to protect your
-              personal information against unauthorized access, alteration,
-              disclosure, or destruction.
+              {t("DataProtectionText")}
             </p>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <Lock className="w-6 h-6 text-indigo-600 mb-2" />
-                <h3 className="font-medium text-gray-900 mb-2">Encryption</h3>
-                <p className="text-sm text-gray-600">
-                  All data is encrypted during transmission
-                </p>
+                <h3 className="font-medium text-gray-900 mb-2">
+                  {t("Encryption")}
+                </h3>
+                <p className="text-sm text-gray-600">{t("EncryptionText")}</p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <Users className="w-6 h-6 text-indigo-600 mb-2" />
                 <h3 className="font-medium text-gray-900 mb-2">
-                  Access Control
+                  {t("AccessControl")}
                 </h3>
                 <p className="text-sm text-gray-600">
-                  Strict access controls for employee data access
+                  {t("AccessControlText")}
                 </p>
               </div>
               <div className="bg-gray-50 p-4 rounded-lg">
                 <Bell className="w-6 h-6 text-indigo-600 mb-2" />
-                <h3 className="font-medium text-gray-900 mb-2">Monitoring</h3>
-                <p className="text-sm text-gray-600">
-                  24/7 security monitoring and alerts
-                </p>
+                <h3 className="font-medium text-gray-900 mb-2">
+                  {t("Monitoring")}
+                </h3>
+                <p className="text-sm text-gray-600">{t("MonitoringText")}</p>
               </div>
             </div>
           </section>
@@ -159,39 +158,40 @@ const Page = () => {
             <div className="flex items-center gap-3 mb-4">
               <Scale className="w-6 h-6 text-indigo-600" />
               <h2 className="text-2xl font-semibold text-gray-900">
-                Your Rights
+                {t("YourRights")}
               </h2>
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <h3 className="font-medium text-gray-900">
-                  You have the right to:
+                  {t("YourRightsText")}:
                 </h3>
                 <ul className="space-y-2 text-gray-600">
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Access your personal data</span>
+                    <span>{t("AccessYourPersonalData")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Correct your personal data</span>
+                    <span>{t("CorrectYourPersonalData")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="min-w-2 h-2 w-2 rounded-full bg-indigo-600 mt-2" />
-                    <span>Request deletion of your personal data</span>
+                    <span>{t("RequestDeletionOfYourPersonalData")}</span>
                   </li>
                 </ul>
               </div>
               <div className="bg-indigo-50 p-6 rounded-lg">
-                <h3 className="font-medium text-gray-900 mb-3">Contact Us</h3>
+                <h3 className="font-medium text-gray-900 mb-3">
+                  {t("ContactUs")}
+                </h3>
                 <p className="text-gray-600 text-sm">
-                  For any privacy-related questions or concerns, please contact
-                  our Data Protection Officer at:
+                  {t("ContactUsText")}
                   <br />
                   <br />
-                  Email: info@q8arzaq.com
+                  {t("Email")}: info@q8arzaq.com
                   <br />
-                  Phone: 96597397310+
+                  {t("Phone")}: 96597397310+
                 </p>
               </div>
             </div>
@@ -201,9 +201,11 @@ const Page = () => {
           <footer className="text-center text-gray-500 text-sm">
             <div className="flex items-center justify-center gap-2 mb-2">
               <Globe className="w-4 h-4" />
-              <span>Available in multiple languages</span>
+              <span>{t("AvailableInMultipleLanguages")}</span>
             </div>
-            <p>© {new Date().getFullYear()} Arzaq. All rights reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Arzaq. {t("Copyright")}.
+            </p>
           </footer>
         </div>
       </main>

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Dialog,
@@ -9,17 +10,19 @@ import {
 } from "@/components/ui/dialog";
 import Image from "next/image";
 import ContactImage from "../../../../../public/contact.png";
+import { useTranslations } from "next-intl";
 
 function GetVerified() {
+  const t = useTranslations("TopNav");
   return (
     <Dialog>
       <DialogTrigger className="bg-[#312783] p-2 text-white text-[16px] rounded-[4px] hover:bg-primary700 hover:shadow-lg">
         {" "}
-        Get Verified
+        {t("GetVerifiedButton")}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Contact Us</DialogTitle>
+          <DialogTitle>{t("ContactUs")}</DialogTitle>
           <DialogDescription>
             <div className="flex flex-col items-center p-8">
               {/* Image Section */}
@@ -27,7 +30,7 @@ function GetVerified() {
                 {/* Replace with your own image URL */}
                 <Image
                   src={ContactImage}
-                  alt="Contact Us"
+                  alt={t("ContactUs")}
                   className="w-[260px]"
                 />
               </div>
@@ -36,24 +39,19 @@ function GetVerified() {
               <hr className="w-full border-gray-300 my-4" />
 
               {/* Contact Heading */}
-              <h2 className="text-xl font-bold text-gray-800">Contact us</h2>
+              <h2 className="text-xl font-bold text-gray-800">
+                {t("ContactUs")}
+              </h2>
 
               {/* Description */}
-              <p className="text-gray-600 text-center my-4">
-                Need help getting your membership or verified status? Verified
-                users gain more trust and visibility, while memberships unlock
-                exclusive features for your ads.
-              </p>
+              <p className="text-gray-600 text-center my-4">{t("NeedHelp")}</p>
               <p className="text-gray-600 text-center mb-6">
-                If you have questions about the verification process or want to
-                learn more about our membership options, our team is here to
-                assist you. Reach out to us, and we’ll guide you every step of
-                the way to boost your ad performance and credibility.
+                {t("VerificationHelp")}
               </p>
 
               {/* Sub-heading */}
               <h3 className="text-lg font-medium text-gray-800 mt-6">
-                You can reach us via:
+                {t("ReachUsVia")}
               </h3>
 
               {/* Contact Methods */}
@@ -63,7 +61,7 @@ function GetVerified() {
                   <div className="text-blue-500 text-3xl">📞</div>
                   <div>
                     <h4 className="text-md font-semibold text-gray-800">
-                      Call us
+                      {t("CallUs")}
                     </h4>
                     <p className="text-sm text-gray-600">96597397310+</p>
                   </div>
@@ -74,7 +72,7 @@ function GetVerified() {
                   <div className="text-blue-500 text-3xl">📧</div>
                   <div>
                     <h4 className="text-md font-semibold text-gray-800">
-                      Email us
+                      {t("EmailUs")}
                     </h4>
                     <p className="text-sm text-gray-600">info@q8arzaq.com</p>
                   </div>

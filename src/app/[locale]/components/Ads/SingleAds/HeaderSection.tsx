@@ -46,7 +46,7 @@ const HeaderSection: React.FC<HeaderSection> = ({
         body: JSON.stringify({ userIdNew, id }),
       });
       const data = await AdExsist.json();
-      console.log(data);
+ 
 
       setFevoriteCheck(data.status);
       setFevoriteCheckData(data.data);
@@ -64,14 +64,14 @@ const HeaderSection: React.FC<HeaderSection> = ({
 
   useEffect(() => {
     if (VerifiedSeller) {
-      setisVerified(" Verified Seller");
+      setisVerified(t("VerifiedSeller"));
     } else {
-      setisVerified("Not Verified Seller");
+      setisVerified(t("NotVerifiedSeller"));
     }
     if (Member) {
-      setisMember("Member");
+      setisMember(t("Member"));
     } else {
-      setisMember("Not a Member");
+      setisMember(t("NotAMember"));
     }
   }, [VerifiedSeller, Member]);
 

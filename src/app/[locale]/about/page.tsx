@@ -1,8 +1,10 @@
-import Link from "next/link";
+
 import { UserPlus, FileText, DollarSign } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+
 
 export default function AboutPage() {
+   const t = useTranslations("TopNav");
   return (
     <>
       {/* Hero Header */}
@@ -12,7 +14,7 @@ export default function AboutPage() {
         </div>
         <div className="relative h-full container mx-auto px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44">
           <div className="flex flex-col justify-center items-center h-full text-white space-y-4">
-            <h1 className="text-4xl font-bold">About Usss</h1>
+            <h1 className="text-4xl font-bold">{t("AboutUs")}</h1>
             <div className="flex items-center gap-2 text-sm"></div>
           </div>
         </div>
@@ -23,20 +25,13 @@ export default function AboutPage() {
         {/* About Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">Know more about Arzaq</h2>
+            <h2 className="text-3xl font-bold">{t("KnowMoreAboutArzaq")}</h2>
             <p className="text-muted-foreground">
-              Arzaq is your go-to platform for buying and selling almost
-              anything. Whether it&apos;s within your city or your neighborhood,
-              the best deals are made locally. With Arzaq, it&apos;s simple to
-              connect with buyers and sellers near you. Just select your region,
-              and you&apos;re ready to explore! Posting an ad on Arzaq is quick
-              and hassle-free, taking less than 2 minutes. Sign up for a free
-              account to easily manage your ads anytime.
+            {t("ArzaqDescription")}
             </p>
             <p className="text-muted-foreground">
-              Arzaq offers the widest range of popular new and second-hand items
-              across Kuwait. Whatever you&apos;re looking for, Arzaq makes it
-              easy to find and connect.
+            {t("ArzaqOffer")}
+
             </p>
           </div>
 
@@ -52,7 +47,7 @@ export default function AboutPage() {
 
         {/* How it Works Section */}
         <div className="text-center space-y-12">
-          <h2 className="text-3xl font-bold">How it Work</h2>
+          <h2 className="text-3xl font-bold">{t("HowItWorks")}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
             <div className="relative p-6 bg-card rounded-xl shadow-sm">
@@ -63,11 +58,9 @@ export default function AboutPage() {
               </div>
               <div className="mt-6 space-y-4">
                 <div className="text-6xl font-bold text-muted/20">01</div>
-                <h3 className="text-xl font-semibold">Create Account</h3>
+                <h3 className="text-xl font-semibold">{t("CreateAccount")}</h3>
                 <p className="text-muted-foreground">
-                  Sign up for free to start buying and selling effortlessly on
-                  Arzaq. Manage your ads with ease and connect with local buyers
-                  and sellers today!
+                {t("CreateAccountDescription")}
                 </p>
               </div>
             </div>
@@ -81,11 +74,9 @@ export default function AboutPage() {
               </div>
               <div className="mt-6 space-y-4">
                 <div className="text-6xl font-bold text-muted/20">02</div>
-                <h3 className="text-xl font-semibold">Post a Ads</h3>
+                <h3 className="text-xl font-semibold">{t("PostAnAd")}</h3>
                 <p className="text-muted-foreground">
-                  List your items in just minutes! Posting an ad on Arzaq is
-                  quick, easy, and completely free. Reach local buyers
-                  instantly!
+                {t("PostAnAdDescription")}
                 </p>
               </div>
             </div>
@@ -99,11 +90,9 @@ export default function AboutPage() {
               </div>
               <div className="mt-6 space-y-4">
                 <div className="text-6xl font-bold text-muted/20">03</div>
-                <h3 className="text-xl font-semibold">Start Earning</h3>
+                <h3 className="text-xl font-semibold">{t("StartEarning")}</h3>
                 <p className="text-muted-foreground">
-                  Begin your journey today by posting ads on Arzaq! Sell your
-                  items locally and make extra income in no time. Sign up now
-                  and start earning!
+                {t("StartEarningDescription")}
                 </p>
               </div>
             </div>
