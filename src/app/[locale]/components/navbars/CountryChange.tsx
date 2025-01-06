@@ -8,8 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import Loading from "../../loading";
 
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
 
 function getCookie(name: string) {
   if (typeof window !== "undefined") {
@@ -39,11 +39,11 @@ function CountryChange() {
   };
 
   // Update the language and URL when switching
- 
+
   const handleLanguageSwitch = async (newLocale: "en" | "ar") => {
     // Start progress bar
     NProgress.start();
-    
+
     // Simulate slow progress
     let progress = 0.1;
     const interval = setInterval(() => {
@@ -54,25 +54,25 @@ function CountryChange() {
         clearInterval(interval);
       }
     }, 110); // Adjust interval time for slower progress
-  
+
     // Simulate language switch
     setLoading(true);
-  
+
     if (typeof window !== "undefined") {
       document.cookie = `NEXT_LOCALE=${newLocale}; path=/;`;
     }
-  
+
     const segments = pathname.split("/");
     if (segments[1] === "en" || segments[1] === "ar") {
       segments[1] = newLocale;
     } else {
       segments.unshift(newLocale);
     }
-  
+
     const newPath = segments.join("/");
-  
+
     await router.push(`${newPath}?${searchParams.toString()}`);
-  
+
     // Slow down completion
     setTimeout(() => {
       setLoading(false);

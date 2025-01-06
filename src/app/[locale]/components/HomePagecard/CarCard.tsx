@@ -54,7 +54,7 @@ export function CarCard({
   }, [duration]);
   return (
     <Link href={`${locale ? `/${locale}` : ""}/ads/${id}`}>
-      <div className="relative flex flex-col bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl max-h-[370px] w-[310px] md:w-full">
+      <div className="relative flex flex-col bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl max-h-[390px] w-[310px] md:w-full">
         {featured && (
           <div className="absolute top-4 left-4 z-10 bg-yellow-400 px-3 py-1 rounded-full flex items-center gap-1">
             <Star className="w-4 h-4" />
@@ -72,7 +72,7 @@ export function CarCard({
         </div>
         <div className="p-4 px-5 md:px-3">
           <p className="text-sm text-gray-600 mb-2">{location}</p>
-          <div className="max-w-[200px]">
+          <div className="max-w-[200px]  h-[80px]">
             <h3 className="text-lg font-semibold mb-2 line-clamp-2 text-wrap">
               {name}
             </h3>
