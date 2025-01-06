@@ -24,6 +24,8 @@ function CountryChange() {
   ];
 
   const [locale, setLocale] = useState<"en" | "ar">("en");
+  const [flag, setFlag] = useState<any>();
+  const [nextLocale, setnextLocale] = useState<any>();
 
   // Fetch the current locale from cookies on mount
   useEffect(() => {
@@ -46,11 +48,21 @@ function CountryChange() {
     document.cookie = `NEXT_LOCALE=${newLocale}; path=/`; // Update the cookie
     router.push(`${newPath}?${params.toString()}`); // Navigate to the new URL
     setLocale(newLocale); // Update the local state
+    // const currentFlag = locale === "en" ? Arab : UKflag;
+    // const nextLocale = locale === "en" ? "ar" : "en";
   };
 
+  useEffect(() => {
+    if (locale == "en") {
+      setFlag(Arab);
+      setnextLocale("ar");
+    } else {
+      setFlag(UKflag);
+      setnextLocale("en");
+    }
+  },[locale]);
+
   // Get the current flag image based on the locale
-  const currentFlag = locale === "en" ? Arab : UKflag;
-  const nextLocale = locale === "en" ? "ar" : "en";
 
   return (
     <div className="flex items-center justify-between min-w-full md:min-w-0 md:space-x-5 md:justify-end rtl:gap-10 border-l pl-2">
@@ -58,14 +70,9 @@ function CountryChange() {
         onClick={() => handleLanguageSwitch(nextLocale)}
         className="flex items-center gap-2 rtl:gap-2"
       >
-        <Image
-         
-          width={25}
-          src={currentFlag}
-          alt={nextLocale}
-        />
+        <Image width={25} src={flag} alt={nextLocale} />
       </button>
-      <Link href={"/"+locale+"/commercial?slug=all"}>Commercial</Link>
+      <Link href={"/" + locale + "/commercial?slug=all"}>Commercial</Link>
     </div>
   );
 }

@@ -140,7 +140,7 @@ model postad {
   @@index([categoryId], map: "postad_categoryId_fkey")
   @@index([subcategoryId], map: "postad_subcategoryId_fkey")
   @@index([userId], map: "postad_userId_fkey")
-
+  @@index([secondcategoryId], map: "postad_secondcategoryId_fkey")
 }
 
 model ad_views {
@@ -286,8 +286,6 @@ enum postad_condition {
   new
   used
 }
-
-
 
 enum postad_authenticity {
   original
