@@ -1,4 +1,3 @@
-import { client } from "@/lib/sanity";
 import { PrismaClient } from "@prisma/client";
 
 const GetFavoritesAds = async (userId: string) => {
