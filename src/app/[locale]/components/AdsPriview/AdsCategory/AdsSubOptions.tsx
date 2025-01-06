@@ -16,7 +16,7 @@ function getCookie(name: string) {
 }
 
 interface AdsSubOptionsProps {
-  Options: any[];
+  Options: any;
 }
 
 const AdsSubOptions: React.FC<AdsSubOptionsProps> = ({ Options }) => {
@@ -73,7 +73,7 @@ const AdsSubOptions: React.FC<AdsSubOptionsProps> = ({ Options }) => {
 
   return (
     <>
-      {Options.map((option, index) => (
+      {Options.map((option:any, index:any) => (
         <div key={index}>
           <Accordion type="single" collapsible>
             <AccordionItem value={`item-${index}`}>

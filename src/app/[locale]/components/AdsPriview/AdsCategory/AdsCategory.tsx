@@ -11,7 +11,7 @@ import AddSubcategory from "./AddSubcategory";
 import { Category } from "@/lib/categoryInterface";
 
 interface Categories {
-  Categories: any[];
+  Categories: any;
 }
 
 interface SubcategoryNew {
