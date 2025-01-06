@@ -11,6 +11,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GetUsers } from "./actions/usersAction";
 import { FloatingMenu } from "./components/ui/floating-dock";
+import { routing } from "@/i18n/routing";
+import { notFound } from "next/navigation";
 
 export const revalidate = 1;
 
@@ -36,6 +38,10 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  if (!routing.locales.includes(locale as any)) {
+    notFound();
+  }
+
   const dir = locale === "ar" ? "rtl" : "ltr";
   const { getUser } = getKindeServerSession();
   const user = await getUser();
@@ -59,15 +65,18 @@ export default async function RootLayout({
   return (
     <html lang={locale} dir={dir}>
       <body className={`${fontClass} bg-gray-100`}>
-        <NextIntlClientProvider messages={messages}>
-          <div className="bg-white">
-            <Topnavbar user={users} />
-          </div>
+        <div className="bg-white">
+          
+        </div>
+        <NextIntlClientProvider  messages={messages}>
+        <Topnavbar user={users} />
           {children}
-          <Analytics />
-          <SpeedInsights />
           <Fotter />
         </NextIntlClientProvider>
+        <Analytics />
+        <SpeedInsights />
+       
+
         <FloatingMenu />
         <Toaster />
       </body>
