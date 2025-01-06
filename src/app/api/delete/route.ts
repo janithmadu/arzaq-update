@@ -1,4 +1,3 @@
-import { client } from "@/lib/sanity";
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma, PrismaClient } from "@prisma/client";
 

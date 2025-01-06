@@ -39,9 +39,9 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
   categorytitle,
 }) => {
   //get category that limit to 7
-  const getLimitedCate = await getlimitedCategory();
+  const getLimitedCate:any = await getlimitedCategory();
   //get all category
-  const getallCategory = await getAllCategory();
+  const getallCategory:any = await getAllCategory();
   const getCurentLocal = CurrentLocal;
 
   return (

@@ -3,7 +3,6 @@ import { Heart, Star } from "@phosphor-icons/react/dist/ssr";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
-import GetFavoritesOfUsers from "@/app/[locale]/actions/GetFavoritesOfUsers";
 import { useTranslations } from "next-intl";
 import Loading from "@/app/[locale]/loading";
 import { CheckUserLog } from "@/app/[locale]/actions/ChekAuth";

@@ -1,4 +1,3 @@
-import { client } from "@/lib/sanity";
 import { NextRequest, NextResponse } from "next/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Prisma, PrismaClient } from "@prisma/client";

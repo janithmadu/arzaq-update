@@ -12,14 +12,14 @@ import HomePageAdContainer from "./HomePageAdContainer";
 import { GetAdByCategory } from "../../actions/getAds";
 
 export default async function HomePagecard() {
-  const category = await getAllCategory();
+  const category:any = await getAllCategory();
   const cookieStore = cookies();
   const locale: string = cookieStore.get("NEXT_LOCALE")?.value || "en";
 
   // Fetch ads for all categories
   const categoriesWithAds = await Promise.all(
     category.map(async (category: any) => {
-      const ads = await GetAdByCategory(category.id); // Assuming this function fetches ads for a given category
+      const ads:any = await GetAdByCategory(category.id); // Assuming this function fetches ads for a given category
       return ads.length > 0 ? category : null; // Include only categories with ads
     })
   );

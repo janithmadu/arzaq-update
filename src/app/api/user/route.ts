@@ -1,5 +1,4 @@
 import { GetUsers } from "@/app/[locale]/actions/usersAction";
-import { client } from "@/lib/sanity";
 import { NextResponse } from "next/server";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { PrismaClient } from "@prisma/client";

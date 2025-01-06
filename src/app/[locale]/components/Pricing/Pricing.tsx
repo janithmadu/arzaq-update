@@ -5,7 +5,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import { convertToSub } from "@/lib/ConvertToSub";
 import Checkout from "@/app/[locale]/components/Pricing/Checkout";
-import { getAdByIdForPayment } from "../../actions/getAds";
 import { redirect } from "next/navigation";
 import { PostAd } from "@/lib/categoryInterface";
 
