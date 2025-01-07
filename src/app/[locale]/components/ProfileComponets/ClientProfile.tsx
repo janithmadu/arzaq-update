@@ -90,7 +90,8 @@ const ClientProfile: React.FC<ClientUserAds> = ({
         <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-x-3">
           {UserAds.ads.map((ad: any) => {
             return (
-              <ProfileAdCard
+              <div key={ad.id}>
+                <ProfileAdCard
                 id={ad.id}
                 title={ad.adName}
                 price={ad.price}
@@ -109,6 +110,7 @@ const ClientProfile: React.FC<ClientUserAds> = ({
                     : ad.subcategory.title_ar
                 }
               />
+              </div>
             );
           })}
         </div>

@@ -5,8 +5,6 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Loading from "@/app/[locale]/loading";
-import { CheckUserLog } from "@/app/[locale]/actions/ChekAuth";
-
 
 export const revalidate = 1;
 
@@ -25,7 +23,7 @@ const PriceSection: React.FC<Price> = ({
   userID,
   id,
 }) => {
-  const [NegotiableCheck, setNegotiableCheck] = useState<boolean>();
+  const [NegotiableCheck, setNegotiableCheck] = useState<boolean>(false);
   const [FevoriteCheck, setFevoriteCheck] = useState<boolean>(false);
   const [FevoriteCheckData, setFevoriteCheckData] = useState<any>();
   const [PageLoader, setPageLoader] = useState<string | null>(null);
@@ -34,45 +32,45 @@ const PriceSection: React.FC<Price> = ({
   const router = useRouter();
 
   useEffect(() => {
-    if (negotiable) {
-      setNegotiableCheck(true);
-    } else {
-      setNegotiableCheck(false);
-    }
-  }, [id]);
+    setNegotiableCheck(negotiable);
+  }, [negotiable]);
 
   useEffect(() => {
     const CheckFaExsisting = async () => {
-      const userIdNew = parseInt(userID)
-      
-  
-      
+      const userIdNew = parseInt(userID);
+      if (!userIdNew || !id) return;
 
-      const AdExsist = await fetch("/api/updateFaverite/getadsbyfav", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userIdNew, id }),
-      });
-      const data = await AdExsist.json()
-      setFevoriteCheck(data.status);
-      setFevoriteCheckData(data.data);
+      try {
+        const AdExsist = await fetch("/api/updateFaverite/getadsbyfav", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userIdNew, id }),
+        });
+
+        const data = await AdExsist.json();
+        setFevoriteCheck(data.status);
+        setFevoriteCheckData(data.data);
+      } catch (error) {
+        console.error("Error checking favorite:", error);
+      }
     };
+
     CheckFaExsisting();
-  }, []);
+  }, [id, userID]);
 
   const AddTofaverite = async () => {
-   
     setPageLoader("Loading");
-    const userIdNew = parseInt(userID)
+    const userIdNew = parseInt(userID);
 
     if (Number.isNaN(userIdNew)) {
       setPageLoader("Error");
-      router.push('/api/auth/login');
-      
+      router.push("/api/auth/login");
+      return;
     }
-    else {
+
+    try {
       const response = await fetch("/api/updateFaverite", {
         method: "POST",
         headers: {
@@ -110,59 +108,61 @@ const PriceSection: React.FC<Price> = ({
           }
         });
       }
+    } catch (error) {
+      console.error("Error adding to favorite:", error);
     }
-
-
   };
-
-
-
 
   const RemoveTofaverite = async () => {
     setPageLoader("Loading");
-    const userIdNew = parseInt(userID)
+    const userIdNew = parseInt(userID);
     const Fvdata = FevoriteCheckData?.id;
-    const response = await fetch("/api/updateFaverite", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ userIdNew, Fvdata }),
-    });
 
-    if (response.status === 200) {
-      setPageLoader("Error");
-      Swal.fire({
-        title: "Favorite Removed!",
-        text: `You've Removed From Favorite This Ad!`,
-        icon: "success",
-        allowOutsideClick: true,
-        allowEscapeKey: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          setFevoriteCheck(false);
-          window.location.reload();
-        }
+    try {
+      const response = await fetch("/api/updateFaverite", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userIdNew, Fvdata }),
       });
-    } else if (response.status === 401) {
-      setPageLoader("Error");
-      Swal.fire({
-        title: "Unauthorized",
-        text: `Unauthorized Access - Log In Required`,
-        icon: "error",
-        confirmButtonText: `Log In`,
-        allowOutsideClick: true,
-        allowEscapeKey: true,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          window.location.reload();
-        }
-      });
+
+      if (response.status === 200) {
+        setPageLoader("Error");
+        Swal.fire({
+          title: "Favorite Removed!",
+          text: `You've Removed From Favorite This Ad!`,
+          icon: "success",
+          allowOutsideClick: true,
+          allowEscapeKey: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setFevoriteCheck(false);
+            window.location.reload();
+          }
+        });
+      } else if (response.status === 401) {
+        setPageLoader("Error");
+        Swal.fire({
+          title: "Unauthorized",
+          text: `Unauthorized Access - Log In Required`,
+          icon: "error",
+          confirmButtonText: `Log In`,
+          allowOutsideClick: true,
+          allowEscapeKey: true,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.reload();
+          }
+        });
+      }
+    } catch (error) {
+      console.error("Error removing favorite:", error);
     }
   };
 
   return (
-    <div className="">
+    <div>
       <div className="min-w-full border-b px-[32px] py-5">
         <div>
           <div className="flex items-center min-h-[72px] justify-between max-w-[322px]">
@@ -174,33 +174,27 @@ const PriceSection: React.FC<Price> = ({
             </div>
 
             <div className="min-w-[48px] flex items-center justify-center min-h-[48px] rounded-[4px] ">
-              {/* Reminder:- Need to Create This after the User Functions  are done */}
               <button>
-                {FevoriteCheck == true ? (
-                  <>
-                    <Heart
-                      onClick={RemoveTofaverite}
-                      className={`${FevoriteCheck == true ? "text-red-600" : "text-[#6f68a8]"} cursor-pointer`}
-                      width={24}
-                      height={24}
-                    />
-                  </>
+                {FevoriteCheck ? (
+                  <Heart
+                    onClick={RemoveTofaverite}
+                    className="text-red-600 cursor-pointer"
+                    width={24}
+                    height={24}
+                  />
                 ) : (
-                  <>
-                    <Heart
-                      onClick={AddTofaverite}
-                      className={`${FevoriteCheck == false ? " text-[#6f68a8]" : "text-red-600"} cursor-pointer`}
-                      width={24}
-                      height={24}
-                    />
-                  </>
+                  <Heart
+                    onClick={AddTofaverite}
+                    className="text-[#6f68a8] cursor-pointer"
+                    width={24}
+                    height={24}
+                  />
                 )}
               </button>
             </div>
           </div>
-          {negotiable && (
+          {NegotiableCheck && (
             <div className="flex gap-x-4 items-center">
-              {" "}
               <Star className="text-blue-500" />
               <h1 className="text-grayscale900 text-bodysmall">
                 {t("Negotiable")}
@@ -209,7 +203,7 @@ const PriceSection: React.FC<Price> = ({
           )}
         </div>
       </div>
-      <>{PageLoader === "Loading" ? <Loading /> : <></>}</>
+      {PageLoader === "Loading" && <Loading />}
     </div>
   );
 };

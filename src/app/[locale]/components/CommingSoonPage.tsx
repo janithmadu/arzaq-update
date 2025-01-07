@@ -1,5 +1,5 @@
 "use client"; // Added "use client" directive at the top if required in your context
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from "react";
 
 interface ComingSoon {
   days?: number;
@@ -13,7 +13,7 @@ interface CommingSoonDate {
 }
 
 const CommingSoonPage: React.FC<CommingSoonDate> = ({ date }) => {
-  const calculateTimeLeft = (): ComingSoon => {
+  const calculateTimeLeft = useCallback((): ComingSoon => {
     const difference = +new Date(date) - +new Date();
     let timeLeft: ComingSoon = {};
 
@@ -27,7 +27,7 @@ const CommingSoonPage: React.FC<CommingSoonDate> = ({ date }) => {
     }
 
     return timeLeft;
-  };
+  }, [date]);
 
   const [timeLeft, setTimeLeft] = useState<ComingSoon>(calculateTimeLeft());
 
@@ -37,7 +37,7 @@ const CommingSoonPage: React.FC<CommingSoonDate> = ({ date }) => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [calculateTimeLeft]);
 
   return (
     <div className="bg-gray-900 text-white h-full flex flex-col items-center justify-center space-y-6 p-4 mb-5">

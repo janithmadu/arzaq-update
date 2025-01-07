@@ -10,7 +10,6 @@ import Loading from "../../loading";
 
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import { t } from "i18next";
 import { useTranslations } from "next-intl";
 
 function getCookie(name: string) {
@@ -42,7 +41,6 @@ function CountryChange() {
   };
 
   // Update the language and URL when switching
-
   const handleLanguageSwitch = async (newLocale: "en" | "ar") => {
     // Start progress bar
     NProgress.start();
@@ -84,13 +82,13 @@ function CountryChange() {
   };
 
   useEffect(() => {
-    // Initialize locale after component mounts
+    // Initialize locale and flag after component mounts or pathname changes
     const segments = pathname.split("/");
     const currentLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
     setLocale(currentLocale);
     setFlgImage(segments[1] === "en" ? Arab : UKflag);
-  }, []);
- 
+  }, [pathname]); // Added `pathname` as a dependency
+
   return (
     <>
       <div className="flex items-center justify-between min-w-full md:min-w-0 md:space-x-5 md:justify-end rtl:gap-10 border-l pl-2">
