@@ -10,7 +10,7 @@ export default function AboutPage() {
       <div className="relative h-[200px] mb-12">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+            src="/photo-1521737711867-e3b97375f902.jpg"
             alt="Hero background"
             layout="fill"
             objectFit="cover"
@@ -37,7 +37,7 @@ export default function AboutPage() {
 
           <div className="relative aspect-video rounded-3xl overflow-hidden bg-muted">
             <Image
-              src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80"
+              src="/photo-1600880292203-757bb62b4baf.jpg"
               alt="Office team meeting"
               layout="fill"
               objectFit="cover"
