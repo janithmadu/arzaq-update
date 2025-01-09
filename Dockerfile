@@ -14,6 +14,13 @@ WORKDIR /app
 # Step 3: Copy package.json and package-lock.json for installing dependencies
 COPY package.json ./
 
+RUN rm -rf package-lock.json node_modules
+#RUN npm cache clean --force
+RUN npm install --production
+RUN npm install tailwindcss postcss autoprefixer
+RUN npm install --save-dev @types/google.maps
+
+
 # Step 4: Install production dependencies
 
 # Step 5: Copy the rest of the application files
@@ -56,9 +63,6 @@ ENV KINDE_MANAGEMENT_CLIENT_SECRET=$KINDE_MANAGEMENT_CLIENT_SECRET
 ENV NODE_ENV=production
 
 
-RUN rm -rf package-lock.json node_modules
-RUN npm cache clean --force
-RUN npm install --omit=dev --legacy-peer-deps
 
 # Step 7: Generate Prisma Client
 RUN npx prisma generate
