@@ -79,12 +79,6 @@ ENV NODE_ENV=production
 # Step 7: Generate Prisma Client
 RUN npx prisma generate
 
-# Step 8: Run Prisma migrations
-
-RUN npx prisma migrate deploy
-
-#RUN npx prisma migrate deploy
-
 
 # Step 9: Build the Next.js app
 RUN npm run build
