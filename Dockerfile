@@ -14,6 +14,17 @@ WORKDIR /app
 # Step 3: Copy package.json and package-lock.json for installing dependencies
 COPY package.json ./
 
+RUN rm -rf package-lock.json node_modules
+#RUN npm cache clean --force
+RUN npm install --production
+RUN npm install tailwindcss postcss autoprefixer
+RUN npm install --save-dev @types/google.maps
+
+
+# Step 4: Install production dependencies
+RUN npm install --production
+
+
 # Step 4: Install production dependencies
 
 # Step 5: Copy the rest of the application files
@@ -25,6 +36,8 @@ ARG DATABASE_URL
 ARG KINDE_ISSUER_URL
 ARG KINDE_CLIENT_ID
 ARG KINDE_CLIENT_SECRET
+
+
 ARG KINDE_SITE_URL
 ARG KINDE_POST_LOGOUT_REDIRECT_URL
 ARG KINDE_POST_LOGIN_REDIRECT_URL
@@ -38,10 +51,15 @@ ARG KINDE_MANAGEMENT_CLIENT_ID
 ARG KINDE_MANAGEMENT_CLIENT_SECRET
 
 
+
 ENV DATABASE_URL=$DATABASE_URL
 ENV KINDE_ISSUER_URL=$KINDE_ISSUER_URL
 ENV KINDE_CLIENT_ID=$KINDE_CLIENT_ID
 ENV KINDE_CLIENT_SECRET=$KINDE_CLIENT_SECRET
+
+ENV NODE_ENV=production
+
+
 ENV KINDE_SITE_URL=$KINDE_SITE_URL
 ENV KINDE_POST_LOGOUT_REDIRECT_URL=$KINDE_POST_LOGOUT_REDIRECT_URL
 ENV KINDE_POST_LOGIN_REDIRECT_URL=$KINDE_POST_LOGIN_REDIRECT_URL
@@ -56,15 +74,11 @@ ENV KINDE_MANAGEMENT_CLIENT_SECRET=$KINDE_MANAGEMENT_CLIENT_SECRET
 ENV NODE_ENV=production
 
 
-RUN rm -rf package-lock.json node_modules
-RUN npm cache clean --force
-RUN npm install --omit=dev --legacy-peer-deps
+
 
 # Step 7: Generate Prisma Client
 RUN npx prisma generate
 
-# Step 8: Run Prisma migrations
-#RUN npx prisma migrate deploy
 
 # Step 9: Build the Next.js app
 RUN npm run build

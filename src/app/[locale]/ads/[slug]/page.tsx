@@ -2,7 +2,7 @@ import HeaderSection from "../../components/Ads/SingleAds/HeaderSection";
 import ImageGallery from "../../components/Ads/SingleAds/ImageGallery";
 import ContactSection from "../../components/Ads/SingleAds/ContactSection";
 import SellerInfo from "../../components/Ads/SingleAds/SellerInfo";
-import Map from "../../components/Ads/SingleAds/Map";
+
 import DescriptionAds from "../../components/Ads/SingleAds/DescriptionAds";
 import { getAdById } from "../../actions/getAds";
 import PriceSection from "../../components/Ads/SingleAds/PriceSection";
@@ -70,7 +70,7 @@ export default async function AdDetailsPage({
       {/* {AdID && <UpdateViewCount adId={AdIDNew} />} */}
       <div className="min-w-full min-h-full bg-white">
         <div className="container mx-auto  px-5 rtl:gap-20  lg:px-5 xl:px-20 md:px-10 flex space-x-6 flex-col lg:flex-row ">
-          <div className="flex-1 lg:min-w-[572px] xl:min-w-[672px] 2xl:min-w-[872px] flex flex-col gap-x-[36px] mt-3">
+          <div className="flex-1 lg:min-w-[572px] mb-10 xl:min-w-[672px] 2xl:min-w-[872px] flex flex-col gap-x-[36px] mt-3">
             <HeaderSection
               Titile={adTitile as string}
               CreatedDate={AddCratedDate}
@@ -143,9 +143,9 @@ export default async function AdDetailsPage({
                   />
                 </div>
 
-                <div className="px-[32px] py-[32px] flex flex-col gap-y-[18px]">
-                  <Map />
-                </div>
+                {/* <div className="px-[32px] py-[32px] flex flex-col gap-y-[18px]">
+                 
+                </div> */}
               </div>
             </div>
           </div>
