@@ -283,8 +283,8 @@ model secondcategory {
 }
 
 enum postad_condition {
-  new
-  used
+  New
+  Used
 }
 
 enum postad_authenticity {
