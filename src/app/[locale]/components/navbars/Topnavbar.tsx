@@ -40,7 +40,7 @@ const Topnavbar: React.FC<User> = ({ user }) => {
   const t = useTranslations("TopNav");
 
   return (
-    <>
+    <div className="bg-white">
       <div className="min-w-full flex flex-col justify-start border-b-[#EBEEF7] border bg-white">
         {/* Top Nav Start */}
         <div className=" container mx-auto px-5 lg:px-5 xl:px-20 md:px-10 min-h-[100px] flex md:gap-10 items-center justify-between ">
@@ -106,7 +106,7 @@ const Topnavbar: React.FC<User> = ({ user }) => {
       </div>
       {/* Top Nav End */}
 
-      <div className="container mx-auto lg:px-5 px-5 xl:px-20 md:px-10">
+      <div className="container mx-auto lg:px-5  px-5 xl:px-20 md:px-10">
         <div className="min-w-full min-h-[78px] flex items-center md:justify-between">
           <CategoryBar
             CurrentLocal={locale}
@@ -116,7 +116,7 @@ const Topnavbar: React.FC<User> = ({ user }) => {
           <CountryChange />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

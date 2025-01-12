@@ -1,6 +1,6 @@
 export const ConditionList = [
-  { title: { ar: "جديد", en: "New" }, value: { ar: "New", en: "new" } },
-  { title: { ar: "مستخدم", en: "Used" }, value: { ar: "Used", en: "used" } },
+  { title: { ar: "جديد", en: "New" }, value: { ar: "New", en: "New" } },
+  { title: { ar: "مستخدم", en: "Used" }, value: { ar: "Used", en: "Used" } },
 ];
 export const Currency= [
   {
