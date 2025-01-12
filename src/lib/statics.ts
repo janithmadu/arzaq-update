@@ -11,9 +11,9 @@ export const Currency= [
 export const Authenticity = [
   {
     title: { ar: "إبداعي", en: "Original" },
-    value: { ar: "إبداعي", en: "original" },
+    value: { ar: "original", en: "original" },
   },
-  { title: { ar: "ينسخ", en: "Copy" }, value: { ar: "ينسخ", en: "copy" } },
+  { title: { ar: "ينسخ", en: "Copy" }, value: { ar: "original", en: "copy" } },
 ];
 
 export const CitiesInKuwait = [
