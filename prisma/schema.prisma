@@ -113,7 +113,7 @@ model postad {
   condition        postad_condition?
   currency         String?
   authenticity     postad_authenticity?
-  price            Decimal              @db.Decimal(10, 2)
+  price            Decimal              @db.Decimal(15, 2)
   negotiable       Boolean?             @default(false)
   description      String?              @db.Text
   phoneNumber      String               @db.VarChar(20)

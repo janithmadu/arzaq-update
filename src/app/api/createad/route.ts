@@ -46,7 +46,7 @@ export async function POST(request: Request) {
         adName: name,
         category: { connect: { id: Number(categoryData.id) } }, // Connect category by ID
         subcategory: { connect: { id: Number(subcategory) } }, // Connect subcategory by ID
-        secondcategoryId: secondcategory === "DEFAULT" ? null : secondcategory, // Connect subcategory by ID
+        secondcategoryId: secondcategory === "DEFAULT" ? null : parseInt(secondcategory), // Connect subcategory by ID
         brand: brands,
         model: model,
         condition: conditions,
