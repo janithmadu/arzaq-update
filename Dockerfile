@@ -13,12 +13,13 @@ WORKDIR /app
 
 # Step 3: Copy package.json and package-lock.json for installing dependencies
 COPY package.json ./
-
+RUN npm i --save-dev @types/nprogress
 RUN rm -rf package-lock.json node_modules
 #RUN npm cache clean --force
 RUN npm install --production
 RUN npm install tailwindcss postcss autoprefixer
 RUN npm install --save-dev @types/google.maps
+
 
 
 # Step 4: Install production dependencies
@@ -29,6 +30,8 @@ RUN npm install --production
 
 # Step 5: Copy the rest of the application files
 COPY . .
+
+
 
 # Step 6: Set environment variables for production
 # These are placeholder values; ensure they are provided during build or runtime.
