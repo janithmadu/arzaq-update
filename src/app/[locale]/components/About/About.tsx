@@ -12,9 +12,24 @@ interface AboutInterface {
     contentar:string
 }
 
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+}
+
+
 function About() {
   const t = useTranslations("TopNav");
   const [About, setAbout] = useState<AboutInterface[] >([]); // Initialize with undefined
+  const [locale, setLocale] = useState("en");
+
+   useEffect(() => {
+      const cookieLocale = getCookie("NEXT_LOCALE") || "en";
+      setLocale(cookieLocale);
+    }, []);
+  
+
   useEffect(() => {
     const getAbout = async () => {
       const response = await fetch("/api/about");
@@ -24,7 +39,7 @@ function About() {
     getAbout()
   }, []);
 
-  console.log();
+  
   
   return (
     <>
@@ -52,8 +67,8 @@ function About() {
         {/* About Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">{About[0]?.title}</h2>
-            <p className="text-muted-foreground whitespace-pre-line text-wrap">{About[0]?.content}</p>
+            <h2 className="text-3xl font-bold">{locale === "en" ? About[0]?.title : About[0]?.titlear}</h2>
+            <p className="text-muted-foreground whitespace-pre-line text-wrap">{locale === "en" ? About[0]?.content : About[0]?.contentar}</p>
             
           </div>
 
