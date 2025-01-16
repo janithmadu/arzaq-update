@@ -182,7 +182,7 @@ function Fotter() {
                     You have no category
                   </div>
                 ) : (
-                  categories.map((item: any, index: number) => {
+                  categories?.map((item: any, index: number) => {
                     return (
                       <Link
                         key={index}

@@ -282,6 +282,111 @@ model secondcategory {
   @@index([subcategory_id], map: "subcategory_id")
 }
 
+model PrivacyPolicy {
+  id               Int      @id @default(autoincrement())
+  introductionEn   String   @db.VarChar(1000)
+  introductionAr   String   @db.VarChar(1000)
+  informationEn    String   @db.VarChar(2000)
+  informationAr    String   @db.VarChar(2000)
+  usagePrimaryEn   String   @db.VarChar(1000)
+  usagePrimaryAr   String   @db.VarChar(1000)
+  usageSecondaryEn String   @db.VarChar(1000)
+  usageSecondaryAr String   @db.VarChar(1000)
+  dataProtectionEn String   @db.VarChar(1000)
+  dataProtectionAr String   @db.VarChar(1000)
+  rightsEn         String   @db.VarChar(1000)
+  rightsAr         String   @db.VarChar(1000)
+  contactEn        String   @db.VarChar(500)
+  contactAr        String   @db.VarChar(500)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime
+}
+
+model TermsAndConditions {
+  id                     Int      @id @default(autoincrement())
+  agreementEn            String   @db.Text
+  agreementAr            String   @db.Text
+  intellectualPropertyEn String   @db.Text
+  intellectualPropertyAr String   @db.Text
+  userResponsibilitiesEn String   @db.Text
+  userResponsibilitiesAr String   @db.Text
+  prohibitedActivitiesEn String   @db.Text
+  prohibitedActivitiesAr String   @db.Text
+  userObligationsEn      String   @db.Text
+  userObligationsAr      String   @db.Text
+  disclaimersEn          String   @db.Text
+  disclaimersAr          String   @db.Text
+  serviceTermsEn         String   @db.Text
+  serviceTermsAr         String   @db.Text
+  acceptableUseEn        String   @db.Text
+  acceptableUseAr        String   @db.Text
+  terminationEn          String   @db.Text
+  terminationAr          String   @db.Text
+  contactInfoEn          String   @db.Text
+  contactInfoAr          String   @db.Text
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime
+}
+
+model AboutUs {
+  id        Int    @id @default(autoincrement())
+  title     String
+  content   String @db.VarChar(1000)
+  titlear   String @db.VarChar(700)
+  contentar String @db.VarChar(1000)
+  image     String
+}
+
+model HowItWorks {
+  id          Int    @id @default(autoincrement())
+  step        Int
+  title       String
+  description String
+  image       String
+}
+
+model BankDetail {
+  id                Int      @id @default(autoincrement())
+  accountHolderName String
+  bankName          String
+  accountNumber     String
+  branchCode        String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  IBAN              String
+
+  @@map("bank_details")
+}
+
+model Contact {
+  id                 Int    @id @default(autoincrement())
+  EmailTitle         String
+  Email              String
+  EmailText          String
+  PhoneTitle         String
+  Phone              String
+  PhoneTxt           String
+  OfficeHoursTitle   String
+  OpenDaysRange      String
+  OpenDaysTime       String
+  CloseDaysRange     String
+  CloseDaysTime      String
+  MainDes            String
+  MainTitle          String
+  MapLink            String @db.VarChar(1000)
+  CloseDaysRangeAr   String
+  CloseDaysTimeAr    String
+  EmailTextAr        String
+  EmailTitleAr       String
+  MainDesAr          String
+  MainTitleAr        String
+  OfficeHoursTitleAr String
+  OpenDaysRangeAr    String
+  OpenDaysTimeAr     String
+  PhoneTitleAr       String
+  PhoneTxtAr         String
+}
+
 enum postad_condition {
   New
   Used
