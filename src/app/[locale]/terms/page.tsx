@@ -7,7 +7,7 @@ import { BulletList } from '../components/Terms/BulletList';
 import { Footer } from '../components/Terms/Footer';
 import { useTranslations } from 'next-intl';
 import TermsMain from '../components/Terms/TermsMain';
-
+export const revalidate = 1;
 
 
 const Page = () => {
