@@ -12,9 +12,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Decimal from 'decimal.js';
+
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu";
+
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+
+import Decimal from "decimal.js";
 
 import { CaretDown } from "@phosphor-icons/react/dist/ssr";
+import {HoverSelect} from "./HoverSelect";
 
 export const revalidate = 1;
 
@@ -31,6 +46,14 @@ interface Category {
   slug: string; // URL-friendly identifier
   image_url: string | null; // Optional image URL, allowing null
   price: number | Decimal;
+  subcategory: [
+    {
+      title_en: string;
+      title_ar: string;
+      slug: string;
+      secondcategory: [];
+    },
+  ];
 }
 
 const CategoryBar: React.FC<CurrentLocal> = async ({
@@ -39,9 +62,9 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
   categorytitle,
 }) => {
   //get category that limit to 7
-  const getLimitedCate:any = await getlimitedCategory();
+  const getLimitedCate: any = await getlimitedCategory();
   //get all category
-  const getallCategory:any = await getAllCategory();
+  const getallCategory: any = await getAllCategory();
   const getCurentLocal = CurrentLocal;
 
   return (
@@ -79,28 +102,18 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
 
         {/* Category Bar section */}
 
-        <div className="border-l hidden   lg:flex-wrap  rtl:border-r rtl:border-l-0 rtl:gap-[24px]  xl:flex items-center space-x-[24px] px-[24px] ">
+        <div className="border-l hidden lg:flex-wrap rtl:border-r rtl:border-l-0 rtl:gap-[24px] xl:flex items-center space-x-[24px] px-[24px]">
           {getLimitedCate.length === 0 ? (
-            <div className="text-grayscale600  text-heading04 hover:text-grayscale800 hover:font-bold">
-              {" "}
+            <div className="text-grayscale600 text-heading04 hover:text-grayscale800 hover:font-bold">
               You have no category
             </div>
           ) : (
-            getLimitedCate.map((item: Category, index: number) => {
-              
-              return (
-                <Link
-                  key={index}
-                  href={`${getCurentLocal ? `/${getCurentLocal}` : ""}/ads?page=1&category=${item?.slug}`}
-                  className="text-grayscale600 text-heading04 transition duration-300 ease-in-out  hover:text-grayscale800 hover:font-bold"
-                >
-          
-                  {getCurentLocal == "en" ? item.title_en : item.title_ar}
-                </Link>
-              );
-            })
+            <div className="reletive">
+            <HoverSelect/>
+            </div>
           )}
         </div>
+
         {/* Category Bar section End */}
       </div>
     </div>

@@ -7,6 +7,13 @@ export async function getlimitedCategory() {
   try {
     const categories = await prisma.categories.findMany({
       take: 7,
+      include:{
+        subcategory:{
+          include:{
+            secondcategory:true
+          }
+        }
+      }
     });
     return categories;
   } catch (error) {

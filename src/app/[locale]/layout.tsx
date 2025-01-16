@@ -14,6 +14,7 @@ import { FloatingMenu } from "./components/ui/floating-dock";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 
+
 export const revalidate = 1;
 
 const roboto = Roboto({
