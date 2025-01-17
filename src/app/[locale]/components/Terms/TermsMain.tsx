@@ -68,7 +68,7 @@ function TermsMain() {
     getTermsData();
   }, []);
 
-  console.log(termsData);
+ 
 
   return (
     <main className="min-h-screen bg-gray-50 py-16">

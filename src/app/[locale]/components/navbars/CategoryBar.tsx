@@ -13,23 +13,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
-} from "@/components/ui/navigation-menu";
-
-import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-
 import Decimal from "decimal.js";
 
 import { CaretDown } from "@phosphor-icons/react/dist/ssr";
-import {HoverSelect} from "./HoverSelect";
+import { HoverSelect } from "./HoverSelect";
 
 export const revalidate = 1;
 
@@ -66,7 +53,8 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
   //get all category
   const getallCategory: any = await getAllCategory();
   const getCurentLocal = CurrentLocal;
-
+ 
+  
   return (
     <div className="min-h-[50px] flex items-center ">
       <div className="flex items-center rtl:gap-[24px]  space-x-[34px]">
@@ -108,8 +96,24 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
               You have no category
             </div>
           ) : (
-            <div className="reletive">
-            <HoverSelect/>
+            <div className="reletive flex gap-x-3">
+              {getLimitedCate.map((data: Category) => {
+               
+               
+                
+                return (
+                  <div key={data.id} className="flex  ">
+                    <HoverSelect
+                      Slug={data.slug}
+                      CategoryName={
+                        getCurentLocal == "en" ? data.title_en : data.title_ar
+                      }
+                      CategoryData={getLimitedCate}
+                      SubCategory={data.subcategory}
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

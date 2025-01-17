@@ -11,8 +11,7 @@ export const CheckUserLog = async () => {
   const user = await getUser();
   const userID = user?.id;
   const checkUserExsist = await CheckUserAuth(userID)
- console.log(checkUserExsist);
- 
+
   
   if (!isUserAuthenticated || checkUserExsist?.errors) {
     redirect("/api/auth/login");
