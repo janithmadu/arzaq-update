@@ -1,20 +1,20 @@
 version: '3.9'
 
 services:
-  nginx:
-    image: nginx:latest
-    container_name: nginx_proxy
-    ports:
-      - "80:80"  # Expose HTTP
-      - "443:443"  # Expose HTTPS
-    volumes:
-      - /root/arzaq-update/nginx.conf:/etc/nginx/nginx.conf:ro  # Mount the Nginx config
-      - /root/arzaq-update/certs:/etc/nginx/certs:ro  # Mount the SSL certificates
-    depends_on:
-      - arzaq_web
-    networks:
-      - web_network
-    restart: always
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx_proxy
+  #   ports:
+  #     - "80:80"  # Expose HTTP
+  #     - "443:443"  # Expose HTTPS
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf:ro  # Mount the Nginx config
+  #     # - /root/arzaq-update/certs:/etc/nginx/certs:ro  # Mount the SSL certificates
+  #   depends_on:
+  #     - arzaq_web
+  #   networks:
+  #     - web_network
+  #   restart: always
 
   arzaq_web:
     image: arzaq_web:latest  # Use your built image
@@ -22,27 +22,32 @@ services:
     build:
       context: .  # Ensure your Dockerfile is in the current directory
     ports:
-      - "3000:3000"  # Expose port 3000 to access the web app on the host
+      - "3000:3000"  # Map port 3000 on the host to port 3000 in the container
+    env_file:
+      - .env.local,.env  # If you're using an .env file
     environment:
-      - DATABASE_URL=mysql://arzaq:OCloud@4.0@195.35.23.27:3306/trial_arzaq
-      - BASEURL="http://localhost:3000/"
-      - KINDE_ISSUER_URL=https://gshop.kinde.com
-      - KINDE_SITE_URL=http://localhost:3000
-      - KINDE_POST_LOGOUT_REDIRECT_URL=http://localhost:3000/
-      - KINDE_POST_LOGIN_REDIRECT_URL=http://localhost:3000/
-      - MAINURL=http://localhost:3000/
-      - CLOUDINARY_CLOUD_NAME=dsyiarmrd
-      - NEXT_PUBLIC_UPLOAD_PRESET=ARZAQ
-      - NEXT_PUBLIC_CLOUDINARY_API_KEY=331171635778625
-      - CLOUDINARY_API_SECRET=NGBGQ-dAnkQgScEIq0gRff7Pdpk
-      - KINDE_DOMAIN=https://gshop.kinde.com
-      - KINDE_MANAGEMENT_CLIENT_ID=e6115a52df3345d99e0c993f46974a1b
-      - KINDE_MANAGEMENT_CLIENT_SECRET=BGOFIXHREJxcCRxDVeaxKExJJQ2f82j0FT1NMLsJ6dCWm5X6mna6
-      - KINDE_CLIENT_ID=98c6db135e7b40118cbd3f9834427b40
-      - KINDE_CLIENT_SECRET=4O1xJYRVSsCXpIpvsoipRImScL7o6UOotsibKbnDyTHWJbZvdO
+      - DATABASE_URL=${DATABASE_URL}
+      - SHADOW_DATABASE_URL=${SHADOW_DATABASE_URL}
+      - BASEURL=${BASEURL}
+      - NEXT_PUBLIC_SANITY_PROJECT_ID=${NEXT_PUBLIC_SANITY_PROJECT_ID}
+      - NEXT_PUBLIC_SANITY_DATASET=true
+      - NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN=${NEXT_PUBLIC_SANITY_USER_ADDER_TOKEN}
+      - NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
+      - NEXT_PUBLIC_UPLOAD_PRESET=${NEXT_PUBLIC_UPLOAD_PRESET}
+      - NEXT_PUBLIC_CLOUDINARY_API_KEY=${NEXT_PUBLIC_CLOUDINARY_API_KEY}
+      - CLOUDINARY_API_SECRET=${CLOUDINARY_API_SECRET}
+      - KINDE_CLIENT_ID=${KINDE_CLIENT_ID}
+      - KINDE_CLIENT_SECRET=${KINDE_CLIENT_SECRET}
+      - KINDE_ISSUER_URL=${KINDE_ISSUER_URL}
+      - KINDE_SITE_URL=${KINDE_SITE_URL}
+      - KINDE_POST_LOGOUT_REDIRECT_URL=${KINDE_POST_LOGOUT_REDIRECT_URL}
+      - KINDE_POST_LOGIN_REDIRECT_URL=${KINDE_POST_LOGIN_REDIRECT_URL}
+      - NEXT_PUBLIC_KINDE_CONNECTION_EMAIL_PASSWORDLESS=${NEXT_PUBLIC_KINDE_CONNECTION_EMAIL_PASSWORDLESS}
+      - NEXT_PUBLIC_KINDE_CONNECTION_EMAIL_PASSWORD=${NEXT_PUBLIC_KINDE_CONNECTION_EMAIL_PASSWORD}
+      - NEXT_PUBLIC_KINDE_CONNECTION_GOOGLE=${NEXT_PUBLIC_KINDE_CONNECTION_GOOGLE}
     networks:
-      - web_network
-    restart: always
+      - web_network  # Ensure this network exists in the same file or is defined elsewhere
+    restart: always  # Restart policy for container resilience
 
 networks:
   web_network:
