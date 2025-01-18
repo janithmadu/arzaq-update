@@ -43,7 +43,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
                   height={150}
                   alt={data.title_en}
                   src={data.image_url || "/defultimage.png"}
-                  className=" w-[70px] h-[70px]"
+                  className=" w-[270px] h-[150px]"
                 />
               </div>
 
