@@ -326,6 +326,7 @@ export default function FilterBySubs() {
 
                 <div className="inline sm:hidden">
                   <ProfileAdCard
+                  id={ad.id}
                     state={ad.state}
                     image={ad.postad_photos[0]?.photoUrl}
                     price={ad.price}

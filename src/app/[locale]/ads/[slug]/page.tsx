@@ -31,13 +31,16 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function AdDetailsPage({ params }: { params: { slug: string } }) {
   const GetAdByID: any = await getAdById(params.slug);
 
+  console.log();
+  
+
   const adTitile = GetAdByID?.adName;
   const AddCratedDate = GetAdByID?.createdAt;
   const Price = GetAdByID?.price;
   const currency = GetAdByID?.currency;
   const Options = GetAdByID?.postad_options;
   const Description = GetAdByID?.description;
-  const UserName = GetAdByID?.user.name;
+  const UserName = GetAdByID?.user?.name;
   const UserEmail = GetAdByID?.user.email;
   const UserAvatar = GetAdByID?.user.avatarUrl;
   const PhoneNumber = GetAdByID?.phoneNumber;
