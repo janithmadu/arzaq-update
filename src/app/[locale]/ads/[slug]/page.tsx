@@ -9,33 +9,26 @@ import PriceSection from "../../components/Ads/SingleAds/PriceSection";
 import ProductOverwiew from "../../components/Ads/SingleAds/ProductOverwiew";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { GetUsers } from "../../actions/usersAction";
+import { Metadata } from "next";
 
-export const revalidate = 1;
 
-async function updateAdViewCount(adId: number) {
-  try {
-    const response = await fetch(`${process.env.BASEURL}/api/ads/${adId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+// Dynamically generate metadata for the page
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const GetAdByID: any = await getAdById(params.slug);
 
-    if (response.ok) {
-      const data = await response.json();
-    } else {
-      console.error("Failed to update view count:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  const adTitle = GetAdByID?.adName || "Ad Details"; // Default title if adName is unavailable
+  const description =
+    GetAdByID?.description ||
+    "Explore this ad on Q8ARZAQ. Discover amazing deals and connect with sellers in Kuwait.";
+
+  return {
+    title: `${adTitle} - Q8ARZAQ | Buy & Sell in Kuwait`,
+    description,
+  };
 }
 
-export default async function AdDetailsPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+// Main Page Component
+export default async function AdDetailsPage({ params }: { params: { slug: string } }) {
   const GetAdByID: any = await getAdById(params.slug);
 
   const adTitile = GetAdByID?.adName;
@@ -62,95 +55,89 @@ export default async function AdDetailsPage({
   const UserID = user?.id;
   const AdID = GetAdByID?.id;
   const ViewCount = GetAdByID?.ad_views;
-  const CuUserID = await GetUsers(user?.id)
-  updateAdViewCount(AdID);
-  
+  const CuUserID = await GetUsers(user?.id);
+
+  // Update ad view count
+  //await updateAdViewCount(AdID);
+
   return (
-    <>
-      {/* {AdID && <UpdateViewCount adId={AdIDNew} />} */}
-      <div className="min-w-full min-h-full bg-white">
-        <div className="container mx-auto  px-5 rtl:gap-20  lg:px-5 xl:px-20 md:px-10 flex space-x-6 flex-col lg:flex-row ">
-          <div className="flex-1 lg:min-w-[572px] mb-10 xl:min-w-[672px] 2xl:min-w-[872px] flex flex-col gap-x-[36px] mt-3">
-            <HeaderSection
-              Titile={adTitile as string}
-              CreatedDate={AddCratedDate}
-              VerifiedSeller={VerifiedSeller}
-              Member={Member as any}
-              userID={CuUserID?.id}
-              id={AdID as number}
-              ViewCount={ViewCount?.[0]?.viewCount || 0}
-            />
+    <div className="min-w-full min-h-full bg-white">
+      <div className="container mx-auto px-5 rtl:gap-20 lg:px-5 xl:px-20 md:px-10 flex space-x-6 flex-col lg:flex-row">
+        <div className="flex-1 lg:min-w-[572px] mb-10 xl:min-w-[672px] 2xl:min-w-[872px] flex flex-col gap-x-[36px] mt-3">
+          <HeaderSection
+            Titile={adTitile as string}
+            CreatedDate={AddCratedDate}
+            VerifiedSeller={VerifiedSeller}
+            Member={Member as any}
+            userID={CuUserID?.id}
+            id={AdID as number}
+            ViewCount={ViewCount?.[0]?.viewCount || 0}
+          />
 
-            <ImageGallery images={GetAdByID?.postad_photos} />
+          <ImageGallery images={GetAdByID?.postad_photos} />
 
-            <DescriptionAds
-              Options={Options}
-              description={Description as string}
-              Features={Features}
+          <DescriptionAds
+            Options={Options}
+            description={Description as string}
+            Features={Features}
+            price={Price as any}
+            currency={currency as string}
+            negotiable={Negotiable as boolean}
+            UserID={UserID as string}
+            id={AdID as number}
+            model={Model as string}
+            state={State as string}
+            condition={Condition as string}
+            brand={Brand as string}
+            authenticity={Authenticity as string}
+            PhoneNumber={PhoneNumber}
+            name={UserName as string}
+            email={UserEmail as string}
+            UserAvatar={UserAvatar}
+            ClientUserID={GetAdByID?.user?.userexid}
+            verifiedSeller={VerifiedSeller as boolean}
+            member={Member as any}
+          />
+        </div>
+
+        <div className="flex-1 min-w-[424px] hidden lg:inline">
+          <div className="w-[424px] border py-[36px] rounded-[12px]">
+            <PriceSection
               price={Price as any}
               currency={currency as string}
               negotiable={Negotiable as boolean}
-              UserID={UserID as string}
+              userID={CuUserID?.id}
               id={AdID as number}
+            />
+            <ProductOverwiew
               model={Model as string}
               state={State as string}
               condition={Condition as string}
               brand={Brand as string}
               authenticity={Authenticity as string}
-              PhoneNumber={PhoneNumber}
-              name={UserName as string}
-              email={UserEmail as string}
-              UserAvatar={UserAvatar}
-              ClientUserID={GetAdByID?.user?.userexid}
-              verifiedSeller={VerifiedSeller as boolean}
-              member={Member as any}
             />
-          </div>
+            <div className="px-[32px] mt-[32px]">
+              <ContactSection
+                email={UserEmail as string}
+                PhoneNumber={PhoneNumber as string}
+              />
+            </div>
 
-          <div className="flex-1  min-w-[424px] hidden lg:inline">
-            <div className="w-[424px]  border  py-[36px] rounded-[12px]">
-              <PriceSection
-                price={Price as any}
-                currency={currency as string}
-                negotiable={Negotiable as boolean}
-                userID={CuUserID?.id}
-                id={AdID as number}
-              />
-              <ProductOverwiew
-                model={Model as string}
-                state={State as string}
-                condition={Condition as string}
-                brand={Brand as string}
-                authenticity={Authenticity as string}
-              />
-              <div className="px-[32px] mt-[32px]">
-                {/* Contact Buttons */}
-                <ContactSection
+            <div className="mt-[32px]">
+              <div className="px-[32px] border-t border-b mt-[32px] py-[32px]">
+                <SellerInfo
+                  name={UserName as string}
                   email={UserEmail as string}
-                  PhoneNumber={PhoneNumber as string}
+                  UserAvatar={UserAvatar as string}
+                  UserID={GetAdByID?.user?.userexid}
+                  member={Member as any}
+                  VerifiedSeller={VerifiedSeller as boolean}
                 />
-              </div>
-
-              <div className="mt-[32px]">
-                <div className="px-[32px] border-t border-b mt-[32px] py-[32px]">
-                  <SellerInfo
-                    name={UserName as string}
-                    email={UserEmail as string}
-                    UserAvatar={UserAvatar as string}
-                    UserID={GetAdByID?.user?.userexid}
-                    member={Member as any}
-                    VerifiedSeller={VerifiedSeller as boolean}
-                  />
-                </div>
-
-                {/* <div className="px-[32px] py-[32px] flex flex-col gap-y-[18px]">
-                 
-                </div> */}
               </div>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -1,13 +1,15 @@
-import React from 'react';
 
-import { Book, Shield, Scale, MessageSquare, AlertCircle, CheckCircle2, Handshake, BadgeAlert } from 'lucide-react';
-import { PageHeader } from '../components/Terms/PageHeader';
-import { Section } from '../components/Terms/Section';
-import { BulletList } from '../components/Terms/BulletList';
-import { Footer } from '../components/Terms/Footer';
 import { useTranslations } from 'next-intl';
 import TermsMain from '../components/Terms/TermsMain';
+import { Metadata } from 'next';
 export const revalidate = 1;
+
+export const metadata: Metadata = {
+  title:
+    "Terms and Conditions - Q8ARZAQ | Guidelines for Using Our Ad Platform in Kuwait",
+  description:
+    "Review the terms and conditions of using Q8ARZAQ’s platform. Understand the rules and guidelines for posting ads, buying, selling, and using our services securely and responsibly.",
+};
 
 
 const Page = () => {

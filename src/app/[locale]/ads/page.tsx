@@ -1,11 +1,7 @@
-//import AdsCategory from "../components/AdsPriview/AdsCategory/AdsCategory";
+
 
 import { getCategoryAndSubcategory } from "../actions/getCategories";
 import { getSubCategoryOptions } from "../actions/getSubCategories";
-
-//import FilterBySubs from "../components/AdsPriview/GetAds/FilterBySubs";
-// import AdsSubOptions from "../components/AdsPriview/AdsCategory/AdsSubOptions";
-// import AddPriceFilter from "../components/AdsPriview/AdsCategory/AddPriceFilter";
 import {
   Sheet,
   SheetContent,
@@ -16,6 +12,14 @@ import dynamic from "next/dynamic";
 
 import { FunnelSimple, ListBullets } from "@phosphor-icons/react/dist/ssr";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title:
+    "Browse Ads on Q8ARZAQ - Find the Best Deals in Kuwait",
+  description:
+    "Explore thousands of ads on Q8ARZAQ. Find the best deals on products and services across Kuwait. Connect directly with sellers and buyers for a seamless experience!",
+};
 
 
 export const revalidate = 1;

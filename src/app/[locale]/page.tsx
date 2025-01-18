@@ -9,8 +9,16 @@ import MobileApp from "./components/MobileApp/MobileApp";
 import { UserRegistration } from "./actions/usersAction";
 import HomePagecard from "./components/HomePagecard/HomePagecard";
 import HomePageTipSection from "./components/HomePageTipSection/HomePageTipSection";
+import { Metadata } from "next";
 
 export const revalidate = 1;
+
+export const metadata: Metadata = {
+  title:
+    "Q8ARZAQ - Kuwait’s #1 Ad Listing Platform | Buy, Sell, and Advertise Now",
+  description:
+    "Welcome to Q8ARZAQ, Kuwait’s premier ad listing platform. Easily post ads, buy, sell, and advertise products or services. Explore thousands of listings and connect with buyers and sellers across Kuwait!",
+};
 
 interface GetPostD {
   subcategoryId: {
