@@ -56,7 +56,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
       {/* Trigger */}
       <div
         className={cn(
-          "cursor-pointer px-3 py-2 transition-all duration-200",
+          "cursor-pointer px-3 py-2 lg:text-xs 2xl:text-sm transition-all duration-200 font-bold",
           "hover:bg-gray-50",
           "border-b-2 border-transparent",
           activeDropdowns.main && "border-primary"
@@ -73,7 +73,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
       {SubCategory && SubCategory.length > 0 && (
         <div
           className={cn(
-            "absolute top-full mt-1 -right-[100px]",
+            "absolute top-full  z-[9999] right-0",
             "bg-white rounded-lg shadow-lg w-60",
             "transform transition-all duration-200 origin-top-right",
             "border border-gray-100",
@@ -108,7 +108,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
               {category.secondcategory && category.secondcategory.length > 0 && (
                 <div
                   className={cn(
-                    "absolute left-full top-0 ml-1",
+                    "absolute left-full top-0 z-[9999]",
                     "bg-white rounded-lg shadow-lg w-60",
                     "transform transition-all duration-200 origin-top-left",
                     "border border-gray-100",

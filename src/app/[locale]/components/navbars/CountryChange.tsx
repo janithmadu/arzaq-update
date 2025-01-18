@@ -91,7 +91,7 @@ function CountryChange() {
 
   return (
     <>
-      <div className="flex items-center justify-between min-w-full md:min-w-0 md:space-x-5 md:justify-end rtl:gap-10 border-l pl-2">
+      <div className="flex items-center">
         <button
           onClick={() =>
             handleLanguageSwitch(languages[locale].nextLocale as "en" | "ar")
@@ -100,7 +100,7 @@ function CountryChange() {
         >
           <Image width={25} src={flgimage} alt={languages[locale].nextLocale} />
         </button>
-        <Link href={`/${locale}/commercial?slug=all`}>{t("Commercial")}</Link>
+       
       </div>
       {loading && <Loading />}
     </>

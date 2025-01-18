@@ -79,7 +79,7 @@ const Searchbar = (searchStyle:SearchStyle) => {
           type="text"
           value={query}
           onChange={handleSearch}
-          className= {`${searchStyle.searchStyle} px-10 min-w-full  xl:min-w-[536px] lg:min-w-[536px] min-h-[52px] border-[#EBEEF7] border rounded-[5px]`}
+          className= {`${searchStyle.searchStyle} px-10 sm:min-h-[52px] md:min-w-[336px] md:min-h-[52px] lg:min-w-[436px]  lg:min-h-[52px] border-[#EBEEF7] border rounded-[5px]`}
           placeholder={t("SearchBarPlaceHolder")}
         />
       </div>

@@ -56,11 +56,38 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
  
   
   return (
-    <div className="min-h-[50px] flex items-center ">
-      <div className="flex items-center rtl:gap-[24px]  space-x-[34px]">
+   
+      <div className="flex items-center rtl:gap-[24px]  ">
+      <div className=" hidden lg:flex-wrap   rtl:gap-[24px] xl:flex items-center space-x-[24px] ">
+          {getLimitedCate.length === 0 ? (
+            <div className="text-grayscale600 text-heading04 hover:text-grayscale800 hover:font-bold">
+              You have no category
+            </div>
+          ) : (
+            <div className="reletive flex gap-x-3">
+              {getLimitedCate.map((data: Category) => {
+               
+               
+                
+                return (
+                  <div key={data.id} className=" ">
+                    <HoverSelect
+                      Slug={data.slug}
+                      CategoryName={
+                        getCurentLocal == "en" ? data.title_en : data.title_ar
+                      }
+                      CategoryData={getLimitedCate}
+                      SubCategory={data.subcategory}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
         {/* Select category section */}
 
-        <DropdownMenu>
+        {/* <DropdownMenu>
           <DropdownMenuTrigger
             className={` hidden text-[8px] md:text-bodysmall rounded-lg text-black gap-x-2  px-1 justify-center py-2  md:flex items-center transition duration-300 ease-in-out hover:bg-grayscale200 hover:shadow-lg min-w-[90px] md:min-w-[140px] `}
           >
@@ -84,43 +111,17 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
               );
             })}
           </DropdownMenuContent>
-        </DropdownMenu>
+        </DropdownMenu> */}
 
         {/* Select category section End */}
 
         {/* Category Bar section */}
 
-        <div className="border-l hidden lg:flex-wrap rtl:border-r rtl:border-l-0 rtl:gap-[24px] xl:flex items-center space-x-[24px] px-[24px]">
-          {getLimitedCate.length === 0 ? (
-            <div className="text-grayscale600 text-heading04 hover:text-grayscale800 hover:font-bold">
-              You have no category
-            </div>
-          ) : (
-            <div className="reletive flex gap-x-3">
-              {getLimitedCate.map((data: Category) => {
-               
-               
-                
-                return (
-                  <div key={data.id} className="flex  ">
-                    <HoverSelect
-                      Slug={data.slug}
-                      CategoryName={
-                        getCurentLocal == "en" ? data.title_en : data.title_ar
-                      }
-                      CategoryData={getLimitedCate}
-                      SubCategory={data.subcategory}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
+       
 
         {/* Category Bar section End */}
       </div>
-    </div>
+    
   );
 };
 

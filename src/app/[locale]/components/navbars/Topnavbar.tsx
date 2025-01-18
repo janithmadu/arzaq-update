@@ -40,10 +40,10 @@ const Topnavbar: React.FC<User> = ({ user }) => {
   const t = useTranslations("TopNav");
 
   return (
-    <div className="bg-white">
+    <div className="bg-white border-b-[#EBEEF7] border">
       <div className="min-w-full flex flex-col justify-start border-b-[#EBEEF7] border bg-white">
         {/* Top Nav Start */}
-        <div className=" container mx-auto px-5 lg:px-5 xl:px-20 md:px-10 min-h-[100px] flex md:gap-10 items-center justify-between ">
+        <div className=" container mx-auto px-5 lg:px-5 xl:px-20 md:px-5 min-h-[80px] flex md:gap-10 items-center justify-between ">
           {/* Logo */}
           <Link href={`${locale == "en" ? "/en" : "/ar"}`}>
             <Image
@@ -56,10 +56,11 @@ const Topnavbar: React.FC<User> = ({ user }) => {
           </Link>
 
           {/* Search Box */}
-          <Searchbar searchStyle="hidden md:inline" />
+          <Searchbar searchStyle="hidden sm:inline" />
 
           {/* Top Nav Button Section */}
-          <div className=" flex md:min-w-[243px] space-x-[20px] rtl:gap-[20px]">
+          <div className=" flex  space-x-[20px] rtl:gap-[20px]">
+          <CountryChange />
             {user?.id ? (
               <UserSetting
                 picture={user.picture}
@@ -72,11 +73,11 @@ const Topnavbar: React.FC<User> = ({ user }) => {
               />
             ) : (
               <>
-                <button className="hidden md:inline min-w-[92px] min-h-[50px] rounded-[4px] bg-[#6f68a8] text-white text-[16px] font-bold">
+                <button className="hidden md:inline  rounded-[4px]  text-[#312783] text-[16px] font-bold">
                   <LoginLink>{t("SignIn")}</LoginLink>
                 </button>
 
-                <button className=" hidden xl:inline min-w-[92px] min-h-[50px] rounded-[4px] bg-[#6f68a8] text-white text-[16px] font-bold">
+                <button className=" hidden xl:inline rounded-[4px]  text-[#312783] text-[16px] font-bold">
                   <RegisterLink>{t("SignUp")}</RegisterLink>
                 </button>
 
@@ -89,31 +90,32 @@ const Topnavbar: React.FC<User> = ({ user }) => {
             )}
 
             <Link
-              className=" hidden min-w-[139px] min-h-[5px] md:flex items-center justify-center bg-[#312783] text-grayscalewhite font-bold rounded-[4px] transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
+              className=" hidden p-[6px] lg:min-w-[139px] min-h-[5px] md:flex items-center justify-center bg-[#312783] text-grayscalewhite font-bold rounded-full lg:rounded-[4px] transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
               href={`/${locale}/addform/step01`}
             >
               <div className=" flex space-x-[8px] rtl:gap-[8px]">
-                <PlusCircle className="min-w-[24px] min-h-[24px]" />
-                <h1>{t("PostAds")}</h1>
+                <PlusCircle className="lg:min-w-[24px] min-w-[24px] min-h-[24px] lg:min-h-[24px]" />
+                <h1 className="lg:inline-block hidden">{t("PostAds")}</h1>
               </div>
             </Link>
           </div>
         </div>
 
-        <div className="sm:hidden relative min-w-full flex justify-center mb-2 rounded-full px-2  ">
-          <Searchbar searchStyle="px-10min-h-[52px] border-[#312783] border rounded-full" />
+        <div className="sm:hidden relative min-w-[20px] flex justify-center mb-2 rounded-full px-2  ">
+          <Searchbar searchStyle="px-10  min-h-[52px] border-[#312783] border rounded-full" />
         </div>
       </div>
       {/* Top Nav End */}
 
-      <div className="container mx-auto lg:px-5  px-5 xl:px-20 md:px-10">
-        <div className="min-w-full min-h-[78px] flex items-center md:justify-between">
+      <div className="container  mx-auto px-5 lg:px-5 xl:px-20 md:px-5  flex md:gap-10 items-center justify-between">
+        <div className="  flex items-center xl:space-x-10">
           <CategoryBar
             CurrentLocal={locale}
             t={t("SelectYourCategory")}
             categorytitle={t("categorytitle")}
           />
-          <CountryChange />
+          
+           <Link className="text-sm font-bold py-3" href={`/${locale}/commercial?slug=all`}>{t("Commercial")}</Link>
         </div>
       </div>
     </div>
