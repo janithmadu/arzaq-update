@@ -39,8 +39,8 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
             >
               <div className=" min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[115px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                 <Image
-                  width={70}
-                  height={70}
+                  width={270}
+                  height={150}
                   alt={data.title_en}
                   src={data.image_url || "/defultimage.png"}
                   className=" w-[70px] h-[70px]"
