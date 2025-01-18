@@ -50,9 +50,7 @@ export default function FilterBySubs() {
   }, []);
 
   const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength
-      ? text.slice(0, maxLength) + "..."
-      : text;
+    return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
   };
 
   useEffect(() => {
@@ -203,7 +201,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "hidden" : "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-x-3 "}`}
+          className={`${titleSubCategory ? "hidden" : "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-x-3 "}`}
         >
           {subcategory[0].subcategory.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -217,16 +215,16 @@ export default function FilterBySubs() {
               <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
-                  className="min-w-[80px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
+                  className="min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
                   onClick={() => handleSubcategoryChange(data.slug)} // Trigger the change on click
                 >
-                  <div className="min-w-full flex justify-center items-center">
+                 <div className=" min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[115px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                     <Image
                       width={270}
                       height={150}
                       alt={data.title_en}
-                      src={data.image || "/photo.png"}
-                       className=" w-[270px] h-[150px]"
+                      src={data.image || "/defultimage.png"}
+                      className=" w-[270px] h-[150px]"
                     />
                   </div>
                 </div>
@@ -254,7 +252,7 @@ export default function FilterBySubs() {
       </h1>
       {subcategory && subcategory[0] ? (
         <div
-          className={`${titleSubCategory ? "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-9 gap-x-3" : " hidden"}`}
+          className={`${titleSubCategory ? "grid grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8 gap-x-3" : " hidden"}`}
         >
           {Secondcategory?.map((data: any, index: number) => {
             // Utility function to truncate text
@@ -268,15 +266,15 @@ export default function FilterBySubs() {
               <div className="flex flex-col items-center" key={data.id}>
                 <div
                   key={index}
-                  className="min-w-[80px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer"
+                  className="min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[150px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col cursor-pointer "
                   onClick={() => handleSecondcategoryChange(data.id)} // Trigger the change on click
                 >
-                  <div className="min-w-full flex justify-center items-center">
+                    <div className=" min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[115px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                     <Image
                       width={270}
                       height={150}
                       alt={data.title_en}
-                      src={data.image || "/photo.png"}
+                      src={data.image || "/defultimage.png"}
                       className=" w-[270px] h-[150px]"
                     />
                   </div>
@@ -333,7 +331,7 @@ export default function FilterBySubs() {
                     price={ad.price}
                     timestamp={ad.createdAt}
                     timedate={true}
-                    title={truncateText(ad.adName,30)}
+                    title={truncateText(ad.adName, 30)}
                     category={
                       locale == "en"
                         ? ad.category.title_en
