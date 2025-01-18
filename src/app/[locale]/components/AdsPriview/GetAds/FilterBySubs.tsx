@@ -222,11 +222,11 @@ export default function FilterBySubs() {
                 >
                   <div className="min-w-full flex justify-center items-center">
                     <Image
-                      width={90}
-                      height={90}
+                      width={270}
+                      height={150}
                       alt={data.title_en}
                       src={data.image || "/photo.png"}
-                      className="w-[70px] h-[70px]"
+                       className=" w-[270px] h-[150px]"
                     />
                   </div>
                 </div>
@@ -273,11 +273,11 @@ export default function FilterBySubs() {
                 >
                   <div className="min-w-full flex justify-center items-center">
                     <Image
-                      width={100}
-                      height={100}
+                      width={270}
+                      height={150}
                       alt={data.title_en}
                       src={data.image || "/photo.png"}
-                      className="w-[70px] h-[70px]"
+                      className=" w-[270px] h-[150px]"
                     />
                   </div>
                 </div>

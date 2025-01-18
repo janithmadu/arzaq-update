@@ -30,12 +30,13 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
 
       {/* Main Grid */}
 
-      <div className="grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6  gap-3 ">
+      <div className="grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6  gap-5 ">
         {getCategory.map((data: Category, index: number) => {
           return (
             <Link
               key={index}
               href={`${locale}/ads?page=1&category=${data?.slug}`}
+               className="flex flex-col gap-y-5"
             >
               <div className=" min-w-[90px] max-h-[70px] md:min-w-[120px] md:min-h-[115px] bg-[#f7f8fa] rounded-lg flex justify-center items-center flex-col space-y-3 ">
                 <Image
