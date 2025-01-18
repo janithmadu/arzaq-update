@@ -29,6 +29,8 @@ RUN npm install --production
 
 # Step 5: Copy the rest of the application files
 COPY . .
+COPY .env .env
+COPY .env.local .env.local
 
 
 
