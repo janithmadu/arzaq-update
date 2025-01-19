@@ -14,11 +14,11 @@ const nextConfig = {
   output: "standalone",
 
   env: {
-    KINDE_SITE_URL: process.env.KINDE_SITE_URL ?? `https://q8arzaq.com`,
+    KINDE_SITE_URL: process.env.KINDE_SITE_URL ?? `https://www.q8arzaq.com`,
     KINDE_POST_LOGOUT_REDIRECT_URL:
-      process.env.KINDE_POST_LOGOUT_REDIRECT_URL ?? `https://q8arzaq.com`,
+      process.env.KINDE_POST_LOGOUT_REDIRECT_URL ?? `https://www.q8arzaq.com`,
     KINDE_POST_LOGIN_REDIRECT_URL:
-      process.env.KINDE_POST_LOGIN_REDIRECT_URL ?? `https://q8arzaq.com`,
+      process.env.KINDE_POST_LOGIN_REDIRECT_URL ?? `https://www.q8arzaq.com`,
   },
 };
 
