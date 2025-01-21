@@ -6,6 +6,9 @@ export async function getlimitedCategory() {
   const prisma = new PrismaClient();
   try {
     const categories = await prisma.categories.findMany({
+      orderBy: {
+        position: 'asc',
+      },
       
       include:{
         subcategory:{
@@ -42,6 +45,9 @@ export async function getAllCategory() {
 
   try {
     const categories = await prisma.categories.findMany({
+      orderBy: {
+        position: 'asc',
+      },
       select: {
         id: true,
         title_en: true,
