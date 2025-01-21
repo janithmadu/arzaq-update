@@ -60,7 +60,7 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
       <div className="flex items-center rtl:gap-[24px]  ">
       <div className=" hidden lg:flex-wrap   rtl:gap-[24px] xl:flex items-center space-x-[24px] ">
           {getLimitedCate.length === 0 ? (
-            <div className="text-grayscale600 text-heading04 hover:text-grayscale800 hover:font-bold">
+            <div className="BodyTextColor text-heading04 hover:BodyTextColor hover:font-bold">
               You have no category
             </div>
           ) : (

@@ -87,6 +87,21 @@ function CountryChange() {
     const currentLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
     setLocale(currentLocale);
     setFlgImage(segments[1] === "en" ? Arab : UKflag);
+    const getColor = async()=>{
+      const getColorRes = await fetch("/api/getcolor")
+      const getColorData = await getColorRes.json()
+      document.documentElement.style.setProperty('--primaryColor',getColorData[0].primaryColor);
+      document.documentElement.style.setProperty('--TitleTextColor',getColorData[0].TitleTextColor);
+      document.documentElement.style.setProperty('--BodyTextColor',getColorData[0].BodyTextColor);
+      document.documentElement.style.setProperty('--FooterColor',getColorData[0].FooterColor);
+      document.documentElement.style.setProperty('--WhiteColor',getColorData[0].WhiteColor);
+      document.documentElement.style.setProperty('--WarningRed',getColorData[0].WarningRed);
+      document.documentElement.style.setProperty('--InfoGreen',getColorData[0].InfoGreen);
+      document.documentElement.style.setProperty('--WhatsAppButtion',getColorData[0].WhatsAppButtion);
+      
+    }
+    getColor()
+    
   }, [pathname]); // Added `pathname` as a dependency
 
   return (

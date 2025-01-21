@@ -98,13 +98,13 @@ function Fotter() {
   
 
   return (
-    <div className="min-w-full min-h-[486px] bg-grayscale900">
+    <div className="min-w-full min-h-[486px] FooterColor">
       <div className="items-center min-h-[414px] flex flex-col justify-center ">
         <div className="min-h-[216px]  min-w-full flex items-center  ">
           <div className="container mx-auto  p-5  lg:px-20 xl:px-64 md:px-10  grid     sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-5 min-w-full xl:place-items-center  min-h-[216px]">
             <div className="min-w-[124px] md:min-w-[347px] max-h-[216px]  flex justify-start items-center ">
               <div className="flex flex-col min-h-[216px] space-y-[32px]">
-                <h1 className="text-heading02 font-bold text-grayscalewhite">
+                <h1 className="text-heading02 font-bold mainColorText">
                   <Image
                     src={logoData?.logo || "/logo.png"}
                     width={100}
@@ -116,13 +116,13 @@ function Fotter() {
 
                 <div className="min-w-[124px] md:min-w-[347px] min-h-[120px] ">
                   <div className="max-w-[312px] max-h-[47px] flex flex-col space-y-[12px] ">
-                    <p className="text-bodymedium text-grayscale500 text-wrap">
+                    <p className="text-bodymedium BodyTextColor text-wrap">
                     {t("Address")}: {footerData?.address || "N/A"}
                     </p>
-                    <p className="text-bodymedium text-grayscale500 text-wrap">
+                    <p className="text-bodymedium BodyTextColor text-wrap">
                     {t("Phone")}: {footerData?.phoneNumber || "N/A"}
                     </p>
-                    <p className="text-bodymedium text-grayscale500 text-wrap">
+                    <p className="text-bodymedium BodyTextColor text-wrap">
                     {t("Mail")}: {footerData?.email || "N/A"}
                     </p>
                   </div>
@@ -131,50 +131,50 @@ function Fotter() {
             </div>
 
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">{t("Supports")}</h1>
+              <h1 className="WhiteColorText text-bodylarge">{t("Supports")}</h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
                 <Link
                   href={`/${locale}/contact`}
-                  className="text-grayscale500 text-bodymedium"
+                  className="BodyTextColor text-bodymedium"
                 >
                   {t("Contact")}
                 </Link>
                 <Link
                   href={`/${locale}/faqs`}
-                  className="text-grayscale500 text-bodymedium"
+                  className="BodyTextColor text-bodymedium"
                 >
                   {t("FAQs")}
                 </Link>
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">
+              <h1 className="WhiteColorText text-bodylarge">
               {t("QuickLinks")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
                 <Link
                   href={`/${locale}/about`}
-                  className="text-grayscale500 text-bodymedium"
+                  className="BodyTextColor text-bodymedium"
                 >
                   {t("AboutUs")}
                 </Link>
                 <Link
                   href={`/${locale}/addform/step01`}
-                  className="text-grayscale500 text-bodymedium"
+                  className="BodyTextColor text-bodymedium"
                 >
                  {t("PostAnAd")}
                 </Link>
 
                 <Link
                   href={`/${locale}/ads?page=1`}
-                  className="text-grayscale500 text-bodymedium"
+                  className="BodyTextColor text-bodymedium"
                 >
                   {t("AllAdss")}
                 </Link>
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">{t("Categoryfotter")}</h1>
+              <h1 className="WhiteColorText text-bodylarge">{t("Categoryfotter")}</h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col ">
                 {categories.length === 0 ? (
                   <div className="text-grayscale600  text-heading04 hover:text-grayscale800 hover:font-bold">
@@ -187,7 +187,7 @@ function Fotter() {
                       <Link
                         key={index}
                         href={`${locale ? `/${locale}` : ""}/ads?page=1&category=${item?.slug?.current}`}
-                        className="text-grayscale500 text-bodymedium"
+                        className="BodyTextColor text-bodymedium"
                       >
                         
                         {locale == "en" ? item.title_en : item.title_ar}
@@ -199,7 +199,7 @@ function Fotter() {
             </div>
 
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
-              <h1 className="text-grayscalewhite text-bodylarge">
+              <h1 className="WhiteColorText text-bodylarge">
               {t("DownloadOurApp")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[32px] flex-col ">
@@ -229,9 +229,9 @@ function Fotter() {
       <div className="container mx-auto  px-5  lg:px-20 xl:px-56 md:px-10   min-w-full  min-h-[72px] bg-grayscale800 flex items-center justify-between md:flex-row flex-col text-center md:text-start ">
         <h1 className="text-bodymedium text-gray-500">
         {t("ArzaqClassifiedListing")} © 2024. {t("DesignBy")}{" "}
-          <span className="text-grayscalewhite">Infinite Open</span>
+          <span className="WhiteColorText">Infinite Open</span>
         </h1>
-        <div className="flex text-grayscale500 space-x-[29px]">
+        <div className="flex BodyTextColor space-x-[29px]">
           <Link href={`/${locale}/privacy`}>{t("PrivacyPolicy")}</Link>
           <Link href={`/${locale}/terms`}>{t("TermsAndCondition")}</Link>
         </div>

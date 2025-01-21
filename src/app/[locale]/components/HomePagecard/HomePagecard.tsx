@@ -35,9 +35,9 @@ export default async function HomePagecard() {
           className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10"
         >
           <div className="flex flex-col gap-y-3 mt-7">
-            <h1 className="text-bodyxl font-bold">
+            <h1 className="text-bodyxl TitleTextColor  font-bold">
               {locale === "en" ? " All In" : "كل شيء في"} {' '}
-              <span className="text-[#312783]">
+              <span className="mainColorText">
                 {locale == "en" ? data.title_en : data.title_ar}
               </span>
             </h1>
@@ -46,11 +46,11 @@ export default async function HomePagecard() {
                 <HomePageAdContainer cateid={data.id} />
               </CarouselContent>
               <CarouselPrevious
-                className="bg-[#312783] text-white hidden md:flex   "
+                className="mainColor WhiteColorText hidden md:flex   "
                 dir="ltr"
               />
               <CarouselNext
-                className="bg-[#312783] text-white hidden md:flex"
+                className="mainColor WhiteColorText hidden md:flex"
                 dir="ltr"
               />
             </Carousel>

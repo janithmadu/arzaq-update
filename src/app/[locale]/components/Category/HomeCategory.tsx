@@ -20,10 +20,10 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
     <div className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10 ">
       {/* Heading */}
       <div>
-        <h1 className="text-bodyxl font-bold  ">
+        <h1 className="text-bodyxl font-bold  TitleTextColor">
           {" "}
           {t("HomePageCategortSectionHeading")}{" "}
-          <span className="text-[#312783]">{t("Categories")}</span>
+          <span className="mainColorText">{t("Categories")}</span>
         </h1>
       </div>
       {/* Heading End*/}
@@ -31,7 +31,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
       {/* Main Grid */}
 
       <div className="grid grid-cols-4  lg:grid-cols-5 xl:grid-cols-6  gap-5 ">
-        {getCategory.map((data: Category, index: number) => {
+        {getCategory?.map((data: Category, index: number) => {
           return (
             <Link
               key={index}
@@ -48,7 +48,7 @@ const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
                 />
               </div>
 
-              <h1 className=" text-md md:text-xl font-bold  text-center">
+              <h1 className=" text-md md:text-xl font-bold TitleTextColor  text-center">
                 {locale == "en" ? data.title_en : data.title_ar}
               </h1>
             </Link>

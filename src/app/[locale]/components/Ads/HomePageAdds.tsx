@@ -40,10 +40,10 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
       {" "}
       {/* Heading */}
       <div>
-        <h1 className=" text-bodyxl  font-bold ">
+        <h1 className=" text-bodyxl TitleTextColor font-bold ">
           {" "}
           {t("HomePageProductSectionHeading")} {' '}
-          <span className="text-[#312783]">{t("ads")}</span>
+          <span className="mainColorText">{t("ads")}</span>
         </h1>
       </div>
       {/* Heading End*/}
@@ -72,11 +72,11 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
             ))}
           </CarouselContent>
           <CarouselPrevious
-            className="bg-[#312783] text-white hidden md:flex   "
+            className="mainColor text-white hidden md:flex   "
             dir="ltr"
           />
           <CarouselNext
-            className="bg-[#312783] text-white hidden md:flex"
+            className="mainColor text-white hidden md:flex"
             dir="ltr"
           />
         </Carousel>
@@ -85,7 +85,7 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
       <div className="min-w-full flex justify-center items-center mt-4">
         <Link
           href={`${locale}/ads?page=1`}
-          className=" mt-5 flex space-x-[8px] items-center min-w-[144px] min-h-[50px] bg-[#312783] justify-center text-heading04 text-grayscalewhite rounded-[4px] rtl:flex-row-reverse transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
+          className=" mt-5 flex space-x-[8px] items-center min-w-[144px] min-h-[50px] mainColor justify-center text-heading04 text-grayscalewhite rounded-[4px] rtl:flex-row-reverse transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
         >
           <h1>{t("ViewAllButtion")}</h1>
           <ArrowRight />

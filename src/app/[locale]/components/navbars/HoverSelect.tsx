@@ -57,7 +57,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
       <div
         className={cn(
           "cursor-pointer px-3 py-2 lg:text-xs 2xl:text-sm transition-all duration-200 font-bold",
-          "hover:bg-gray-50",
+          "",
           "border-b-2 border-transparent",
           activeDropdowns.main && "border-primary"
         )}
@@ -65,7 +65,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
         onMouseLeave={() => handleMouseLeave("main")}
       >
         <Link href={`/${locale}/ads?page=1&category=${Slug}`}>
-          <span>{CategoryName}</span>
+          <span className="TitleTextColor">{CategoryName}</span>
         </Link>
       </div>
 
@@ -74,7 +74,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
         <div
           className={cn(
             "absolute top-full  z-[9999] right-0",
-            "bg-white rounded-lg shadow-lg w-60",
+            "WhiteColor rounded-lg shadow-lg w-60",
             "transform transition-all duration-200 origin-top-right",
             "border border-gray-100",
             activeDropdowns.main
@@ -91,7 +91,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
                   "flex items-center justify-between px-4 py-3",
                   "hover:bg-gray-50 transition-colors duration-200",
                   "border-b border-gray-100",
-                  activeDropdowns.subMenus[category.id] && "bg-gray-50"
+                  activeDropdowns.subMenus[category.id] && "WhiteColor"
                 )}
                 onMouseEnter={() => handleMouseEnter(category.id)}
                 onMouseLeave={() => handleMouseLeave(category.id)}
@@ -109,7 +109,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
                 <div
                   className={cn(
                     "absolute left-full top-0 z-[9999]",
-                    "bg-white rounded-lg shadow-lg w-60",
+                    "WhiteColor rounded-lg shadow-lg w-60",
                     "transform transition-all duration-200 origin-top-left",
                     "border border-gray-100",
                     activeDropdowns.subMenus[category.id]

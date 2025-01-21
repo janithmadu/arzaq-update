@@ -73,7 +73,7 @@ const Searchbar = (searchStyle:SearchStyle) => {
         <Image
           alt="Search Icon"
           src={SearcICon}
-          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+          className="absolute left-3 top-1/2 transform -translate-y-1/2 "
         />
         <input
           type="text"
@@ -104,18 +104,18 @@ const Searchbar = (searchStyle:SearchStyle) => {
                 />
                 <div className="flex justify-between   xl:min-w-[436px]">
                  <div>
-                 <h3 className="font-bold">{item.adName}</h3>
+                 <h3 className="font-bold TitleTextColor">{item.adName}</h3>
                  <div className="flex gap-x-2">
-                 <h3 className="text-grayscale200">{locale == "en" ? item?.category.title_en : item?.category.title_ar}</h3>
-                 <h3 className="text-grayscale200">{item.brand}</h3>
-                 <h3 className="text-grayscale200">{item.model}</h3>
+                 <h3 className="text-grayscale200 BodyTextColor">{locale == "en" ? item?.category.title_en : item?.category.title_ar}</h3>
+                 <h3 className="text-grayscale200 BodyTextColor">{item.brand}</h3>
+                 <h3 className="text-grayscale200 BodyTextColor">{item.model}</h3>
                  </div>
-                 <h3 className="text-grayscale200">{item.state}</h3>
+                 <h3 className="text-grayscale200 BodyTextColor">{item.state}</h3>
                  </div>
                   <div className="flex gap-x-1 text-bodytiny font-semibold flex-col">
                     <div className="flex gap-x-3">
-                    <h3 className="text-primary500 text-bodymedium">{item.currency}</h3>
-                    <h3 className="text-primary500 text-bodymedium">{item.price}</h3>
+                    <h3 className="text-primary500 text-bodymedium mainColorText">{item.currency}</h3>
+                    <h3 className="text-primary500 text-bodymedium mainColorText">{item.price}</h3>
                     </div>
                    
                   </div>

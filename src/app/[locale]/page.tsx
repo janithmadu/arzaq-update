@@ -9,16 +9,9 @@ import MobileApp from "./components/MobileApp/MobileApp";
 import { UserRegistration } from "./actions/usersAction";
 import HomePagecard from "./components/HomePagecard/HomePagecard";
 import HomePageTipSection from "./components/HomePageTipSection/HomePageTipSection";
-import { Metadata } from "next";
+import { getDetailSecionImages, HomePageImages } from "./actions/HomePageImages";
 
 export const revalidate = 1;
-
-export const metadata: Metadata = {
-  title:
-    "Q8ARZAQ - Kuwait’s #1 Ad Listing Platform | Buy, Sell, and Advertise Now",
-  description:
-    "Welcome to Q8ARZAQ, Kuwait’s premier ad listing platform. Easily post ads, buy, sell, and advertise products or services. Explore thousands of listings and connect with buyers and sellers across Kuwait!",
-};
 
 interface GetPostD {
   subcategoryId: {
@@ -27,9 +20,13 @@ interface GetPostD {
   };
 }
 
+
 export default async function Home() {
   const HeroImages = await getHeroImages();
   const GetCategory = await getAllCategory();
+  const GetHomePageImages:any = await HomePageImages()
+  const GetDetailPageImages = await getDetailSecionImages()
+  
   await UserRegistration();
 
   const GetPostData: GetPostD = {
@@ -40,6 +37,9 @@ export default async function Home() {
   };
 
   const getPost = await getPostAds(GetPostData);
+
+  console.log(GetDetailPageImages);
+  
 
   return (
     <main className="flex flex-col space-y-[40px]">
@@ -63,16 +63,16 @@ export default async function Home() {
 
       {/* Details Section */}
       <section>
-        <Details />
+        <Details image={GetHomePageImages[0]} />
       </section>
 
       <section>
-        <HomePageTipSection />
+        <HomePageTipSection tipImages={GetDetailPageImages}/>
       </section>
 
       {/* Mobile App Section */}
       <section>
-        <MobileApp />
+        <MobileApp image={GetHomePageImages[6]} image2={GetHomePageImages[7]} image3={GetHomePageImages[8]} />
       </section>
     </main>
   );

@@ -29,6 +29,15 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    --primaryColor: #ffffff;
+    --TitleTextColor: #ffffff;
+    --BodyTextColor: #ffffff;
+    --FooterColor: #ffffff;
+    --WhiteColor: #ffffff;
+    --WarningRed: #ffffff;
+    --InfoGreen: #ffffff;
+    --WhatsAppButtion: #ffffff;
   }
   .dark {
     --background: 240 10% 3.9%;
@@ -97,6 +106,42 @@
   background-position: center;
   min-width: 100px;
   min-height: 100px;
+}
+
+.mainColor {
+  background-color: var(--primaryColor);
+}
+
+.mainColorborder {
+  border-color: var(--primaryColor);
+}
+
+.mainColorText {
+  color: var(--primaryColor);
+}
+.TitleTextColor {
+  color: var(--TitleTextColor);
+}
+.BodyTextColor {
+  color: var(--BodyTextColor);
+}
+.FooterColor {
+  background-color: var(--FooterColor);
+}
+.WhiteColor {
+  background-color: var(--WhiteColor);
+}
+.WhiteColorText {
+  color: var(--WhiteColor);
+}
+.WarningRed {
+  background-color: var(--WarningRed);
+}
+.InfoGreen {
+  background-color: var(--InfoGreen);
+}
+.WhatsAppButtion {
+  background-color: var(--WhatsAppButtion);
 }
 
 

@@ -90,7 +90,8 @@ const Topnavbar: React.FC<User> = ({ user }) => {
             )}
 
             <Link
-              className=" hidden p-[6px] lg:min-w-[139px] min-h-[5px] md:flex items-center justify-center bg-[#312783] text-grayscalewhite font-bold rounded-full lg:rounded-[4px] transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
+           
+              className=" mainColor hidden p-[6px] lg:min-w-[139px] min-h-[5px] md:flex items-center justify-center  text-grayscalewhite font-bold rounded-full lg:rounded-[4px] transition duration-300 ease-in-out hover:bg-primary700 hover:shadow-lg"
               href={`/${locale}/addform/step01`}
             >
               <div className=" flex space-x-[8px] rtl:gap-[8px]">

@@ -8,15 +8,15 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Camera, DollarSign, FileText, LayoutGrid, Type } from "lucide-react";
 
-
-
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop()?.split(";").shift();
 }
 
-export default function HomePageTipSection() {
+export default function HomePageTipSection(tipImages: any) {
+  console.log(tipImages.tipImages[0].image);
+
   const [selectedTip, setSelectedTip] = useState(0);
   const [locale, setLocale] = useState<"en" | "ar">("en");
   const t = useTranslations("TopNav");
@@ -26,48 +26,47 @@ export default function HomePageTipSection() {
       icon: LayoutGrid,
       title: t("PicktheRightCategory"), // Correctly using the translation function
       description: t("PicktheRightCategoryDes"), // Add translation for the description as well
-      image: "https://images.unsplash.com/photo-1512314889357-e157c22f938d?auto=format&fit=crop&w=800&q=80",
+      image: tipImages.tipImages[0].image,
     },
     {
       icon: Camera,
       title: t("CaptureAttentionWithQualityPhotos"), // Correctly using the translation function
       description: t("CaptureAttentionWithQualityPhotosDes"), // Add translation for the description as well
-      image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+      image: tipImages.tipImages[1].image,
     },
     {
       icon: Type,
       title: t("WriteaClearTitle"), // Correctly using the translation function
       description: t("WriteaClearTitleDes"), // Add translation for the description as well
-      image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=800&q=80",
+      image: tipImages.tipImages[2].image,
     },
     {
       icon: FileText,
       title: t("DescribeYourItemWell"), // Correctly using the translation function
       description: t("DescribeYourItemWellDes"), // Add translation for the description as well
-      image: "https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=800&q=80",
+      image: tipImages.tipImages[3].image,
     },
     {
       icon: DollarSign,
       title: t("PriceItRight"), // Correctly using the translation function
       description: t("PriceItRightDes"), // Add translation for the description as well
-      image: "https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80",
+      image: tipImages.tipImages[4].image,
     },
-  ]
+  ];
 
   useEffect(() => {
     const cookieLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
     setLocale(cookieLocale);
   }, []);
 
-
   return (
     <main className="container mx-auto flex flex-col space-y-[50px] px-5 lg:px-5 xl:px-20 md:px-10 2xl:px-44 mb-3">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="text-center mb-16">
-          <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
+          <h1 className="text-4xl font-bold TitleTextColor sm:text-5xl mb-6">
             {t("TipsforCreatingthePerfectListing")}
           </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl BodyTextColor max-w-2xl mx-auto">
             {t("TipsforCreatingDes")}
           </p>
         </div>
@@ -95,7 +94,7 @@ export default function HomePageTipSection() {
         <div className="text-center">
           <Link
             href={`/${locale}/addform/step01`}
-            className="bg-[#312783] text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200"
+            className="mainColor WhiteColorText px-8 py-3 rounded-lg font-medium hover:mainColor transition-colors duration-200"
           >
             {t("StartCreatingYourListing")}
           </Link>
