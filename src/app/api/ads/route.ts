@@ -90,7 +90,13 @@ export async function PATCH(request: NextRequest) {
     featurs,
     model,
     negotiable,
+    secondcategory,
   } = addata;
+
+  const CategoryId = JSON.parse(category)
+ 
+  
+  
 
   const OptionJson = options.map((data: any) => JSON.parse(data as any));
 
@@ -102,11 +108,12 @@ export async function PATCH(request: NextRequest) {
       data: {
         adName: name,
         price: price,
-        categoryId: parseInt(category),
+        categoryId: CategoryId.id,
         description: description,
         phoneNumber: MobileNumbe,
         location: "Updated Location",
         subcategoryId: subcategory,
+        secondcategoryId:parseInt(secondcategory),
         brand: brands,
         model: model,
         condition: conditions,
@@ -135,6 +142,8 @@ export async function PATCH(request: NextRequest) {
       },
     });
 
+  
+    
  
   } catch (error) {
     console.log(error);

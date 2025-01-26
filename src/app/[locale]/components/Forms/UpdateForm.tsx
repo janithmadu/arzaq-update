@@ -92,15 +92,16 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   const [subCategories, setsubCategories] = useState<
     Subcategory[] | undefined
   >();
+  const [secondCategories, setsecondCategories] = useState<any>();
   const [subBrands, setsubBrands] = useState<Brand[] | undefined>();
   const [Options, setOptions] = useState<PostAdOption[] | undefined>();
   const [Models, setModels] = useState<Model[] | undefined>();
   const [locale, setLocale] = useState<string>("en");
- 
+
   const [selectedCountry, setSelectedCountry] = useState<string | undefined>(
     undefined
   );
-  const [State, setState] = useState<State[]>([]);
+  const [secondCategorySet,setsecondCategorySet]= useState<any>()
   const [PageLoader, setPageLoader] = useState<string | null>(null);
   const [features, setFeatures] = useState<Feature[]>([{ feature: "" }]);
   const [AdPrice, setAdPrice] = useState<number>();
@@ -113,9 +114,8 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //Get Category ID for retrive subcategories
   const handleInputChange = (e: string) => {
-
     console.log(e);
-    
+
     const { id, price } = JSON.parse(e);
     setCategoriesID(id);
     setAdPrice(price);
@@ -137,7 +137,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   //Get SubCategory ID for retrive Models,Brands,Options
   const handleSubCategoryChange = (e: number) => {
     console.log(e);
-    
+
     setOptions([]);
     setsubCategoriesID(e);
   };
@@ -211,6 +211,26 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //////////////////////////////////////////////// END Get SubCategory By Usin Category ID /////////////////////////////////
 
+
+  //////////////////////////////////////////////// Get Second Category By Usin Category ID /////////////////////////////////
+   useEffect(() => {
+    console.log(subCategoriesID);
+    
+      const getSecondCategory = async () => {
+        if (subCategoriesID) {
+          // const response = await getSubCategoriesByID(CategoriesID);
+          const response = await fetch(
+            `/api/secondcategory?categoryId=${subCategoriesID}`
+          );
+          const data = await response.json();
+          setsecondCategories(data);
+        }
+      };
+      getSecondCategory();
+    }, [subCategoriesID]);
+
+    //////////////////////////////////////////////// END  Get Second Category By Usin Category ID /////////////////////////////////
+
   //////////////////////////////////////////////// Get Models By Usin SubCategory ID /////////////////////////////////
 
   useEffect(() => {
@@ -269,8 +289,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   ////////////////////////////////////////////////  DELTE IMAGES from Cloudnery /////////////////////////////////
 
   const handleRemoveImage = async (id: string, CldId: string) => {
-    
-
     setImages((prevImages) =>
       prevImages.filter((image) => image.postAdId !== id)
     );
@@ -306,6 +324,49 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   ////////////////////////////////////////////////  Start Send Form Data To API And Database /////////////////////////////////
 
+
+
+  //////////////////////////////////////////////// Get Current Second Category ///////////////////////////////////////////////
+
+
+  useEffect(()=>{
+
+    async function fetchSubcategories(categoryId:string) {
+      if (!categoryId) {
+        console.error("categoryId is required.");
+        return;
+      }
+    
+      try {
+        const response = await fetch(`/api/secondcategory/getbysecid?categoryId=${categoryId}`, {
+          method: 'GET',
+        });
+    
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error("Error:", errorData.error);
+          return;
+        }
+    
+        const subcategories = await response.json();
+        console.log("Subcategories:", subcategories);
+        setsecondCategorySet(subcategories)
+        return subcategories;
+      } catch (error) {
+        console.error("Fetch error:", error);
+      }
+    }
+    
+    // Example usage
+    fetchSubcategories(updateAd?.subcategoryId as string);
+
+  },[updateAd?.subcategoryId])
+
+  console.log(secondCategorySet?.title_en);
+  
+   //////////////////////////////////////////////// End Get Current Second Category ///////////////////////////////////////////////
+
+
   const {
     register,
     handleSubmit,
@@ -319,7 +380,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
-    
+
     setPageLoader("Loading");
     if (Object.keys(errors).length > 0) {
       setPageLoader("Error");
@@ -336,7 +397,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
         adid: updateAd?.id,
       };
       console.log(dataToSend);
-      
+
       const CreateAdRes = await fetch("/api/ads", {
         method: "PATCH",
         body: JSON.stringify(dataToSend),
@@ -424,9 +485,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
     }));
   }, [updateAd]);
 
-
-  console.log(typeof(updateAd?.category.id));
-  
+  console.log(updateAd);
 
   return (
     <div className=" justify-center  flex flex-col gap-y-[20px] ">
@@ -437,7 +496,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
           className="rounded-xl min-h-[100px] min-w-full object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-center text-white">
-          <h1 className="text-[32px]">{t("PostYourAd")}</h1>
+          <h1 className="text-[32px]">{t("UpdateYourAd")}</h1>
         </div>
       </div>
 
@@ -467,16 +526,16 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
         {/* Name End */}
 
         {/* Category and  Subcategory*/}
-        <div className="flex  flex-col lg:flex-row justify-between">
+        <div className="flex  flex-col 2xl:flex-row gap-x-3 justify-between">
           <div className="flex flex-col ">
             <label className="text-grayscale900">{t("Category")}</label>
             <select
               className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              {...register("category",{ valueAsNumber: true })}
+              {...register("category")}
               onChange={(e) => handleInputChange(e.target.value)}
-              defaultValue={updateAd?.category.id}
+              defaultValue={String(updateAd?.category.id)}
             >
-              <option value={updateAd?.category.id} disabled>
+              <option value={String(updateAd?.category.id)} disabled>
                 {locale == "en"
                   ? updateAd?.category.title_en
                   : updateAd?.category.title_ar}
@@ -505,84 +564,121 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
             <label className="text-grayscale900">{t("Subcategory")}</label>
             <select
               className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              {...register("subcategory",{ valueAsNumber: true })}
+              {...register("subcategory", { valueAsNumber: true })}
               onChange={(e) => handleSubCategoryChange(Number(e.target.value))}
-              defaultValue={updateAd?.subcategory.id}
+              defaultValue={secondCategorySet?.id}
             >
-              <option value={updateAd?.subcategory.id} disabled>
+              <option value={secondCategorySet?.id} disabled>
                 {locale == "en"
-                  ? updateAd?.subcategory.title_en
-                  : updateAd?.subcategory.title_ar}
+                  ? secondCategorySet?.title_en
+                  : secondCategorySet?.title_ar}
               </option>
               {subCategories?.map((selectData: SubCategory) => {
-                  console.log(typeof(selectData.id));
-                  
-               return(
-                <option key={selectData.id} value={Number(selectData.id)}>
-                {locale == "en" ? selectData.title_en : selectData.title_ar}
-              </option>
-               )
-            })}
+                
+
+                return (
+                  <option key={selectData.id} value={Number(selectData.id)}>
+                    {locale == "en" ? selectData.title_en : selectData.title_ar}
+                  </option>
+                );
+              })}
             </select>
             {errors.subcategory && (
               <p className="text-red-600">{`${errors.subcategory.message}`}</p>
             )}
             {/* Show error for name */}
           </div>
+
+          <div className="flex flex-col">
+                <label className="text-grayscale900">
+                  {t("SecondSubcategory")}
+                </label>
+                <select
+                  className=" min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
+                  {...register("secondcategory")}
+                  // onChange={(e) => handleSecondCategoryChange(e.target.value)}
+                  defaultValue={"DEFAULT"}
+                >
+                  <option value={updateAd?.subcategory.id} disabled>
+                {locale == "en"
+                  ? updateAd?.subcategory.title_en
+                  : updateAd?.subcategory.title_ar}
+              </option>
+                  {secondCategories?.map((selectData: any) => (
+                    <option key={selectData.id} value={Number(selectData.id)}>
+                      {locale == "en"
+                        ? selectData.title_en
+                        : selectData.title_ar}
+                    </option>
+                  ))}
+                </select>
+                {errors.secondcategory && (
+                  <p className="text-red-600">{`${errors.secondcategory.message}`}</p>
+                )}
+                {/* Show error for name */}
+              </div>
         </div>
         {/* Category and  Subcategory End*/}
 
         {/* Brands and  Models */}
         <div className="flex  flex-col lg:flex-row justify-between ">
-          <div className="flex flex-col">
-            <label className="text-grayscale900">{t("Brands")}</label>
-            <select
-              className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              {...register("brands")}
-              defaultValue={"test"}
-            >
-              <option disabled>{updateAd?.brand}</option>
-              {subBrands?.map((selectData: Brand) => (
-                <option
-                  key={selectData.id}
-                  value={
-                    locale == "en" ? selectData.title_en : selectData.title_ar
-                  }
-                >
-                  {locale == "en" ? selectData.title_en : selectData.title_ar}
+          {updateAd?.brand == "" ? (
+            <></>
+          ) : (
+            <div className="flex flex-col">
+              <label className="text-grayscale900">{t("Brands")}</label>
+              <select
+                className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
+                {...register("brands")}
+                defaultValue={"test"}
+              >
+                <option disabled>{updateAd?.brand}</option>
+                {subBrands?.map((selectData: Brand) => (
+                  <option
+                    key={selectData.id}
+                    value={
+                      locale == "en" ? selectData.title_en : selectData.title_ar
+                    }
+                  >
+                    {locale == "en" ? selectData.title_en : selectData.title_ar}
+                  </option>
+                ))}
+              </select>
+
+              {/* Show error for name */}
+            </div>
+          )}
+
+          {updateAd?.model == "" ? (
+            <></>
+          ) : (
+            <div className="flex flex-col">
+              <label className="text-grayscale900">{t("Models")}</label>
+              <select
+                {...register("model")}
+                name="model"
+                className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
+                defaultValue={updateAd?.model as string}
+              >
+                <option value={updateAd?.model as string} disabled>
+                  {updateAd?.model as string}
                 </option>
-              ))}
-            </select>
+                {Models?.map((selectData: Model) => (
+                  <option
+                    key={selectData.id}
+                    value={
+                      locale == "en" ? selectData.title_en : selectData.title_ar
+                    }
+                  >
+                    {locale == "en" ? selectData.title_en : selectData.title_ar}
+                  </option>
+                ))}
+              </select>
 
-            {/* Show error for name */}
-          </div>
-
-          <div className="flex flex-col">
-            <label className="text-grayscale900">{t("Models")}</label>
-            <select
-              {...register("model")}
-              name="model"
-              className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              defaultValue={updateAd?.model as string}
-            >
-              <option value={updateAd?.model as string} disabled>
-                {updateAd?.model as string}
-              </option>
-              {Models?.map((selectData: Model) => (
-                <option
-                  key={selectData.id}
-                  value={
-                    locale == "en" ? selectData.title_en : selectData.title_ar
-                  }
-                >
-                  {locale == "en" ? selectData.title_en : selectData.title_ar}
-                </option>
-              ))}
-            </select>
-
-            {/* <p className="text-red-600">{fields.model.errors}</p> */}
-            {/* Show error for name */}
-          </div>
+              {/* <p className="text-red-600">{fields.model.errors}</p> */}
+              {/* Show error for name */}
+            </div>
+          )}
         </div>
 
         {/* Brands and  Models End*/}
@@ -807,8 +903,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
           <div className="flex gap-x-3 mb-2">
             {ImagesArray.map((ImageOptions) => {
-        
-
               return (
                 <div key={ImageOptions.postAdId}>
                   <div className="min-w-full justify-end flex mb-1">

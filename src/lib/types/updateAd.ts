@@ -30,6 +30,7 @@ export interface PostAd {
     postad_features: PostAdFeature[];
     postad_options: PostAdOption[];
     postad_photos: PostAdPhoto[];
+    secondcategoryId:Number;
   }
   
   // Supporting interfaces

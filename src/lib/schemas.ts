@@ -81,9 +81,10 @@ export const SchemaAdPostFormUpdate = z.object({
     .min(2, "Name must be at least 2 characters")
     .max(100, "Name must be at most 100 characters"),
   category: z
-    .number()
+    .string()
     .min(1, "Select the right category for your ad.")
     ,
+    secondcategory:z.string().min(1,"Select the right Second Category for your ad."),
   subcategory: z
     .number()
     .min(1, "Pick the perfect subcategory to refine your listing."),

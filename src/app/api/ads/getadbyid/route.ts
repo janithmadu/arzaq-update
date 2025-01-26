@@ -13,7 +13,15 @@ export const POST = async (req: Request) => {
       },
       include: {
         category: true,
-        subcategory: true,
+        subcategory: {
+          select:{
+            title_ar:true,
+            title_en:true,
+            id:true,
+            secondcategory:true,
+            slug:true,
+          }
+        },
         postad_features: true,
         postad_options: true,
         postad_photos: true,
