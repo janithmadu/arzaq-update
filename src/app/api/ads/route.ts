@@ -102,7 +102,7 @@ export async function PATCH(request: NextRequest) {
       data: {
         adName: name,
         price: price,
-        categoryId: category,
+        categoryId: parseInt(category),
         description: description,
         phoneNumber: MobileNumbe,
         location: "Updated Location",
@@ -137,6 +137,10 @@ export async function PATCH(request: NextRequest) {
 
  
   } catch (error) {
+    console.log(error);
+    return NextResponse.json("test");
+    
+    
    
   } finally {
     await prisma.$disconnect();

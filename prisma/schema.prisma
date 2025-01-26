@@ -179,6 +179,7 @@ model postad_photos {
   postAdId Int
   photoUrl String? @db.Text
   altText  String? @db.VarChar(255)
+  cldId String ? @db.VarChar(255)
   postad   postad  @relation(fields: [postAdId], references: [id], onDelete: Cascade, onUpdate: Restrict, map: "postad_photos_ibfk_1")
 
   @@index([postAdId], map: "postAdId")

@@ -2,8 +2,8 @@
 export interface PostAd {
     id: number;
     adName: string;
-    categoryId: number;
-    subcategoryId: number;
+    categoryId: number | string;
+    subcategoryId: number | string;
     brand?: string | null;
     model?: string | null;
     condition?: PostAdCondition | null;
@@ -88,6 +88,7 @@ export interface PostAd {
     photoUrl?: string | null;
     altText?: string | null;
     postad: PostAd;
+    cldId:string
   }
   
   export interface User {

@@ -73,9 +73,11 @@ export async function POST(request: Request) {
         },
         postad_photos: {
           create: images?.map(
-            (image: { photoUrl: string; altText: string }) => ({
+            (image: { photoUrl: string; altText: string; cldId:string }) => ({
               photoUrl: image.photoUrl,
               altText: image.altText,
+              cldId:image.cldId
+              
             })
           ),
         },

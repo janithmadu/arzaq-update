@@ -96,24 +96,26 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   const [Options, setOptions] = useState<PostAdOption[] | undefined>();
   const [Models, setModels] = useState<Model[] | undefined>();
   const [locale, setLocale] = useState<string>("en");
-  const [Countries, setCountries] = useState<Countries[]>([]);
+ 
   const [selectedCountry, setSelectedCountry] = useState<string | undefined>(
     undefined
   );
   const [State, setState] = useState<State[]>([]);
   const [PageLoader, setPageLoader] = useState<string | null>(null);
-  const router = useRouter();
   const [features, setFeatures] = useState<Feature[]>([{ feature: "" }]);
   const [AdPrice, setAdPrice] = useState<number>();
   const t = useTranslations("TopNav");
   const [ImagesArray, setImages] = useState<
-    { postAdId: string; photoUrl: string; altText: string }[]
+    { postAdId: string; photoUrl: string; altText: string; cldId: string }[]
   >([]);
   const [ImageError, setImageError] = useState<boolean>(true);
   const [ImageCountError, setImageCountError] = useState<boolean>(true);
 
   //Get Category ID for retrive subcategories
   const handleInputChange = (e: string) => {
+
+    console.log(e);
+    
     const { id, price } = JSON.parse(e);
     setCategoriesID(id);
     setAdPrice(price);
@@ -134,6 +136,8 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //Get SubCategory ID for retrive Models,Brands,Options
   const handleSubCategoryChange = (e: number) => {
+    console.log(e);
+    
     setOptions([]);
     setsubCategoriesID(e);
   };
@@ -166,14 +170,15 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   }, []);
 
   //////////////////////////////////////////////// Set the Options to the Select /////////////////////////////////////
- 
+
   useEffect(() => {
     setsubCategoriesID(updateAd?.category.id);
     setImages(
       (updateAd?.postad_photos || []).map((photo) => ({
-        postAdId: photo.postAdId.toString(),
+        postAdId: photo.id.toString(),
         photoUrl: photo.photoUrl ?? "",
         altText: photo.altText || "",
+        cldId: photo.cldId || "",
       }))
     );
 
@@ -251,7 +256,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
           `/api/options?categoryId=${subCategoriesID}`
         );
         const data = await response.json();
-   
 
         setOptions(data);
       }
@@ -262,54 +266,11 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //////////////////////////////////////////////// Get Barands By Usin SubCategory ID /////////////////////////////////
 
-  //////////////////////////////////////////////// Get Country By Externel API  /////////////////////////////////
-
-  useEffect(() => {
-    const getCountries = async () => {
-      const response = await fetch("https://restcountries.com/v3.1/all");
-      const countries = await response.json();
-      const countryList = countries.map((country: CountriesGet) => ({
-        name: country?.name.common,
-        code: country.cca2, // Country code (2-letter)
-      }));
-
-      setCountries(countryList);
-    };
-
-    getCountries();
-  }, []);
-  //////////////////////////////////////////////// END Get Country By Externel API  /////////////////////////////////
-
-  //////////////////////////////////////////////// Get States By Externel API  /////////////////////////////////
-
-  useEffect(() => {
-    const getStateByCountry = async () => {
-      const response = await fetch(
-        "https://countriesnow.space/api/v0.1/countries/states",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ country: selectedCountry }),
-        }
-      );
-      const data = await response?.json();
-      const states = data?.data?.states?.map((state: State) => ({
-        name: state.name,
-      }));
-
-      setState(states);
-    };
-
-    getStateByCountry();
-  }, [selectedCountry]);
-
-  //////////////////////////////////////////////// END Get States By Externel API  /////////////////////////////////
-
   ////////////////////////////////////////////////  DELTE IMAGES from Cloudnery /////////////////////////////////
 
-  const handleRemoveImage = async (id: string) => {
+  const handleRemoveImage = async (id: string, CldId: string) => {
+    
+
     setImages((prevImages) =>
       prevImages.filter((image) => image.postAdId !== id)
     );
@@ -319,7 +280,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id, CldId }),
       });
     } catch (error) {}
   };
@@ -357,6 +318,8 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   });
 
   const onSubmit = async (data: FieldValues) => {
+    console.log(data);
+    
     setPageLoader("Loading");
     if (Object.keys(errors).length > 0) {
       setPageLoader("Error");
@@ -366,7 +329,14 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
       setPageLoader("Error");
       return null;
     } else {
-      const dataToSend = { ...data, images: ImagesArray, featurs: features,adid:updateAd?.id };
+      const dataToSend = {
+        ...data,
+        images: ImagesArray,
+        featurs: features,
+        adid: updateAd?.id,
+      };
+      console.log(dataToSend);
+      
       const CreateAdRes = await fetch("/api/ads", {
         method: "PATCH",
         body: JSON.stringify(dataToSend),
@@ -395,7 +365,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
           allowOutsideClick: true,
           allowEscapeKey: true,
         });
-        localStorage.setItem("AdID", CreateAdData.res.id);
+        // localStorage.setItem("AdID", CreateAdData.res.id);
       }
     }
   };
@@ -431,7 +401,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
     const transformedOptions = updateAd?.postad_options.map((option) =>
       JSON.stringify({
-       
         optionKey: option.optionKey,
         optionValue: option.optionValue,
       })
@@ -454,6 +423,10 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
       ],
     }));
   }, [updateAd]);
+
+
+  console.log(typeof(updateAd?.category.id));
+  
 
   return (
     <div className=" justify-center  flex flex-col gap-y-[20px] ">
@@ -499,7 +472,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
             <label className="text-grayscale900">{t("Category")}</label>
             <select
               className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              {...register("category")}
+              {...register("category",{ valueAsNumber: true })}
               onChange={(e) => handleInputChange(e.target.value)}
               defaultValue={updateAd?.category.id}
             >
@@ -532,7 +505,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
             <label className="text-grayscale900">{t("Subcategory")}</label>
             <select
               className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-              {...register("subcategory")}
+              {...register("subcategory",{ valueAsNumber: true })}
               onChange={(e) => handleSubCategoryChange(Number(e.target.value))}
               defaultValue={updateAd?.subcategory.id}
             >
@@ -541,11 +514,15 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
                   ? updateAd?.subcategory.title_en
                   : updateAd?.subcategory.title_ar}
               </option>
-              {subCategories?.map((selectData: SubCategory) => (
-                <option key={selectData.id} value={selectData.id}>
-                  {locale == "en" ? selectData.title_en : selectData.title_ar}
-                </option>
-              ))}
+              {subCategories?.map((selectData: SubCategory) => {
+                  console.log(typeof(selectData.id));
+                  
+               return(
+                <option key={selectData.id} value={Number(selectData.id)}>
+                {locale == "en" ? selectData.title_en : selectData.title_ar}
+              </option>
+               )
+            })}
             </select>
             {errors.subcategory && (
               <p className="text-red-600">{`${errors.subcategory.message}`}</p>
@@ -799,7 +776,12 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
                 if (imageUrl) {
                   setImages((prevImages) => [
                     ...prevImages,
-                    { postAdId: id, photoUrl: imageUrl, altText: alt },
+                    {
+                      postAdId: id,
+                      photoUrl: imageUrl,
+                      altText: alt,
+                      cldId: id,
+                    },
                   ]);
                 }
               }}
@@ -825,12 +807,19 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
           <div className="flex gap-x-3 mb-2">
             {ImagesArray.map((ImageOptions) => {
+        
+
               return (
                 <div key={ImageOptions.postAdId}>
                   <div className="min-w-full justify-end flex mb-1">
                     <button
                       type="button"
-                      onClick={() => handleRemoveImage(ImageOptions.postAdId)}
+                      onClick={() =>
+                        handleRemoveImage(
+                          ImageOptions.postAdId,
+                          ImageOptions.cldId
+                        )
+                      }
                       className="p-2 flex items-center justify-center bg-red-600 rounded-full text-white text-sm w-3 h-3"
                     >
                       X
@@ -901,7 +890,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
             <div className="flex items-center gap-x-3">
               <input
                 type="checkbox"
-                checked={updateAd?.negotiable as boolean}
+                defaultChecked={updateAd?.negotiable as boolean}
                 {...register("negotiable")}
               />
               <label

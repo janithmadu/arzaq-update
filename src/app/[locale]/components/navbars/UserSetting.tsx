@@ -12,6 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import Image, { StaticImageData } from "next/image";
 
 
 export interface UserSetting {
@@ -19,7 +20,7 @@ export interface UserSetting {
   email?: string;
   family_name?: string;
   given_name?: string;
-  picture?: string;
+  picture?: string | StaticImageData;
   username?: string;
   phone_number?: string;
 }
@@ -35,9 +36,12 @@ const UserSetting: React.FC<UserSetting> = ({ given_name, picture }) => {
     <DropdownMenu>
       <DropdownMenuTrigger>
         {picture ? (
-          <Avatar>
-            <AvatarImage src={picture} />
-          </Avatar>
+          // <Avatar>
+          //   <AvatarImage src={picture} />
+          // </Avatar>
+          <div>
+            <Image width={40} height={40} alt="User Avatar" src={picture}/>
+          </div>
         ) : (
           <Avatar>
             <AvatarFallback>{given_name}</AvatarFallback>

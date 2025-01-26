@@ -21,6 +21,7 @@ import {
 import UserSetting from "./UserSetting";
 import { User } from "@phosphor-icons/react";
 import Searchbar from "./Searchbar";
+import Avatart from "../../../../../public/student.png"
 
 export interface User {
   user: {
@@ -63,7 +64,7 @@ const Topnavbar: React.FC<User> = ({ user }) => {
           <CountryChange />
             {user?.id ? (
               <UserSetting
-                picture={user.picture}
+                picture={Avatart}
                 email={user.email}
                 family_name={user.family_name}
                 given_name={user.given_name}

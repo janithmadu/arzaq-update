@@ -115,7 +115,7 @@ export const SchemaAdPostFormUpdate = z.object({
       message: "Please select a valid Currency.",
     }),
   description: z.string().min(1, "Description is required"),
-  options: z.array(z.string()).min(1, "Please select at least one option").optional(),
+  options: z.array(z.string()).optional(),
   image: z
     .array(
       z.object({
@@ -152,7 +152,7 @@ export const SchemaUpdatePostForm = z.object({
       message: "Please select a valid category",
     }),
   subcategory: z
-    .string()
+    .number()
     .min(1, "Pick the perfect subcategory to refine your listing."),
   price: z.coerce.number().min(1, "Set a fair price for your item."),
   brand: z.string().optional(),

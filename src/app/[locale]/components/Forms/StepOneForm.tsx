@@ -114,7 +114,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   const [AdPrice, setAdPrice] = useState<number>();
   const t = useTranslations("TopNav");
   const [ImagesArray, setImages] = useState<
-    { postAdId: string; photoUrl: string; altText: string }[]
+    { postAdId: string; photoUrl: string; altText: string, cldId : string }[]
   >([]);
   const [ImageError, setImageError] = useState<boolean>(true);
   const [ImageCountError, setImageCountError] = useState<boolean>(true);
@@ -850,11 +850,13 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                       const id = results?.info?.public_id;
                       const alt = results?.info?.original_filename;
                       const imageUrl = results?.info?.secure_url;
-
+                      
+                      
+                      
                       if (imageUrl) {
                         setImages((prevImages) => [
                           ...prevImages,
-                          { postAdId: id, photoUrl: imageUrl, altText: alt },
+                          { postAdId: id, photoUrl: imageUrl, altText: alt, cldId:id },
                         ]);
                       }
                     }}
