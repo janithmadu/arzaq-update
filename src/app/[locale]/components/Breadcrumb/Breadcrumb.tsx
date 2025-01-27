@@ -1,70 +1,99 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { ArrowArcRight } from "@phosphor-icons/react";
 
-const Breadcrumb = ({ children}:{children: React.ReactNode;}) => {
+type Category = {
+  title_ar: string;
+  title_en: string;
+  subcategory?: Category[];
+};
+
+type BreadcrumbProps = {
+  children: ReactNode;
+  category?: Category[];
+};
+
+function getCookie(name: string): string | undefined {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  return parts.length === 2 ? parts.pop()?.split(";").shift() : undefined;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = ({ children, category }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  // Filter out language prefixes
-  const segments =
-    pathname?.split("/").filter((segment) => segment && !["en", "ar"].includes(segment)) || [];
+  const categoryQu = searchParams.get("category");
+  const subcategoriesQu = searchParams.get("subcategories");
+  const secondcategoryQu = searchParams.get("secondcategory");
 
-  // Convert query parameters to breadcrumb segments
-  const queryEntries = Array.from(searchParams.entries());
-  if (queryEntries.length > 0) {
-    queryEntries.forEach(([key, value]) => {
-      segments.push(`${key}: ${value}`);
-    });
+  const [locale, setLocale] = useState<"en" | "ar">("en");
+  const BredCambArray: string[] = [];
+
+  useEffect(() => {
+    const cookieLocale = (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
+    setLocale(cookieLocale);
+  }, []);
+
+  // Add breadcrumbs based on query parameters and category data
+  if (!categoryQu && !subcategoriesQu && !secondcategoryQu) {
+    BredCambArray.push(locale === "en" ? "All Ads" : "جميع الإعلانات");
+  } else {
+    // Filter main category
+    const filteredCategory = category?.find(
+      (cat) => cat.title_ar === categoryQu || cat.title_en === categoryQu
+    );
+
+    if (filteredCategory) {
+      BredCambArray.push(
+        locale === "en" ? filteredCategory.title_en : filteredCategory.title_ar
+      );
+
+      // Filter subcategory
+      const filterSubCategory = filteredCategory.subcategory?.find(
+        (subcat) => subcat.title_ar === subcategoriesQu || subcat.title_en === subcategoriesQu
+      );
+
+      if (filterSubCategory) {
+        BredCambArray.push(
+          locale === "en" ? filterSubCategory.title_en : filterSubCategory.title_ar
+        );
+
+        // Handle second category (if needed later)
+        // Add logic for filtering second category if it's part of the data structure
+      }
+    }
   }
 
+  // Render breadcrumbs
   return (
     <nav aria-label="breadcrumb" className="mb-3 flex justify-between">
       <ol className="flex flex-wrap items-center text-sm text-gray-600">
         <li>
           <Link href="/" className="hover:underline font-bold">
-            Home
+            {locale === "en" ? "Home" : "الرئيسية"}
           </Link>
         </li>
-        {segments.map((segment, index) => {
-          const isQueryParam = segment.includes(":");
-          const path = isQueryParam
-            ? undefined // Query params don't form part of the path
-            : `/${segments.slice(0, index + 1).join("/")}`;
-
-          return (
-            <li
-              key={index}
-              className={`flex items-center ${
-                index === segments.length - 1 ? "w-full sm:w-auto mt-2 sm:mt-0" : ""
-              }`}
-            >
-              <span className="mx-2">
-                <ArrowArcRight />
-              </span>
-              {isQueryParam ? (
-                <span className="text-gray-500">{segment}</span>
-              ) : (
-                <Link
-                  href={path || "#"}
-                  className={`${
-                    index === segments.length - 1 ? "font-semibold" : "hover:underline"
-                  }`}
-                >
-                  {decodeURIComponent(segment)}
-                </Link>
-              )}
-            </li>
-          );
-        })}
+        {BredCambArray.map((segment, index) => (
+          <li
+            key={index}
+            className={`flex items-center ${
+              index === BredCambArray.length - 1
+                ? "font-semibold"
+                : "hover:underline"
+            }`}
+          >
+            <span className="mx-2">
+              <ArrowArcRight />
+            </span>
+            <Link href={"#"}>{decodeURIComponent(segment)}</Link>
+          </li>
+        ))}
       </ol>
-
-      {
-        children
-      }
+      <div>{children}</div>
     </nav>
   );
 };

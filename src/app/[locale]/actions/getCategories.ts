@@ -71,7 +71,27 @@ export const getCategoryAndSubcategory = async () => {
   try {
     const data = await prisma.categories.findMany({
       include: {
-        subcategory: true, // Include the subcategories for each category
+        subcategory: {
+         select:{
+          brand:true,
+          categories:true,
+          category_id:true,
+          commercial:true,
+          created_at:true,
+          description_ar:true,
+          description_en:true,
+          id:true,
+          image:true,
+          model:true,
+          optionsubcategory:true,
+          postads:true,
+          secondcategory:true,
+          slug:true,
+          title_ar:true,
+          title_en:true,
+          updated_at:true,
+         }
+        }, // Include the subcategories for each category
       },
     });
     return data;

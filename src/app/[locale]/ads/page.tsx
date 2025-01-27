@@ -55,7 +55,13 @@ export default async function Home() {
   const [getSubCategoryAndCategory, getOptions] = await Promise.all([
     getCategoryAndSubcategory(),
     getSubCategoryOptions(),
-  ]);
+  ]) as any;
+
+  
+
+
+  
+  
 
   return (
     <div className="min-h-screen bg-gray-100 sm:p-4 p-1">
@@ -70,7 +76,7 @@ export default async function Home() {
         {/* Main Content - Grid */}
 
         <main className="  w-full">
-          <Breadcrumb>
+          <Breadcrumb category={getSubCategoryAndCategory}>
             <div className="">
               <Sheet>
                 <SheetTrigger>
