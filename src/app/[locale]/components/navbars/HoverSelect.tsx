@@ -73,7 +73,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: an
       {SubCategory && SubCategory.length > 0 && (
         <div
           className={cn(
-            "absolute top-full  z-[9999] right-0",
+            "absolute top-full  z-[9999] -right-20 ",
             "WhiteColor rounded-lg shadow-lg w-60",
             "transform transition-all duration-200 origin-top-right",
             "border border-gray-100",

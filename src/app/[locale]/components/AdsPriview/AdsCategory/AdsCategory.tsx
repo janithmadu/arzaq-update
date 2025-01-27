@@ -53,6 +53,7 @@ const AdsCategory: React.FC<Categories> = ({ Categories }) => {
                           locale == "en" ? subcate.title_en : subcate.title_ar
                         }
                         subcatoId={subcate.slug}
+                        categorySlug={category.slug}
                       />
                     );
                   })}

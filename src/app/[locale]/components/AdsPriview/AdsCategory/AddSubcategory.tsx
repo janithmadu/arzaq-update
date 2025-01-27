@@ -5,9 +5,10 @@ import { useRouter, useSearchParams } from "next/navigation";
 interface SubCategory {
   subcatotitle:string
   subcatoId:string
+  categorySlug:String
 }
 
-const  AddSubcategory:React.FC<SubCategory> = ({ subcatotitle, subcatoId }) => {
+const  AddSubcategory:React.FC<SubCategory> = ({ subcatotitle, subcatoId,categorySlug }) => {
   
   
   const router = useRouter();
