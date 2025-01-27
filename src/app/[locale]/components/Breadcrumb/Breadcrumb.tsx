@@ -30,7 +30,10 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ children, category }) => {
   const subcategoriesQu = searchParams.get("subcategories");
   const secondcategoryQu = searchParams.get("secondcategory");
 
-  const [locale, setLocale] = useState<"en" | "ar">("en");
+  console.log(subcategoriesQu);
+  
+
+  const [locale, setLocale] = useState<"en" | "ar">("en"); 
   const BredCambArray: string[] = [];
 
   useEffect(() => {
@@ -43,18 +46,18 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ children, category }) => {
     BredCambArray.push(locale === "en" ? "All Ads" : "جميع الإعلانات");
   } else {
     // Filter main category
-    const filteredCategory = category?.find(
+    const filteredCategory:any = category?.find(
       (cat) => cat.title_ar === categoryQu || cat.title_en === categoryQu
     );
 
     if (filteredCategory) {
       BredCambArray.push(
-        locale === "en" ? filteredCategory.title_en : filteredCategory.title_ar
+        locale === "en" ? filteredCategory?.title_en : filteredCategory?.title_ar
       );
 
       // Filter subcategory
-      const filterSubCategory = filteredCategory.subcategory?.find(
-        (subcat) => subcat.title_ar === subcategoriesQu || subcat.title_en === subcategoriesQu
+      const filterSubCategory = filteredCategory?.subcategory?.find(
+        (subcat:any) => subcat.title_ar === subcategoriesQu || subcat.title_en === subcategoriesQu
       );
 
       if (filterSubCategory) {

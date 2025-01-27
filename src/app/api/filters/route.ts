@@ -16,6 +16,9 @@ export async function POST(request: NextRequest) {
     const limit = parseInt(data.limit) || 10;
     const page = parseInt(data.page) || 1;
 
+    console.log(subcategoryId);
+    
+
     const skip = (page - 1) * limit;
 
     // Build where conditions dynamically

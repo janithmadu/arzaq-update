@@ -96,7 +96,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
                 onMouseEnter={() => handleMouseEnter(category.id)}
                 onMouseLeave={() => handleMouseLeave(category.id)}
               >
-                <Link href={`/${locale}/ads?page=1&subcategory=${category.slug}`}>
+                <Link href={`/${locale}/ads?page=1&category=${CategoryName}&subcategories=${category.slug}`}>
                   <span className="font-medium">{locale == "en" ? category.title_en : category.title_ar}</span>
                 </Link>
                 {category.secondcategory && category.secondcategory.length > 0 && (
