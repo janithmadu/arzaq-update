@@ -1,7 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Authenticity, ConditionList, Currency } from "@/lib/statics";
+import {
+  Authenticity,
+  CitiesInKuwait,
+  ConditionList,
+  Currency,
+} from "@/lib/statics";
 import { Input } from "@/components/ui/input";
 import LoadingImage from "../../../../../public/system-regular-715-spinner-horizontal-dashed-circle-loop-jab.gif";
 import Image from "next/image";
@@ -101,7 +106,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   const [selectedCountry, setSelectedCountry] = useState<string | undefined>(
     undefined
   );
-  const [secondCategorySet,setsecondCategorySet]= useState<any>()
+  const [secondCategorySet, setsecondCategorySet] = useState<any>();
   const [PageLoader, setPageLoader] = useState<string | null>(null);
   const [features, setFeatures] = useState<Feature[]>([{ feature: "" }]);
   const [AdPrice, setAdPrice] = useState<number>();
@@ -114,8 +119,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //Get Category ID for retrive subcategories
   const handleInputChange = (e: string) => {
-    console.log(e);
-
     const { id, price } = JSON.parse(e);
     setCategoriesID(id);
     setAdPrice(price);
@@ -136,8 +139,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //Get SubCategory ID for retrive Models,Brands,Options
   const handleSubCategoryChange = (e: number) => {
-    console.log(e);
-
     setOptions([]);
     setsubCategoriesID(e);
   };
@@ -211,25 +212,23 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   //////////////////////////////////////////////// END Get SubCategory By Usin Category ID /////////////////////////////////
 
-
   //////////////////////////////////////////////// Get Second Category By Usin Category ID /////////////////////////////////
-   useEffect(() => {
-    console.log(subCategoriesID);
-    
-      const getSecondCategory = async () => {
-        if (subCategoriesID) {
-          // const response = await getSubCategoriesByID(CategoriesID);
-          const response = await fetch(
-            `/api/secondcategory?categoryId=${subCategoriesID}`
-          );
-          const data = await response.json();
-          setsecondCategories(data);
-        }
-      };
-      getSecondCategory();
-    }, [subCategoriesID]);
+  useEffect(() => {
+    const getSecondCategory = async () => {
+      if (subCategoriesID) {
+        // const response = await getSubCategoriesByID(CategoriesID);
+        const response = await fetch(
+          `/api/secondcategory?categoryId=${updateAd?.subcategoryId}`
+        );
+        const data = await response.json();
 
-    //////////////////////////////////////////////// END  Get Second Category By Usin Category ID /////////////////////////////////
+        setsecondCategories(data);
+      }
+    };
+    getSecondCategory();
+  }, [updateAd]);
+
+  //////////////////////////////////////////////// END  Get Second Category By Usin Category ID /////////////////////////////////
 
   //////////////////////////////////////////////// Get Models By Usin SubCategory ID /////////////////////////////////
 
@@ -324,48 +323,41 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
 
   ////////////////////////////////////////////////  Start Send Form Data To API And Database /////////////////////////////////
 
-
-
   //////////////////////////////////////////////// Get Current Second Category ///////////////////////////////////////////////
 
-
-  useEffect(()=>{
-
-    async function fetchSubcategories(categoryId:string) {
+  useEffect(() => {
+    async function fetchSubcategories(categoryId: any) {
       if (!categoryId) {
         console.error("categoryId is required.");
         return;
       }
-    
+
       try {
-        const response = await fetch(`/api/secondcategory/getbysecid?categoryId=${categoryId}`, {
-          method: 'GET',
-        });
-    
+        const response = await fetch(
+          `/api/secondcategory/getbysecid?categoryId=${categoryId}`,
+          {
+            method: "GET",
+          }
+        );
+
         if (!response.ok) {
           const errorData = await response.json();
-          console.error("Error:", errorData.error);
+
           return;
         }
-    
+
         const subcategories = await response.json();
-        console.log("Subcategories:", subcategories);
-        setsecondCategorySet(subcategories)
+
+        setsecondCategorySet(subcategories);
         return subcategories;
-      } catch (error) {
-        console.error("Fetch error:", error);
-      }
+      } catch (error) {}
     }
-    
+
     // Example usage
-    fetchSubcategories(updateAd?.subcategoryId as string);
+    fetchSubcategories(updateAd?.secondcategoryId);
+  }, [updateAd?.secondcategoryId]);
 
-  },[updateAd?.subcategoryId])
-
-  console.log(secondCategorySet?.title_en);
-  
-   //////////////////////////////////////////////// End Get Current Second Category ///////////////////////////////////////////////
-
+  //////////////////////////////////////////////// End Get Current Second Category ///////////////////////////////////////////////
 
   const {
     register,
@@ -379,8 +371,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   });
 
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
-
     setPageLoader("Loading");
     if (Object.keys(errors).length > 0) {
       setPageLoader("Error");
@@ -396,7 +386,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
         featurs: features,
         adid: updateAd?.id,
       };
-      console.log(dataToSend);
 
       const CreateAdRes = await fetch("/api/ads", {
         method: "PATCH",
@@ -442,7 +431,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   /////////////////////////////////////////////// Set All Defult Values /////////////////////////////////////////////////
   useEffect(() => {
     setValue("name", updateAd?.adName);
-    setValue("category", updateAd?.category.id);
+    setValue("category", String(updateAd?.category.id));
     setValue("subcategory", updateAd?.subcategory.id);
     setValue("brands", updateAd?.brand);
     setValue("conditions", updateAd?.condition);
@@ -459,7 +448,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
     setValue("model", updateAd?.model);
 
     setValue("negotiable", updateAd?.negotiable);
-
     const transformedOptions = updateAd?.postad_options.map((option) =>
       JSON.stringify({
         optionKey: option.optionKey,
@@ -485,7 +473,9 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
     }));
   }, [updateAd]);
 
-  console.log(updateAd);
+  useEffect(() => {
+    setValue("secondcategory", String(secondCategorySet?.id));
+  }, [secondCategorySet]);
 
   return (
     <div className=" justify-center  flex flex-col gap-y-[20px] ">
@@ -566,16 +556,14 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
               className="sm:min-w-[451px] min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
               {...register("subcategory", { valueAsNumber: true })}
               onChange={(e) => handleSubCategoryChange(Number(e.target.value))}
-              defaultValue={secondCategorySet?.id}
+              defaultValue={updateAd?.subcategory?.id}
             >
               <option value={secondCategorySet?.id} disabled>
                 {locale == "en"
-                  ? secondCategorySet?.title_en
-                  : secondCategorySet?.title_ar}
+                  ? updateAd?.subcategory?.title_en
+                  : updateAd?.subcategory?.title_ar}
               </option>
               {subCategories?.map((selectData: SubCategory) => {
-                
-
                 return (
                   <option key={selectData.id} value={Number(selectData.id)}>
                     {locale == "en" ? selectData.title_en : selectData.title_ar}
@@ -590,33 +578,31 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
           </div>
 
           <div className="flex flex-col">
-                <label className="text-grayscale900">
-                  {t("SecondSubcategory")}
-                </label>
-                <select
-                  className=" min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
-                  {...register("secondcategory")}
-                  // onChange={(e) => handleSecondCategoryChange(e.target.value)}
-                  defaultValue={"DEFAULT"}
-                >
-                  <option value={updateAd?.subcategory.id} disabled>
+            <label className="text-grayscale900">
+              {t("SecondSubcategory")}
+            </label>
+            <select
+              className=" min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
+              {...register("secondcategory")}
+              // onChange={(e) => handleSecondCategoryChange(e.target.value)}
+              defaultValue={String(secondCategorySet?.id)}
+            >
+              <option value={String(secondCategorySet?.id)} disabled>
                 {locale == "en"
-                  ? updateAd?.subcategory.title_en
-                  : updateAd?.subcategory.title_ar}
+                  ? secondCategorySet?.title_en
+                  : secondCategorySet?.title_ar}
               </option>
-                  {secondCategories?.map((selectData: any) => (
-                    <option key={selectData.id} value={Number(selectData.id)}>
-                      {locale == "en"
-                        ? selectData.title_en
-                        : selectData.title_ar}
-                    </option>
-                  ))}
-                </select>
-                {errors.secondcategory && (
-                  <p className="text-red-600">{`${errors.secondcategory.message}`}</p>
-                )}
-                {/* Show error for name */}
-              </div>
+              {secondCategories?.map((selectData: any) => (
+                <option key={selectData?.id} value={String(selectData?.id)}>
+                  {locale == "en" ? selectData?.title_en : selectData?.title_ar}
+                </option>
+              ))}
+            </select>
+            {errors.secondcategory && (
+              <p className="text-red-600">{`${errors.secondcategory.message}`}</p>
+            )}
+            {/* Show error for name */}
+          </div>
         </div>
         {/* Category and  Subcategory End*/}
 
@@ -954,7 +940,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
                   {updateAd?.country}
                 </option>
 
-                <option value="srilanla">Sri Lanka</option>
+                <option value="Kuwaiti">Kuwaiti</option>
               </select>
 
               {errors.country && (
@@ -972,8 +958,16 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
                 <option value={updateAd?.state as string} disabled>
                   {updateAd?.state as string}
                 </option>
-
-                <option value={"Gampaha"}>Gampaha</option>
+                {CitiesInKuwait.map((Cities, index) => {
+                  return (
+                    <option
+                      key={index}
+                      value={Cities?.title[locale as "en" | "ar"] as string}
+                    >
+                      {Cities?.title[locale as "en" | "ar"] as string}
+                    </option>
+                  );
+                })}
               </select>
 
               {errors.state && (

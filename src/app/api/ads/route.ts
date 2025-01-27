@@ -72,6 +72,7 @@ export async function PATCH(request: NextRequest) {
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
+  
   const {
     name,
     category,
