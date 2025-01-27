@@ -228,8 +228,7 @@ function Fotter() {
       </div>
       <div className="container mx-auto  px-5  lg:px-20 xl:px-56 md:px-10   min-w-full  min-h-[72px] bg-grayscale800 flex items-center justify-between md:flex-row flex-col text-center md:text-start ">
         <h1 className="text-bodymedium text-gray-500">
-        {t("ArzaqClassifiedListing")} © 2024. {t("DesignBy")}{" "}
-          <span className="WhiteColorText">Infinite Open</span>
+        {t("ArzaqClassifiedListing")} © 2024
         </h1>
         <div className="flex BodyTextColor space-x-[29px]">
           <Link href={`/${locale}/privacy`}>{t("PrivacyPolicy")}</Link>
