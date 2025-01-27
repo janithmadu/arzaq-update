@@ -65,6 +65,17 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ children, category }) => {
           locale === "en" ? filterSubCategory.title_en : filterSubCategory.title_ar
         );
 
+        const filterSecCategory = filterSubCategory?.secondcategory?.find(
+          (seccat:any) => seccat.id === parseInt(secondcategoryQu as string) 
+        );
+
+        if (filterSecCategory) {
+          BredCambArray.push(
+            locale === "en" ? filterSecCategory.title_en : filterSecCategory.title_ar
+          );
+        }
+
+
         // Handle second category (if needed later)
         // Add logic for filtering second category if it's part of the data structure
       }

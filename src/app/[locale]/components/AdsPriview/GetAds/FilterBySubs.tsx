@@ -181,6 +181,8 @@ export default function FilterBySubs() {
           body: JSON.stringify({ subcategoryPrams }),
         });
         const res = await Secondcategories.json();
+        
+        
         setSecondcategory(res);
       } else {
         return null;
@@ -188,6 +190,11 @@ export default function FilterBySubs() {
     };
     getSecondcategory();
   }, [subcategoryPrams]);
+
+
+
+  console.log(subcategory);
+  
 
   return (
     <div>

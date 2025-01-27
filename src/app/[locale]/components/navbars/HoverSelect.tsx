@@ -15,7 +15,7 @@ function getCookie(name: string) {
 
 
 
-export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
+export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: any) {
   const [locale, setLocale] = useState<"en" | "ar">(() => {
     return (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
   });
@@ -96,7 +96,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
                 onMouseEnter={() => handleMouseEnter(category.id)}
                 onMouseLeave={() => handleMouseLeave(category.id)}
               >
-                <Link href={`/${locale}/ads?page=1&category=${CategoryName}&subcategories=${category.slug}`}>
+                <Link href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}`}>
                   <span className="font-medium">{locale == "en" ? category.title_en : category.title_ar}</span>
                 </Link>
                 {category.secondcategory && category.secondcategory.length > 0 && (
@@ -127,7 +127,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory }: any) {
                         index !== category.secondcategory!.length - 1 && "border-b border-gray-100"
                       )}
                     >
-                      <Link href={`/${locale}/ads?page=1&secondcategory=${subItem.slug}`}>
+                      <Link href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}&secondcategory=${subItem.id}`}>
                         <span>{subItem.title_en}</span>
                       </Link>
                     </div>

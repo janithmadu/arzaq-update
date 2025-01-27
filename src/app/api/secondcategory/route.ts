@@ -5,6 +5,8 @@ export async function POST(request: Request) {
 
   if(request){
     const req = await request.json();
+    
+    
 
     if (!req.subcategoryPrams) {
       return new Response("Category is required", { status: 400 });
@@ -17,6 +19,9 @@ export async function POST(request: Request) {
             }
           }
         });
+
+        console.log(Secondcategories);
+        
 
         
   

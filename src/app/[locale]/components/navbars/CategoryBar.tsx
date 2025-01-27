@@ -78,6 +78,7 @@ const CategoryBar: React.FC<CurrentLocal> = async ({
                       }
                       CategoryData={getLimitedCate}
                       SubCategory={data.subcategory}
+                      CategorySlug={data.slug}
                     />
                   </div>
                 );

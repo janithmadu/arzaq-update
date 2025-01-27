@@ -21,6 +21,9 @@ interface SubcategoryNew {
 
 const AdsCategory: React.FC<Categories> = ({ Categories }) => {
 
+  console.log("Test"+Categories);
+  
+
 
   const cookieStore = cookies();
   const locale = (cookieStore.get("NEXT_LOCALE")?.value || "en") as "en" | "ar";
