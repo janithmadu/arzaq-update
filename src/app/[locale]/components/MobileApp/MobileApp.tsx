@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 
 function MobileApp({ image, image2, image3 }: any) {
   const t = useTranslations("TopNav");
-  console.log();
+
 
   return (
     <div className="container mx-auto flex flex-col space-y-[50px] px-5 lg:px-5 xl:px-20 md:px-10 mb-3">

@@ -15,7 +15,7 @@ function getCookie(name: string) {
 }
 
 export default function HomePageTipSection(tipImages: any) {
-  console.log(tipImages.tipImages[0].image);
+
 
   const [selectedTip, setSelectedTip] = useState(0);
   const [locale, setLocale] = useState<"en" | "ar">("en");

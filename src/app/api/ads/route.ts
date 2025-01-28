@@ -147,7 +147,7 @@ export async function PATCH(request: NextRequest) {
     
  
   } catch (error) {
-    console.log(error);
+
     return NextResponse.json("test");
     
     

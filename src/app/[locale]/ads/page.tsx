@@ -1,5 +1,3 @@
-
-
 import { getCategoryAndSubcategory } from "../actions/getCategories";
 import { getSubCategoryOptions } from "../actions/getSubCategories";
 import {
@@ -13,14 +11,13 @@ import dynamic from "next/dynamic";
 import { FunnelSimple, ListBullets } from "@phosphor-icons/react/dist/ssr";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import { Metadata } from "next";
+import GoogleAds from "../components/GoogleAds/GoogleAds";
 
 export const metadata: Metadata = {
-  title:
-    "Browse Ads on Q8ARZAQ - Find the Best Deals in Kuwait",
+  title: "Browse Ads on Q8ARZAQ - Find the Best Deals in Kuwait",
   description:
     "Explore thousands of ads on Q8ARZAQ. Find the best deals on products and services across Kuwait. Connect directly with sellers and buyers for a seamless experience!",
 };
-
 
 export const revalidate = 1;
 
@@ -52,16 +49,10 @@ const AddPriceFilter = dynamic(
 );
 
 export default async function Home() {
-  const [getSubCategoryAndCategory, getOptions] = await Promise.all([
+  const [getSubCategoryAndCategory, getOptions] = (await Promise.all([
     getCategoryAndSubcategory(),
     getSubCategoryOptions(),
-  ]) as any;
-
-  
-
-
-  
-  
+  ])) as any;
 
   return (
     <div className="min-h-screen bg-gray-100 sm:p-4 p-1">
@@ -77,6 +68,7 @@ export default async function Home() {
 
         <main className="  w-full">
           <Breadcrumb category={getSubCategoryAndCategory}>
+         
             <div className="">
               <Sheet>
                 <SheetTrigger>
@@ -100,6 +92,9 @@ export default async function Home() {
             </div>
           </Breadcrumb>
           <FilterBySubs />
+          <section className="mb-3">
+            <GoogleAds adSecName="Test 01" />
+          </section>
         </main>
       </div>
     </div>

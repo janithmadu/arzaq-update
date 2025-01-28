@@ -10,6 +10,7 @@ import { UserRegistration } from "./actions/usersAction";
 import HomePagecard from "./components/HomePagecard/HomePagecard";
 import HomePageTipSection from "./components/HomePageTipSection/HomePageTipSection";
 import { getDetailSecionImages, HomePageImages } from "./actions/HomePageImages";
+import GoogleAds from "./components/GoogleAds/GoogleAds";
 
 export const revalidate = 1;
 
@@ -38,7 +39,7 @@ export default async function Home() {
 
   const getPost = await getPostAds(GetPostData);
 
-  console.log(GetDetailPageImages);
+
   
 
   return (
@@ -51,7 +52,9 @@ export default async function Home() {
       <section>
         <HomeCategory getCategory={GetCategory} />
       </section>
-
+      <section>
+        <GoogleAds adSecName="Test 01"/>
+      </section>
       {/* Fresh recommended ads Section */}
       <section>
         <HomePageAdds Ads={getPost.result} />
@@ -73,6 +76,10 @@ export default async function Home() {
       {/* Mobile App Section */}
       <section>
         <MobileApp image={GetHomePageImages[6]} image2={GetHomePageImages[7]} image3={GetHomePageImages[8]} />
+      </section>
+
+      <section className="mb-3">
+        <GoogleAds adSecName="Test 01"/>
       </section>
     </main>
   );

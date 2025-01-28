@@ -21,7 +21,7 @@ interface SubcategoryNew {
 
 const AdsCategory: React.FC<Categories> = ({ Categories }) => {
 
-  console.log("Test"+Categories);
+
   
 
 

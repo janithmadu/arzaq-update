@@ -30,8 +30,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = ({ children, category }) => {
   const subcategoriesQu = searchParams.get("subcategories");
   const secondcategoryQu = searchParams.get("secondcategory");
 
-  console.log(subcategoriesQu);
-  
+
 
   const [locale, setLocale] = useState<"en" | "ar">("en"); 
   const BredCambArray: string[] = [];

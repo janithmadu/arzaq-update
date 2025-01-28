@@ -7,7 +7,7 @@ export async function POST(reqest: Request) {
 
   try {
     const addata = await reqest.json();
-    console.log(addata);
+;
 
     if(addata.id == addata.CldId){
       cloudinary.config({
@@ -19,7 +19,7 @@ export async function POST(reqest: Request) {
       const deletefomrCloudnary = await cloudinary.uploader.destroy(
         addata.CldId
       );
-      console.log(deletefomrCloudnary);
+
       return NextResponse.json(deletefomrCloudnary, { status: 200 });
     }
     else{

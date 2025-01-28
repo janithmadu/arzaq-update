@@ -31,7 +31,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 export default async function AdDetailsPage({ params }: { params: { slug: string } }) {
   const GetAdByID: any = await getAdById(params.slug);
 
-  console.log();
   
 
   const adTitile = GetAdByID?.adName;

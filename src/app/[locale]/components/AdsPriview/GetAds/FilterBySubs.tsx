@@ -11,6 +11,7 @@ import { ProfileAdCard } from "../../ProfileComponets/ProfileAdCard";
 import Breadcrumb from "../../Breadcrumb/Breadcrumb";
 import { CarCard } from "../../HomePagecard/CarCard";
 import { useTranslations } from "next-intl";
+import GoogleAds from "../../GoogleAds/GoogleAds";
 
 interface Result {
   result: any;
@@ -193,11 +194,12 @@ export default function FilterBySubs() {
 
 
 
-  console.log(subcategory);
+
   
 
   return (
     <div>
+      
       <h1
         className={`${titleSubCategory ? "hidden" : "text-bodyxl font-bold"}`}
       >
@@ -248,6 +250,10 @@ export default function FilterBySubs() {
       ) : (
         <></>
       )}
+
+<section className="mb-3">
+            <GoogleAds adSecName="Test 01" />
+          </section>
 
       <h1
         className={`${titleSubCategory ? " text-bodyxl font-bold" : "hidden"}`}

@@ -418,6 +418,15 @@ model ColorSettingsNew {
   updatedAt       DateTime @default(now()) @updatedAt
 }
 
+model GoogleAds {
+  id        Int      @id @default(autoincrement())
+  adUnitId  String
+  adCode    String   @db.VarChar(800)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Section   String
+}
+
 enum postad_condition {
   New
   Used
