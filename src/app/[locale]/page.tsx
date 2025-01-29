@@ -53,7 +53,7 @@ export default async function Home() {
         <HomeCategory getCategory={GetCategory} />
       </section>
       <section>
-        <GoogleAds adSecName="Test 01"/>
+        <GoogleAds id={5} adSecName="Home Page Ad Section 01"/>
       </section>
       {/* Fresh recommended ads Section */}
       <section>
@@ -79,7 +79,7 @@ export default async function Home() {
       </section>
 
       <section className="mb-3">
-        <GoogleAds adSecName="Test 01"/>
+        <GoogleAds id={6} adSecName="Home Page Ad Section 02"/>
       </section>
     </main>
   );

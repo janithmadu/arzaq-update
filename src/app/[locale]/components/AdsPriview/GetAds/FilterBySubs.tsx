@@ -252,7 +252,7 @@ export default function FilterBySubs() {
       )}
 
 <section className="mb-3">
-            <GoogleAds adSecName="Test 01" />
+            <GoogleAds adSecName="Category Page Ad Section 01" />
           </section>
 
       <h1

@@ -39,6 +39,9 @@ export async function getPostAds(data: Params): Promise<Result> {
 
   const resultCount = result.length;
 
+ 
+  
+
   return {
     result,
     resultCount, // Ensure this uses camel case

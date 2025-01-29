@@ -137,9 +137,13 @@ export default async function AdDetailsPage({ params }: { params: { slug: string
                 />
               </div>
             </div>
+          
           </div>
+          
         </div>
+        
       </div>
+    
     </div>
   );
 }

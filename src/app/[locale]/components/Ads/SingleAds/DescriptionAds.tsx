@@ -23,6 +23,7 @@ import Image from "next/image";
 import { CircleWavyCheck } from "@phosphor-icons/react/dist/ssr";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import GoogleAds from "../../GoogleAds/GoogleAds";
 
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -248,6 +249,8 @@ const DescriptionAds: React.FC<AdData> = ({
         </button>
       )}
       {/* Features List */}
+
+      <GoogleAds adSecName="Single Ad Page Ad Section 01" />
       
         <div className={`${Options.length === 0 ? 'hidden':'mt-6 flex flex-col gap-y-[24px]'}`}>
         <h2 className="text-grayscale900 text-heading03">{t("Options")}</h2>
@@ -346,6 +349,7 @@ const DescriptionAds: React.FC<AdData> = ({
               </span>
             </div>
           </div>
+          
         </div>
       </div>
     </div>

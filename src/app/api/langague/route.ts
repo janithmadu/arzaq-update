@@ -15,6 +15,9 @@ export async function GET() {
         select: { key: true, value: true },
       });
 
+      console.log(translations);
+      
+
       const translationsObject = translations.reduce(
         (acc: any, { key, value }) => {
           acc["TopNav"] = acc["TopNav"] || {}; // Initialize the "TopNav" object if it doesn't exist

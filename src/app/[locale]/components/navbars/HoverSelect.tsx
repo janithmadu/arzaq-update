@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { ArrowRight } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -13,9 +13,12 @@ function getCookie(name: string) {
   return undefined;
 }
 
-
-
-export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: any) {
+export function HoverSelect({
+  CategoryName,
+  Slug,
+  SubCategory,
+  CategorySlug,
+}: any) {
   const [locale, setLocale] = useState<"en" | "ar">(() => {
     return (getCookie("NEXT_LOCALE") as "en" | "ar") || "en";
   });
@@ -30,24 +33,24 @@ export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: an
     subMenus: Record<string, boolean>;
   }>({
     main: false,
-    subMenus: {}
+    subMenus: {},
   });
 
   const handleMouseEnter = useCallback((type: "main" | string) => {
-    setActiveDropdowns(prev => ({
+    setActiveDropdowns((prev) => ({
       ...prev,
       ...(type === "main"
         ? { main: true }
-        : { subMenus: { ...prev.subMenus, [type]: true } })
+        : { subMenus: { ...prev.subMenus, [type]: true } }),
     }));
   }, []);
 
   const handleMouseLeave = useCallback((type: "main" | string) => {
-    setActiveDropdowns(prev => ({
+    setActiveDropdowns((prev) => ({
       ...prev,
       ...(type === "main"
         ? { main: false, subMenus: {} }
-        : { subMenus: { ...prev.subMenus, [type]: false } })
+        : { subMenus: { ...prev.subMenus, [type]: false } }),
     }));
   }, []);
 
@@ -84,7 +87,7 @@ export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: an
           onMouseEnter={() => handleMouseEnter("main")}
           onMouseLeave={() => handleMouseLeave("main")}
         >
-          {SubCategory.map((category:any) => (
+          {SubCategory.map((category: any) => (
             <div key={category.id} className="relative">
               <div
                 className={cn(
@@ -96,44 +99,53 @@ export function HoverSelect({ CategoryName, Slug, SubCategory,CategorySlug }: an
                 onMouseEnter={() => handleMouseEnter(category.id)}
                 onMouseLeave={() => handleMouseLeave(category.id)}
               >
-                <Link href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}`}>
-                  <span className="font-medium">{locale == "en" ? category.title_en : category.title_ar}</span>
+                <Link
+                  href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}`}
+                >
+                  <span className="font-medium">
+                    {locale == "en" ? category.title_en : category.title_ar}
+                  </span>
                 </Link>
-                {category.secondcategory && category.secondcategory.length > 0 && (
-                  <ArrowRight className="h-4 w-4 text-gray-500" />
-                )}
+                {category.secondcategory &&
+                  category.secondcategory.length > 0 && (
+                    <ArrowRight className="h-4 w-4 text-gray-500" />
+                  )}
               </div>
 
               {/* Sub-dropdown */}
-              {category.secondcategory && category.secondcategory.length > 0 && (
-                <div
-                  className={cn(
-                    "absolute left-full top-0 z-[9999]",
-                    "WhiteColor rounded-lg shadow-lg w-60",
-                    "transform transition-all duration-200 origin-top-left",
-                    "border border-gray-100",
-                    activeDropdowns.subMenus[category.id]
-                      ? "opacity-100 scale-100 translate-x-0"
-                      : "opacity-0 scale-95 -translate-x-2 pointer-events-none"
-                  )}
-                  onMouseEnter={() => handleMouseEnter(category.id)}
-                  onMouseLeave={() => handleMouseLeave(category.id)}
-                >
-                  {category.secondcategory.map((subItem:any, index:any) => (
-                    <div
-                      key={subItem.id}
-                      className={cn(
-                        "px-4 py-3 hover:bg-gray-50 transition-colors duration-200 cursor-pointer",
-                        index !== category.secondcategory!.length - 1 && "border-b border-gray-100"
-                      )}
-                    >
-                      <Link href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}&secondcategory=${subItem.id}`}>
-                        <span>{subItem.title_en}</span>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              )}
+              {category.secondcategory &&
+                category.secondcategory.length > 0 && (
+                  <div
+                    className={cn(
+                      "absolute left-full top-0 z-[9999]",
+                      "WhiteColor rounded-lg shadow-lg w-60",
+                      "transform transition-all duration-200 origin-top-left",
+                      "border border-gray-100",
+                      activeDropdowns.subMenus[category.id]
+                        ? "opacity-100 scale-100 translate-x-0"
+                        : "opacity-0 scale-95 -translate-x-2 pointer-events-none"
+                    )}
+                    onMouseEnter={() => handleMouseEnter(category.id)}
+                    onMouseLeave={() => handleMouseLeave(category.id)}
+                  >
+                    {category.secondcategory.map((subItem: any, index: any) => (
+                      <div
+                        key={subItem.id}
+                        className={cn(
+                          "px-4 py-3 hover:bg-gray-50 transition-colors duration-200 cursor-pointer",
+                          index !== category.secondcategory!.length - 1 &&
+                            "border-b border-gray-100"
+                        )}
+                      >
+                        <Link
+                          href={`/${locale}/ads?page=1&category=${CategorySlug}&subcategories=${category.slug}&secondcategory=${subItem.id}`}
+                        >
+                          <span>{subItem.title_en}</span>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                )}
             </div>
           ))}
         </div>

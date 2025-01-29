@@ -7,11 +7,14 @@ interface GoogleAds {
   adCode: string;
 }
 interface GetAdSectionName {
-    adSecName:string
+    adSecName:string,
+   
 }
 
 function GoogleAds({adSecName}:GetAdSectionName) {
   const [googleAdData, setGoogleAdData] = useState<GoogleAds | null>(null);
+  
+  
 
   useEffect(() => {
     const getGoogleAds = async () => {

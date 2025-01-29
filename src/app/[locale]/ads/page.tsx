@@ -93,7 +93,7 @@ export default async function Home() {
           </Breadcrumb>
           <FilterBySubs />
           <section className="mb-3">
-            <GoogleAds adSecName="Test 01" />
+            <GoogleAds adSecName="Category Page Ad Section 02" />
           </section>
         </main>
       </div>

@@ -424,8 +424,9 @@ model GoogleAds {
   adCode    String   @db.VarChar(800)
   createdAt DateTime @default(now())
   updatedAt DateTime
-  Section   String
+  Section   String   @unique
 }
+
 
 enum postad_condition {
   New
