@@ -208,13 +208,15 @@ model hero_image {
 }
 
 model Footer {
-  id          Int           @id @default(autoincrement())
-  address     String        @db.Text
-  phoneNumber String        @db.VarChar(20)
-  email       String        @db.VarChar(255)
-  createdAt   DateTime      @default(now()) @db.Timestamp(0)
-  updatedAt   DateTime      @db.Timestamp(0)
-  SocialMedia SocialMedia[]
+  id              Int               @id @default(autoincrement())
+  address         String            @db.Text
+  phoneNumber     String            @db.VarChar(20)
+  email           String            @db.VarChar(255)
+  createdAt       DateTime          @default(now()) @db.Timestamp(0)
+  updatedAt       DateTime          @db.Timestamp(0)
+  FooterQuickLink FooterQuickLink[]
+  FooterSupport   FooterSupport[]
+  SocialMedia     SocialMedia[]
 }
 
 model SocialMedia {
@@ -427,6 +429,31 @@ model GoogleAds {
   Section   String   @unique
 }
 
+model FooterQuickLink {
+  id        Int      @id @default(autoincrement())
+  dname     String   @db.VarChar(255)
+  link      String   @db.Text
+  footerId  Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @db.Timestamp(0)
+  dnamear   String?  @db.VarChar(255)
+  Footer    Footer   @relation(fields: [footerId], references: [id], onDelete: Cascade)
+
+  @@index([footerId], map: "FooterQuickLink_footerId_fkey")
+}
+
+model FooterSupport {
+  id        Int      @id @default(autoincrement())
+  dname     String   @db.VarChar(255)
+  link      String   @db.Text
+  footerId  Int
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @db.Timestamp(0)
+  dnamear   String?  @db.VarChar(255)
+  Footer    Footer   @relation(fields: [footerId], references: [id], onDelete: Cascade)
+
+  @@index([footerId], map: "FooterSupport_footerId_fkey")
+}
 
 enum postad_condition {
   New

@@ -41,6 +41,19 @@ interface LogoData {
   logo: string;
   name: string;
 }
+interface FooterSupport {
+  id: number;
+  dname: string;
+  link: string;
+  dnamear: string;
+}
+
+interface QuickLinks {
+  id: number;
+  dname: string;
+  link: string;
+  dnamear: string;
+}
 
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -53,7 +66,11 @@ function Fotter() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [logoData, setlogoData] = useState<LogoData | null>(null);
+  const [support, setsupport] = useState<FooterSupport[] | null>([]);
+  const [quicklinks, setquicklinks] = useState<QuickLinks[] | null>(null);
+
   const t = useTranslations("TopNav");
+
 
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
@@ -89,6 +106,45 @@ function Fotter() {
     };
     getLogoData();
   }, []);
+
+  useEffect(() => {
+    const getSupportData = async () => {
+      const supportdata = await fetch("/api/footer/support");
+      try {
+        if (!supportdata.ok) {
+          console.error("Support Data Getting Error");
+        }
+        const support = await supportdata.json();
+        setsupport(support);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getSupportData();
+  }, []);
+
+  useEffect(() => {
+    const getQuickLinks = async () => {
+      const quicklinks = await fetch("/api/footer/quicklink");
+
+      try {
+        if (!quicklinks.ok) {
+          console.error("Quick Links Getting Error");
+        }
+        const quicklinksData = await quicklinks.json();
+       
+        
+        setquicklinks(quicklinksData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getQuickLinks()
+  },[]);
+
+
+  
 
   return (
     <div className="min-w-full min-h-[486px] FooterColor">
@@ -126,18 +182,18 @@ function Fotter() {
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
               <h1 className="WhiteColorText text-bodylarge">{t("Supports")}</h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
-                <Link
-                  href={`/${locale}/contact`}
-                  className="BodyTextColor text-bodymedium"
-                >
-                  {t("Contact")}
-                </Link>
-                <Link
-                  href={`/${locale}/faqs`}
-                  className="BodyTextColor text-bodymedium"
-                >
-                  {t("FAQs")}
-                </Link>
+                {support?.map((data: FooterSupport, index: number) => {
+                  return (
+                    <>
+                      <Link
+                        href={`/${locale}/${data.link}`}
+                        className="BodyTextColor text-bodymedium"
+                      >
+                        {locale == "en" ? data.dname : data.dnamear}
+                      </Link>
+                    </>
+                  );
+                })}
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
@@ -145,25 +201,18 @@ function Fotter() {
                 {t("QuickLinks")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
-                <Link
-                  href={`/${locale}/about`}
-                  className="BodyTextColor text-bodymedium"
-                >
-                  {t("AboutUs")}
-                </Link>
-                <Link
-                  href={`/${locale}/addform/step01`}
-                  className="BodyTextColor text-bodymedium"
-                >
-                  {t("PostAnAd")}
-                </Link>
-
-                <Link
-                  href={`/${locale}/ads?page=1`}
-                  className="BodyTextColor text-bodymedium"
-                >
-                  {t("AllAdss")}
-                </Link>
+              {quicklinks?.map((data: QuickLinks, index: number) => {
+                  return (
+                    <>
+                      <Link
+                        href={`/${locale}/${data.link}`}
+                        className="BodyTextColor text-bodymedium"
+                      >
+                        {locale == "en" ? data.dname : data.dnamear}
+                      </Link>
+                    </>
+                  );
+                })}
               </div>
             </div>
             <div className="min-w-[175px] min-h-[216px] flex flex-col space-y-[32px]  justify-center items-start ">
@@ -201,7 +250,8 @@ function Fotter() {
                   <AppStoreButtons />
                 </div>
 
-                <div className="flex space-x-[12px] items-center ">
+                <div className="flex flex-col items-center ">
+                 
                   {footerData?.SocialMedia.map((data, index: number) => {
                     return (
                       <Link key={index} href={data.url}>
