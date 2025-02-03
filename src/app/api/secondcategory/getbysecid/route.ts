@@ -12,7 +12,7 @@ export const GET = async (request: Request) => {
   }
 
   try {
-    const result = await prisma.secondcategory.findUnique({
+    const result = await prisma.secondcategory.findMany({
       where: {
         id: Number(categoryId),
       },
