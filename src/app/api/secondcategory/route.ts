@@ -49,6 +49,7 @@ export async function GET(request: Request) {
     if (!categoryId) {
         return new Response(JSON.stringify({ error: 'categoryId is required' }), { status: 400 });
     }
+    console.log(categoryId);
     
 
     try {
@@ -57,6 +58,8 @@ export async function GET(request: Request) {
                 subcategory_id:Number(categoryId),
             },
         });
+
+
 
   
         
