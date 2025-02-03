@@ -97,7 +97,7 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   const [subCategories, setsubCategories] = useState<
     Subcategory[] | undefined
   >();
-  const [secondCategories, setsecondCategories] = useState<any>();
+  const [secondCategories, setsecondCategories] = useState<any | undefined>();
   const [subBrands, setsubBrands] = useState<Brand[] | undefined>();
   const [Options, setOptions] = useState<PostAdOption[] | undefined>();
   const [Models, setModels] = useState<Model[] | undefined>();
@@ -143,8 +143,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
     setsubCategoriesID(e);
   };
 
-
-
   //Get the locales from cookies for navigate based on the locals
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
@@ -166,8 +164,8 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
         const response = await adres.json();
         setupdateAd(response);
         console.log();
-        
-        setsubCategoriesID(response.subcategoryId)
+
+        setsubCategoriesID(response.subcategoryId);
       } else {
         console.error("add fetchin faild pleace check it");
       }
@@ -220,24 +218,31 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   //////////////////////////////////////////////// Get Second Category By Usin Category ID /////////////////////////////////
   useLayoutEffect(() => {
     const getSecondCategory = async () => {
-      
-        
-        // const response = await getSubCategoriesByID(CategoriesID);
-        const response = await fetch(
-          `/api/secondcategory?categoryId=${subCategoriesID}`
-        );
-        const data = await response.json();
-        console.log(data);
-        
+      // Check if subCategoriesID is defined and valid
+      if (subCategoriesID) {
+        try {
+          const response = await fetch("/api/secondcategory/getsecbysubid", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: subCategoriesID }),
+          });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
 
-        setsecondCategories(data);
-     
+          setsecondCategories(data);
+          
+        } catch (error) {
+          console.error("Failed to fetch second categories:", error);
+        }
+      }
     };
+
     getSecondCategory();
-  }, [subCategoriesID]);
-
-
-  
+  }, [subCategoriesID]); // Only run this effect when subCategoriesID changes
 
   //////////////////////////////////////////////// END  Get Second Category By Usin Category ID /////////////////////////////////
 
@@ -279,7 +284,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   //////////////////////////////////////////////// Get Options By Usin SubCategory ID /////////////////////////////////
 
   useEffect(() => {
-    
     const getOptions = async () => {
       if (subCategoriesID) {
         setOptions([]);
@@ -296,7 +300,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
   }, []);
 
   console.log();
-  
 
   //////////////////////////////////////////////// Get Barands By Usin SubCategory ID /////////////////////////////////
 
@@ -599,7 +602,6 @@ const UpdateForm: React.FC<StepOneFormProps> = ({ categories, params }) => {
             <select
               className=" min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px]"
               {...register("secondcategory")}
-             
               defaultValue={String(secondCategorySet?.id)}
             >
               <option value={String(secondCategorySet?.id)} disabled>
