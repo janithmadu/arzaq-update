@@ -40,13 +40,14 @@ export default async function Home() {
   const getPost = await getPostAds(GetPostData);
 
 
+
   
 
   return (
     <main className="flex flex-col space-y-[40px]">
-      {/* Hero Section */}
+      
       <section>
-        <Hero HeroImages={HeroImages} />
+        {/* <Hero HeroImages={HeroImages} /> */}
       </section>
       {/* Category Section */}
       <section>

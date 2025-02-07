@@ -35,11 +35,13 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
+  params,
 }: {
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  const { locale } = await params; // Destructure inside the function
+
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
@@ -73,9 +75,6 @@ export default async function RootLayout({
           {children}
           <Fotter />
         </NextIntlClientProvider>
-        <Analytics />
-        <SpeedInsights />
-
         <FloatingMenu />
         <Toaster />
       </body>

@@ -13,7 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import Decimal from "decimal.js";
+//import Decimal from "decimal.js";
 
 import { CaretDown } from "@phosphor-icons/react/dist/ssr";
 import { HoverSelect } from "./HoverSelect";
@@ -32,7 +32,7 @@ interface Category {
   title_ar: string; // Arabic title
   slug: string; // URL-friendly identifier
   image_url: string | null; // Optional image URL, allowing null
-  price: number | Decimal;
+  price: number;
   subcategory: [
     {
       title_en: string;

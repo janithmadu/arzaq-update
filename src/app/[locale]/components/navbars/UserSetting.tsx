@@ -28,9 +28,9 @@ export interface UserSetting {
 
 
 
-const UserSetting: React.FC<UserSetting> = ({ given_name, picture }) => {
+const UserSetting: React.FC<UserSetting> = async ({ given_name, picture }) => {
   
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   return (
     <DropdownMenu>

@@ -13,7 +13,7 @@ export async function POST(request: Request) {
       status: 400,
     });
   }
-  console.log(categoryId);
+
   
   try {
     const result = await prisma.secondcategory.findMany({

@@ -2,7 +2,6 @@ import HeaderSection from "../../components/Ads/SingleAds/HeaderSection";
 import ImageGallery from "../../components/Ads/SingleAds/ImageGallery";
 import ContactSection from "../../components/Ads/SingleAds/ContactSection";
 import SellerInfo from "../../components/Ads/SingleAds/SellerInfo";
-
 import DescriptionAds from "../../components/Ads/SingleAds/DescriptionAds";
 import { getAdById } from "../../actions/getAds";
 import PriceSection from "../../components/Ads/SingleAds/PriceSection";
@@ -11,10 +10,18 @@ import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { GetUsers } from "../../actions/usersAction";
 import { Metadata } from "next";
 
+// Type for params in dynamic route
+interface AdDetailsPageParams {
+  params: {
+    slug: string;
+  };
+}
 
 // Dynamically generate metadata for the page
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const GetAdByID: any = await getAdById(params.slug);
+export async function generateMetadata({  params }: AdDetailsPageParams): Promise<Metadata> {
+  const parm = await params
+  const GetAdByID: any = await getAdById( parm?.slug);
+
 
   const adTitle = GetAdByID?.adName || "Ad Details"; // Default title if adName is unavailable
   const description =
@@ -28,10 +35,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 // Main Page Component
-export default async function AdDetailsPage({ params }: { params: { slug: string } }) {
-  const GetAdByID: any = await getAdById(params.slug);
-
-  
+export default async function AdDetailsPage({ params }: AdDetailsPageParams) {
+  const parm = await params
+  const GetAdByID: any = await getAdById(parm.slug);
 
   const adTitile = GetAdByID?.adName;
   const AddCratedDate = GetAdByID?.createdAt;
@@ -58,9 +64,6 @@ export default async function AdDetailsPage({ params }: { params: { slug: string
   const AdID = GetAdByID?.id;
   const ViewCount = GetAdByID?.ad_views;
   const CuUserID = await GetUsers(user?.id);
-
-  // Update ad view count
-  //await updateAdViewCount(AdID);
 
   return (
     <div className="min-w-full min-h-full bg-white">

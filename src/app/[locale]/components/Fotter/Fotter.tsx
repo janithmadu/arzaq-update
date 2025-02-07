@@ -4,22 +4,22 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { AppStoreButtons } from "./app-store-buttons";
-import Decimal from "decimal.js";
+//import Decimal from "decimal.js";
 import { useTranslations } from "next-intl";
 
-interface Category {
-  id: number;
-  title_en: string;
-  title_ar: string;
-  slug: string;
-  image_url: string | null;
-  description_en: string | null;
-  description_ar: string | null;
-  price: number | Decimal;
-  ad_count: number;
-  created_at: Date;
-  updated_at: Date;
-}
+// interface Category {
+//   id: number;
+//   title_en: string;
+//   title_ar: string;
+//   slug: string;
+//   image_url: string | null;
+//   description_en: string | null;
+//   description_ar: string | null;
+//   price: number | Decimal;
+//   ad_count: number;
+//   created_at: Date;
+//   updated_at: Date;
+// }
 
 interface SocialMedia {
   footerId: number;
@@ -61,16 +61,17 @@ function getCookie(name: string) {
   if (parts.length === 2) return parts.pop()?.split(";").shift();
 }
 
+export const revalidate = 1;
+
 function Fotter() {
   const [locale, setLocale] = useState<string>("en");
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<any[]>([]);
   const [footerData, setFooterData] = useState<FooterData | null>(null);
   const [logoData, setlogoData] = useState<LogoData | null>(null);
   const [support, setsupport] = useState<FooterSupport[] | null>([]);
   const [quicklinks, setquicklinks] = useState<QuickLinks[] | null>(null);
 
   const t = useTranslations("TopNav");
-
 
   useEffect(() => {
     const cookieLocale = getCookie("NEXT_LOCALE") || "en";
@@ -79,7 +80,9 @@ function Fotter() {
 
   useEffect(() => {
     const getFooterData = async () => {
-      const footerdata = await fetch("/api/footer");
+      const footerdata = await fetch("/api/footer",{
+        next: { revalidate: 0 },
+      });
       const footer = await footerdata.json();
 
       setFooterData(footer.footerdata);
@@ -89,7 +92,9 @@ function Fotter() {
 
   useEffect(() => {
     const getFooterData = async () => {
-      const categoryData = await fetch("/api/categories/getlimitcate");
+      const categoryData = await fetch("/api/categories/getlimitcate",{
+        next: { revalidate: 0 },
+      });
       const categories = await categoryData.json();
 
       setCategories(categories);
@@ -99,7 +104,9 @@ function Fotter() {
 
   useEffect(() => {
     const getLogoData = async () => {
-      const logodata = await fetch("/api/logo");
+      const logodata = await fetch("/api/logo",{
+        next: { revalidate: 0 },
+      });
       const logo = await logodata.json();
 
       setlogoData(logo.logodata);
@@ -109,7 +116,9 @@ function Fotter() {
 
   useEffect(() => {
     const getSupportData = async () => {
-      const supportdata = await fetch("/api/footer/support");
+      const supportdata = await fetch("/api/footer/support",{
+        next: { revalidate: 0 },
+      });
       try {
         if (!supportdata.ok) {
           console.error("Support Data Getting Error");
@@ -126,25 +135,24 @@ function Fotter() {
 
   useEffect(() => {
     const getQuickLinks = async () => {
-      const quicklinks = await fetch("/api/footer/quicklink");
+      const quicklinks = await fetch("/api/footer/quicklink",{
+        next: { revalidate: 0 },
+      });
 
       try {
         if (!quicklinks.ok) {
           console.error("Quick Links Getting Error");
         }
         const quicklinksData = await quicklinks.json();
-       
-        
+
         setquicklinks(quicklinksData);
       } catch (error) {
         console.error(error);
       }
     };
-    getQuickLinks()
-  },[]);
+    getQuickLinks();
+  }, []);
 
-
-  
 
   return (
     <div className="min-w-full min-h-[486px] FooterColor">
@@ -163,19 +171,23 @@ function Fotter() {
                   ></Image>
                 </h1>
 
-                <div className="min-w-[124px] md:min-w-[347px] min-h-[120px] ">
-                  <div className="max-w-[312px] max-h-[47px] flex flex-col space-y-[12px] ">
-                    <p className="text-bodymedium BodyTextColor text-wrap">
-                      {t("Address")}: {footerData?.address || "N/A"}
-                    </p>
-                    <p className="text-bodymedium BodyTextColor text-wrap">
-                      {t("Phone")}: {footerData?.phoneNumber || "N/A"}
-                    </p>
-                    <p className="text-bodymedium BodyTextColor text-wrap">
-                      {t("Mail")}: {footerData?.email || "N/A"}
-                    </p>
-                  </div>
-                </div>
+                
+                  
+                    <div  className="min-w-[124px] md:min-w-[347px] min-h-[120px] ">
+                      <div className="max-w-[312px] max-h-[47px] flex flex-col space-y-[12px] ">
+                        <p className="text-bodymedium BodyTextColor text-wrap">
+                          {t("Address")}: {footerData?.address || "N/A"}
+                        </p>
+                        <p className="text-bodymedium BodyTextColor text-wrap">
+                          {t("Phone")}: {footerData?.phoneNumber || "N/A"}
+                        </p>
+                        <p className="text-bodymedium BodyTextColor text-wrap">
+                          {t("Mail")}: {footerData?.email || "N/A"}
+                        </p>
+                      </div>
+                    </div>
+                 
+                
               </div>
             </div>
 
@@ -184,14 +196,14 @@ function Fotter() {
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
                 {support?.map((data: FooterSupport, index: number) => {
                   return (
-                    <>
+                    <div key={index}>
                       <Link
                         href={`/${locale}/${data.link}`}
                         className="BodyTextColor text-bodymedium"
                       >
                         {locale == "en" ? data.dname : data.dnamear}
                       </Link>
-                    </>
+                    </div>
                   );
                 })}
               </div>
@@ -201,16 +213,16 @@ function Fotter() {
                 {t("QuickLinks")}
               </h1>
               <div className="min-w-[94px] min-h-[152px] flex space-y-[8px] flex-col">
-              {quicklinks?.map((data: QuickLinks, index: number) => {
+                {quicklinks?.map((data: QuickLinks, index: number) => {
                   return (
-                    <>
+                    <div key={index}>
                       <Link
                         href={`/${locale}/${data.link}`}
                         className="BodyTextColor text-bodymedium"
                       >
                         {locale == "en" ? data.dname : data.dnamear}
                       </Link>
-                    </>
+                    </div>
                   );
                 })}
               </div>
@@ -251,7 +263,6 @@ function Fotter() {
                 </div>
 
                 <div className="flex flex-col items-center ">
-                 
                   {footerData?.SocialMedia.map((data, index: number) => {
                     return (
                       <Link key={index} href={data.url}>

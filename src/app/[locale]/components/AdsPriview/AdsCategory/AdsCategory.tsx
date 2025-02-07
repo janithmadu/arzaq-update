@@ -19,13 +19,8 @@ interface SubcategoryNew {
   title: string[]; // Updated to string[] to match data structure
 }
 
-const AdsCategory: React.FC<Categories> = ({ Categories }) => {
-
-
-  
-
-
-  const cookieStore = cookies();
+const AdsCategory: React.FC<Categories> = async ({ Categories }) => {
+  const cookieStore = await cookies();
   const locale = (cookieStore.get("NEXT_LOCALE")?.value || "en") as "en" | "ar";
   const localeIndex = locale; // Assume the array has `en` at index 0 and `ar` at index 1
   return (

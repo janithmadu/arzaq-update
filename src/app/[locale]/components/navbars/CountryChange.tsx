@@ -113,7 +113,9 @@ function CountryChange() {
           }
           className="flex items-center gap-2 rtl:gap-2"
         >
-          <Image width={25} src={flgimage} alt={languages[locale].nextLocale} />
+          {
+            flgimage ? <Image width={25} src={flgimage || null} alt={languages[locale].nextLocale} />  : <></>
+          }
         </button>
        
       </div>

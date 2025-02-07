@@ -13,13 +13,14 @@ const Page = async ({ params }: { params: { slug: string } }) => {
   await CheckUserLog();
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+  const param  = await params
 
-  const UpdateAdDetails:any = await getAdById(params.slug);
+  const UpdateAdDetails:any = await getAdById(param.slug);
 
   const GetCategory:any = await getAllCategory();
   return (
     <div>
-      <UpdateForm params={Number(params.slug)} categories={GetCategory} />
+      <UpdateForm params={Number(param.slug)} categories={GetCategory} />
     </div>
   );
 };

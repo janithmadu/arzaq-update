@@ -10,6 +10,7 @@ export const revalidate = 1;
 
 async function page({ searchParams }: any) {
   const { getUser } = getKindeServerSession();
+  const srchparm = await searchParams
 
   const user = await getUser();
 
@@ -17,7 +18,7 @@ async function page({ searchParams }: any) {
     await CheckUserLog();
   }
 
-  const Page = parseInt(searchParams.page);
+  const Page = parseInt(srchparm.page);
   const Limit = 5;
 
   const UserAds = await GetAdByUser(user?.id, Page, Limit);

@@ -1,9 +1,10 @@
+"use client";
 import { Category } from "@/lib/categoryInterface";
 import { useTranslations } from "next-intl";
 import { cookies } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export const revalidate = 1;
 
@@ -11,10 +12,22 @@ interface getCategory {
   getCategory: any;
 }
 
+function getCookie(name: string) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop()?.split(";").shift();
+}
+
 const HomeCategory: React.FC<getCategory> = ({ getCategory }) => {
-  const cookieStore = cookies();
-  const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
+  const [locale, setLocale] = useState<string>("en");
+  // const cookieStore = cookies();
+  // const locale = cookieStore.get("NEXT_LOCALE")?.value || "en";
   const t = useTranslations("TopNav");
+
+    useEffect(() => {
+      const cookieLocale = getCookie("NEXT_LOCALE") || "en";
+      setLocale(cookieLocale);
+    }, []);
 
   return (
     <div className="container mx-auto flex flex-col space-y-[10px] px-2  lg:px-5 xl:px-20 md:px-10 ">

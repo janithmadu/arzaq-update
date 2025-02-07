@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js';
+
 
 export interface Category {
   id: number;
@@ -6,7 +6,7 @@ export interface Category {
   title_ar: string; // Arabic title
   slug: string; // URL-friendly identifier
   image_url: string | null; // Optional image URL, allowing null
-  price: number | Decimal;
+  price: number ;
   subcategory:[{
     title_en:string,
     title_ar:string,

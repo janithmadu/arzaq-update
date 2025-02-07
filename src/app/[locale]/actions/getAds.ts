@@ -19,6 +19,8 @@ export interface Result {
 }
 
 export async function getPostAds(data: Params): Promise<Result> {
+
+  
   const prisma = new PrismaClient();
   const result = await prisma.postad.findMany({
     where: {
@@ -40,6 +42,7 @@ export async function getPostAds(data: Params): Promise<Result> {
   const resultCount = result.length;
 
  
+
   
 
   return {

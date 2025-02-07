@@ -10,10 +10,15 @@ async function page({
   params: { slugs: string };
   searchParams: any;
 }) {
-  const Page = parseInt(searchParams.page);
+  const pram = await params;
+  const serchparm = await searchParams
+  const Page = parseInt(serchparm.page);
   const Limit = 5;
+
+
+
   
-   const Users = await GetUsers(params.slugs);
+   const Users = await GetUsers(pram.slugs);
    const UserAds = await GetAdByUser(Users?.userexid as string, Page, Limit);
 
   

@@ -13,8 +13,8 @@ import { GetAdByCategory } from "../../actions/getAds";
 
 export default async function HomePagecard() {
   const category:any = await getAllCategory();
-  const cookieStore = cookies();
-  const locale: string = cookieStore.get("NEXT_LOCALE")?.value || "en";
+  const cookieStore = await cookies();
+  const locale: string = await cookieStore.get("NEXT_LOCALE")?.value || "en";
 
   // Fetch ads for all categories
   const categoriesWithAds = await Promise.all(
