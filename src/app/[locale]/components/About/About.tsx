@@ -1,15 +1,14 @@
-"use client"
-import { UserPlus, FileText, DollarSign } from "lucide-react";
+"use client";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 interface AboutInterface {
-    title:string
-    content:string
-    image:string
-    titlear:string
-    contentar:string
+  title: string;
+  content: string;
+  image: string;
+  titlear: string;
+  contentar: string;
 }
 
 function getCookie(name: string) {
@@ -18,17 +17,15 @@ function getCookie(name: string) {
   if (parts.length === 2) return parts.pop()?.split(";").shift();
 }
 
-
 function About() {
   const t = useTranslations("TopNav");
-  const [About, setAbout] = useState<AboutInterface[] >([]); // Initialize with undefined
+  const [About, setAbout] = useState<AboutInterface[]>([]); // Initialize with undefined
   const [locale, setLocale] = useState("en");
 
-   useEffect(() => {
-      const cookieLocale = getCookie("NEXT_LOCALE") || "en";
-      setLocale(cookieLocale);
-    }, []);
-  
+  useEffect(() => {
+    const cookieLocale = getCookie("NEXT_LOCALE") || "en";
+    setLocale(cookieLocale);
+  }, []);
 
   useEffect(() => {
     const getAbout = async () => {
@@ -36,11 +33,9 @@ function About() {
       const data = await response.json();
       setAbout(data);
     };
-    getAbout()
+    getAbout();
   }, []);
 
-  
-  
   return (
     <>
       {/* Hero Header */}
@@ -67,9 +62,12 @@ function About() {
         {/* About Section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
-            <h2 className="text-3xl font-bold">{locale === "en" ? About[0]?.title : About[0]?.titlear}</h2>
-            <p className="text-muted-foreground whitespace-pre-line text-wrap">{locale === "en" ? About[0]?.content : About[0]?.contentar}</p>
-            
+            <h2 className="text-3xl font-bold">
+              {locale === "en" ? About[0]?.title : About[0]?.titlear}
+            </h2>
+            <p className="text-muted-foreground whitespace-pre-line text-wrap">
+              {locale === "en" ? About[0]?.content : About[0]?.contentar}
+            </p>
           </div>
 
           <div className="relative aspect-video rounded-3xl overflow-hidden bg-muted">

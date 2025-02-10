@@ -9,7 +9,10 @@ import MobileApp from "./components/MobileApp/MobileApp";
 import { UserRegistration } from "./actions/usersAction";
 import HomePagecard from "./components/HomePagecard/HomePagecard";
 import HomePageTipSection from "./components/HomePageTipSection/HomePageTipSection";
-import { getDetailSecionImages, HomePageImages } from "./actions/HomePageImages";
+import {
+  getDetailSecionImages,
+  HomePageImages,
+} from "./actions/HomePageImages";
 import GoogleAds from "./components/GoogleAds/GoogleAds";
 
 export const revalidate = 1;
@@ -21,13 +24,12 @@ interface GetPostD {
   };
 }
 
-
 export default async function Home() {
   const HeroImages = await getHeroImages();
   const GetCategory = await getAllCategory();
-  const GetHomePageImages:any = await HomePageImages()
-  const GetDetailPageImages = await getDetailSecionImages()
-  
+  const GetHomePageImages: any = await HomePageImages();
+  const GetDetailPageImages = await getDetailSecionImages();
+
   await UserRegistration();
 
   const GetPostData: GetPostD = {
@@ -39,22 +41,17 @@ export default async function Home() {
 
   const getPost = await getPostAds(GetPostData);
 
-
-
-  
-
   return (
     <main className="flex flex-col space-y-[40px]">
-      
       <section>
-        {/* <Hero HeroImages={HeroImages} /> */}
+        <Hero HeroImages={HeroImages} />
       </section>
       {/* Category Section */}
       <section>
         <HomeCategory getCategory={GetCategory} />
       </section>
       <section>
-        <GoogleAds  adSecName="Home Page Ad Section 01"/>
+        <GoogleAds adSecName="Home Page Ad Section 01" />
       </section>
       {/* Fresh recommended ads Section */}
       <section>
@@ -71,16 +68,20 @@ export default async function Home() {
       </section>
 
       <section>
-        <HomePageTipSection tipImages={GetDetailPageImages}/>
+        <HomePageTipSection tipImages={GetDetailPageImages} />
       </section>
 
       {/* Mobile App Section */}
       <section>
-        <MobileApp image={GetHomePageImages[6]} image2={GetHomePageImages[7]} image3={GetHomePageImages[8]} />
+        <MobileApp
+          image={GetHomePageImages[6]}
+          image2={GetHomePageImages[7]}
+          image3={GetHomePageImages[8]}
+        />
       </section>
 
       <section className="mb-3">
-        <GoogleAds  adSecName="Home Page Ad Section 02"/>
+        <GoogleAds adSecName="Home Page Ad Section 02" />
       </section>
     </main>
   );

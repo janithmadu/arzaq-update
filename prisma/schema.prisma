@@ -114,15 +114,15 @@ model postad {
   condition        postad_condition?
   currency         String?
   authenticity     postad_authenticity?
-  price            Int              
+  price            Int
   negotiable       Boolean?             @default(false)
   description      String?              @db.Text
   phoneNumber      String               @db.VarChar(20)
   country          String               @db.VarChar(255)
   state            String?              @db.VarChar(255)
   location         String?              @db.VarChar(255)
-  mapLatitude      Int?            
-  mapLongitude     Int?            
+  mapLatitude      Int?
+  mapLongitude     Int?
   userId           Int
   payment          Boolean?             @default(false)
   viewCount        Int?                 @default(0)
@@ -205,6 +205,7 @@ model hero_image {
   altText   String
   imageUrl  String
   createdAt DateTime @default(now())
+  lan       String?  @db.VarChar(45)
 }
 
 model Footer {
