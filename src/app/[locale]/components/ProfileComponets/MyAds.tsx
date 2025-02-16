@@ -46,13 +46,14 @@ const MyAds: React.FC<MainProfileProps> = ({
         </h2>
       )}
       <div
-        className={` ${UserAds?.ads?.length > 0 ? `min-w-full  grid grid-cols-1 xl:grid-cols-2 gap-1` : "grid grid-cols-1"}`}
+        className={` ${UserAds?.ads?.length > 0 ? `min-w-full  grid grid-cols-1   xl:grid-cols-2   gap-1` : "grid grid-cols-1"}`}
       >
         {UserAds?.ads?.length > 0 ? (
           UserAds?.ads?.map((ad: PostAd, index: number) => {
             return (
-              <div key={index} className="flex min-w-full">
+              <div key={index} className="">
                 <ProfileAdCard
+                  curruncy={locale === "en" ? ad.currency : ad.currency_Ar}
                   id={ad.id}
                   title={ad.adName}
                   price={ad.price}
@@ -83,7 +84,7 @@ const MyAds: React.FC<MainProfileProps> = ({
               height={160}
             />
             <h2 className="text-2xl font-semibold text-gray-700">
-            {t("NoAdsStill")}
+              {t("NoAdsStill")}
             </h2>
           </div>
         )}

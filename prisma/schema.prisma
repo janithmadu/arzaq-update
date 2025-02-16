@@ -129,6 +129,7 @@ model postad {
   createdAt        DateTime             @default(now()) @db.Timestamp(0)
   updatedAt        DateTime             @default(now()) @db.Timestamp(0)
   secondcategoryId Int?
+  currency_Ar      String?
   ad_views         ad_views[]           @relation("PostadViews")
   favorites        favorites[]          @relation("PostAdFavorites")
   category         categories           @relation("CategoryPostads", fields: [categoryId], references: [id])
@@ -454,6 +455,12 @@ model FooterSupport {
   Footer    Footer   @relation(fields: [footerId], references: [id], onDelete: Cascade)
 
   @@index([footerId], map: "FooterSupport_footerId_fkey")
+}
+
+model currency {
+  id        Int    @id @default(autoincrement())
+  symbol_En String @db.VarChar(255)
+  symbol_Ar String @db.VarChar(255)
 }
 
 enum postad_condition {

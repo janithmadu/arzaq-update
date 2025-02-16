@@ -18,6 +18,8 @@ interface AdCardProps {
 }
 
 const AdCard: React.FC<AdCardProps> = ({ GetAds }) => {
+  console.log(GetAds);
+  
   const [locale, setLocale] = useState<"en" | "ar">("en");
 
   useEffect(() => {

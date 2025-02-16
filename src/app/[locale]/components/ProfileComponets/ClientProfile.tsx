@@ -92,6 +92,7 @@ const ClientProfile: React.FC<ClientUserAds> = ({
             return (
               <div key={ad.id}>
                 <ProfileAdCard
+                curruncy={locale === "en" ? ad.currency : ad.currency_Ar}
                 id={ad.id}
                 title={ad.adName}
                 price={ad.price}

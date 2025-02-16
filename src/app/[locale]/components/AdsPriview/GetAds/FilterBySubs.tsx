@@ -327,7 +327,7 @@ export default function FilterBySubs() {
                   <CarCard
                     name={ad.adName}
                     brand={ad.brand}
-                    currancy={ad.currency}
+                    currancy={locale === "en" ? ad.currency : ad.currency_Ar}
                     duration={ad.createdAt}
                     location={ad.state}
                     km={ad.model}
@@ -340,6 +340,7 @@ export default function FilterBySubs() {
                 <div className="inline sm:hidden">
                   <ProfileAdCard
                   id={ad.id}
+                  curruncy={locale === "en" ? ad.currency : ad.currency_Ar}
                     state={ad.state}
                     image={ad.postad_photos[0]?.photoUrl}
                     price={ad.price}

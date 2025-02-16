@@ -27,7 +27,8 @@ function getCookie(name: string) {
 
 const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
   const t = useTranslations("TopNav");
-
+  console.log(Ads);
+  
   const [locale, setLocale] = useState<"en" | "ar">("en");
 
   useEffect(() => {
@@ -66,7 +67,7 @@ const HomePageAdds: React.FC<Ads> = ({ Ads }) => {
                   name={item.adName}
                   price={item.price}
                   km={item.model}
-                  currancy={item.currency}
+                  currancy={locale === "en" ? item.currency : item.currency_Ar}
                 />
               </CarouselItem>
             ))}

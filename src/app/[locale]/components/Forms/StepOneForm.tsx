@@ -114,7 +114,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   const [AdPrice, setAdPrice] = useState<number>();
   const t = useTranslations("TopNav");
   const [ImagesArray, setImages] = useState<
-    { postAdId: string; photoUrl: string; altText: string, cldId : string }[]
+    { postAdId: string; photoUrl: string; altText: string; cldId: string }[]
   >([]);
   const [ImageError, setImageError] = useState<boolean>(true);
   const [ImageCountError, setImageCountError] = useState<boolean>(true);
@@ -146,9 +146,6 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
   };
 
   const handleSecondCategoryChange = (e: string) => {
-  
-
-
     setOptions([]);
     setsecondCategoriesID(e);
   };
@@ -284,6 +281,20 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
     setFeatures(newFeatures);
   };
 
+  //////////////////////////////////////////////// Get Curruncies /////////////////////////////////
+
+  const [curruncies, setCurruncies] = useState([]);
+  useEffect(() => {
+    const getCurrancy = async () => {
+      const response = await fetch("/api/currency");
+      const data = await response.json();
+      setCurruncies(data);
+    };
+    getCurrancy();
+  }, []);
+
+  ////////////////////////////////////////////////  End Get Curruncies /////////////////////////////////
+
   ////////////////////////////////////////////////  Start Send Form Data To API And Database /////////////////////////////////
 
   const {
@@ -338,7 +349,7 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
         }).then((result) => {
           reset();
           if (result.isConfirmed) {
-            router.push(`/${locale}/payments/paymentsuccess`);
+            router.push(`/${locale}`);
           }
         });
 
@@ -617,12 +628,15 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                   <option value="DEFAULT" disabled>
                     {t("Currency")}
                   </option>
-                  {Currency?.map((selectData: Currency) => (
+                  {curruncies?.map((selectData: any) => (
                     <option
-                      key={selectData?.title[locale as "en" | "ar"]}
-                      value={selectData?.title[locale as "en" | "ar"] as string}
+                      key={selectData.id}
+                      value={JSON.stringify({
+                        symbol_En: selectData.symbol_En,
+                        symbol_Ar: selectData.symbol_Ar,
+                      })}
                     >
-                      {selectData?.title[locale as "en" | "ar"]}
+                      {locale === "en" ? selectData.symbol_En : selectData.symbol_Ar}
                     </option>
                   ))}
                 </select>
@@ -655,7 +669,8 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                     <Input
                       type="text"
                       {...register("mobileNumbe")}
-                      placeholder="Ex: +96*********"
+                      defaultValue="+965"
+                      placeholder="+965"
                       className={`min-h-[48px] border border-[#EDEFF5] rounded-[5px] px-[18px] py-[12px] min-w-full`}
                     ></Input>
                     {errors.mobileNumbe && (
@@ -850,13 +865,16 @@ const StepOneForm: React.FC<StepOneFormProps> = ({ categories }) => {
                       const id = results?.info?.public_id;
                       const alt = results?.info?.original_filename;
                       const imageUrl = results?.info?.secure_url;
-                      
-                      
-                      
+
                       if (imageUrl) {
                         setImages((prevImages) => [
                           ...prevImages,
-                          { postAdId: id, photoUrl: imageUrl, altText: alt, cldId:id },
+                          {
+                            postAdId: id,
+                            photoUrl: imageUrl,
+                            altText: alt,
+                            cldId: id,
+                          },
                         ]);
                       }
                     }}

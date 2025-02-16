@@ -39,6 +39,7 @@ const DraftAds: React.FC<MainProfileProps> = ({ UserAds, resultCount }) => {
               <div key={index}>
                 <ProfileAdCard
                   id={ad.id}
+                  curruncy={locale === "en" ? ad.currency : ad.currency_Ar}
                   title={ad.adName}
                   category={
                     locale == "en" ? ad.category.title_en : ad.category.title_ar

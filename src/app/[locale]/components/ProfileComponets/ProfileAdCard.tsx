@@ -29,6 +29,7 @@ interface ProductCardProps {
   adprice?: number;
   timedate?: boolean;
   state?: string;
+  curruncy:string
 }
 function getCookie(name: string) {
   const value = `; ${document.cookie}`;
@@ -50,6 +51,7 @@ export function ProfileAdCard({
   delteActive,
   timedate,
   state,
+  curruncy
 }: ProductCardProps) {
   const [locale, setLocale] = useState("en");
   const [loading, setloading] = useState(true);
@@ -208,7 +210,7 @@ export function ProfileAdCard({
                 </div>
                 <div className="flex items-center sm:justify-between sm:max-w-[700px] 2xl:min-w-[360px] lg:min-w-[520px] sm:min-w-[360px]  max-w-[600px] gap-x-[10px]">
                   <span className=" text-bodytiny sm:text-lg font-semibold text-[#312783]">
-                    Rs {price}
+                    {curruncy} {price}
                   </span>
                   {timedate && (
                     <Badge

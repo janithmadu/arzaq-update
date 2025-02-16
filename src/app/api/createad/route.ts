@@ -34,6 +34,8 @@ export async function POST(request: Request) {
     secondcategory,
   } = addata;
 
+  const GetCurancy = JSON.parse(Currency);
+
   // Parse category and options safely
   const categoryData = category ? JSON.parse(category) : null;
   const OptionJson = options
@@ -46,11 +48,13 @@ export async function POST(request: Request) {
         adName: name,
         category: { connect: { id: Number(categoryData.id) } }, // Connect category by ID
         subcategory: { connect: { id: Number(subcategory) } }, // Connect subcategory by ID
-        secondcategoryId: secondcategory === "DEFAULT" ? null : parseInt(secondcategory), // Connect subcategory by ID
+        secondcategoryId:
+          secondcategory === "DEFAULT" ? null : parseInt(secondcategory), // Connect subcategory by ID
         brand: brands,
         model: model,
         condition: conditions,
-        currency: Currency,
+        currency: GetCurancy.symbol_En,
+        currency_Ar: GetCurancy.symbol_Ar,
         authenticity: authenticity,
         price: price,
         negotiable: true,
@@ -73,11 +77,10 @@ export async function POST(request: Request) {
         },
         postad_photos: {
           create: images?.map(
-            (image: { photoUrl: string; altText: string; cldId:string }) => ({
+            (image: { photoUrl: string; altText: string; cldId: string }) => ({
               photoUrl: image.photoUrl,
               altText: image.altText,
-              cldId:image.cldId
-              
+              cldId: image.cldId,
             })
           ),
         },

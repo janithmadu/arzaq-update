@@ -42,7 +42,7 @@ export const SchemaAdPostForm = z.object({
     .refine((value) => value !== "DEFAULT", {
       message: "Please select a valid authenticity.",
     }),
-    mobileNumbe: z.string().min(10, "Enter a contact number."),
+    mobileNumbe: z.string().min(10, "Enter a contact number.") || z.number().min(10,"Enter a contact number."),
   Currency: z
     .string()
     .min(1, "State the currency for payment.")

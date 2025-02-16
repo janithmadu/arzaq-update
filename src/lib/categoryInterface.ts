@@ -157,6 +157,7 @@ export interface PostAd {
     title_ar:string
   };
   condition: string;
+  currency_Ar:string,
   country: string;
   description: string;
   email: string | null;

@@ -40,6 +40,7 @@ const Favorites: React.FC<MainProfileProps> = ({ UserAds }) => {
               <div key={index} className="">
                 <ProfileAdCard
                   title={ad?.postad.adName}
+                  curruncy={locale === "en" ? ad.currency : ad.currency_Ar}
                   category={
                     locale == "en"
                       ? ad.postad.category.title_en
