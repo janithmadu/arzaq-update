@@ -40,7 +40,25 @@ export async function GET() {
   const prisma = new PrismaClient();
 
   try {
-    const category = await prisma.categories.findMany();
+    const category = await prisma.categories.findMany({
+      select: {
+        ad_count: true,
+        created_at: true,
+        description_ar: true,
+        description_en: true,
+        id: true,
+        image_url: true,
+        position: true,
+        postads: true,
+        price: true,
+        slug: true,
+        subcategory: true,
+        title_ar: true,
+        title_en: true,
+        updated_at: true,
+        _count: true,
+      },
+    });
     if (!category) {
       return NextResponse.json(
         { error: "Category not found" },
