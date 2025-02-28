@@ -49,7 +49,18 @@ export async function GET() {
         id: true,
         image_url: true,
         position: true,
-        postads: true,
+        postads: {
+          include:{
+            ad_views:true,
+            category:true,
+            favorites:true,
+            postad_features:true,
+            postad_options:true,
+            postad_photos:true,
+            subcategory:true,
+            user:true
+          }
+        },
         price: true,
         slug: true,
         subcategory: true,
