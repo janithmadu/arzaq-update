@@ -65,7 +65,18 @@ export async function GET() {
         slug: true,
         subcategory: {
           include:{
-            postads:true,
+            postads:{
+               include:{
+                postad_photos:true,
+                ad_views:true,
+                category:true,
+                favorites:true,
+                postad_features:true,
+                subcategory:true,
+                postad_options:true,
+                user:true
+               }
+            },
             secondcategory:true,
             commercial:true,
           }
