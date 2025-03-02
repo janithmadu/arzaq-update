@@ -63,7 +63,13 @@ export async function GET() {
         },
         price: true,
         slug: true,
-        subcategory: true,
+        subcategory: {
+          include:{
+            postads:true,
+            secondcategory:true,
+            commercial:true,
+          }
+        },
         title_ar: true,
         title_en: true,
         updated_at: true,
